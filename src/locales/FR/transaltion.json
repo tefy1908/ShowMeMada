@@ -1,0 +1,23 @@
+{
+  "welcome": "Bienvenue",
+  "home": "Accueil",
+  "about": "À propos",
+  "contact": "Contact",
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact",
+    "tours": "Circuits",
+    "destinations": "Destinations",
+    "services": "Services"
+  },
+  "inquiry": "Pour plus d'informations",
+  "language": "Langue",
+  "email": "Email",
+  "hurryUp": "Dépêchez-vous pour votre",
+  "newTour": "Nouveau Circuit !",
+  "heroTitle": "Découvrons Madagascar ensemble !",
+  "heroSubtitle": "Votre aventure authentique vous attend sur l'île rouge.",
+  "bookTrip": "Réserver un Voyage",
+  "rating": "Note"
+}

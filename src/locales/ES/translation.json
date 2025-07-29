@@ -1,0 +1,23 @@
+{
+  "welcome": "Bienvenido",
+  "home": "Inicio",
+  "about": "Acerca de",
+  "contact": "Contacto",
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "tours": "Tours",
+    "destinations": "Destinos",
+    "services": "Servicios"
+  },
+  "inquiry": "Para más consultas",
+  "language": "Idioma",
+  "email": "Email",
+  "hurryUp": "¡Date prisa para tu",
+  "newTour": "Nuevo Tour !",
+  "heroTitle": "¡Descubramos Madagascar juntos!",
+  "heroSubtitle": "Tu auténtica aventura te espera en la isla roja.",
+  "bookTrip": "Reservar un Viaje",
+  "rating": "Puntuación"
+}

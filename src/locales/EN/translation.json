@@ -1,0 +1,23 @@
+{
+  "welcome": "Welcome",
+  "home": "Home",
+  "about": "About Us",
+  "contact": "Contact",
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "tours": "Tours",
+    "destinations": "Destinations",
+    "services": "Services"
+  },
+  "inquiry": "To more Inquiry",
+  "language": "Language",
+  "email": "Email",
+  "hurryUp": "Hurry Up For Your",
+  "newTour": "New Tour !",
+  "heroTitle": "Let's discover Madagascar with us !",
+  "heroSubtitle": "Your authentic adventure awaits you on the red island.",
+  "bookTrip": "Book A Trip",
+  "rating": "Rating"
+}
