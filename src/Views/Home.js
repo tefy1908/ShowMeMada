@@ -14,7 +14,6 @@ const Home = () => {
   const {t} = useTranslation();
   return (
     <Box display="flex" flexGrow={1} flexDirection={"column"} height={"100vh"}>
-      <ResponsiveAppBar />
       <Box
         display={"flex"}
         flexGrow={1}
@@ -74,10 +73,10 @@ const Home = () => {
         }}
       >
         <LocMadagascarIcon />
-        <Box fontWeight={900} fontSize={"65px"}>
+        <Box fontWeight={900} fontSize={"65px"} textAlign={'center'}>
           {t('heroTitle')}
         </Box>
-        <Box fontSize={"18px"}>
+        <Box fontSize={"18px"} textAlign={'center'}>
           {" "}
           {t('heroSubtitle')}
         </Box>
@@ -88,6 +87,7 @@ const Home = () => {
             fontSize={"16px"}
             borderRadius={"10px"}
             fontWeight={900}
+            sx={{cursor : "pointer"}}
           >
             {t('bookTrip')}
           </Box>

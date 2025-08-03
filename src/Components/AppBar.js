@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,17 +17,18 @@ import { useTranslation } from 'react-i18next';
 
 function ResponsiveAppBar() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  // Pages avec leurs clés de traduction
+  // Pages avec leurs clés de traduction et routes
   const pages = [
-    { key: 'navigation.home', suffix: ' +' },
-    { key: 'navigation.about', suffix: ' +' },
-    { key: 'navigation.tours', suffix: ' +' },
-    { key: 'navigation.destinations', suffix: ' +' },
-    { key: 'navigation.services', suffix: ' +' },
-    { key: 'navigation.contact', suffix: ' +' }
+    { key: 'navigation.home', route: '/', suffix: ' +' },
+    { key: 'navigation.about', route: '/about', suffix: ' +' },
+    { key: 'navigation.tours', route: '/tours', suffix: ' +' },
+    { key: 'navigation.destinations', route: '/destinations', suffix: ' +' },
+    { key: 'navigation.services', route: '/services', suffix: ' +' },
+    { key: 'navigation.contact', route: '/contact', suffix: ' +' }
   ];
 
   // Langues disponibles
@@ -40,32 +42,39 @@ function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleNavigation = (route) => {
+    navigate(route);
+    handleCloseNavMenu();
   };
 
   const handleLanguageChange = (event) => {
     i18n.changeLanguage(event.target.value);
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
+  // Fonction pour vérifier si la route est active
+  const isActiveRoute = (route) => {
+    return location.pathname === route;
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#FFFFFF' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Logo Desktop */}
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'black' }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component="button"
+            onClick={handleLogoClick}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -74,15 +83,22 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'black',
               textDecoration: 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8
+              }
             }}
           >
             LOGO
           </Typography>
 
+          {/* Menu Mobile */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu de navigation"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -107,7 +123,14 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.key} onClick={handleCloseNavMenu}>
+                <MenuItem 
+                  key={page.key} 
+                  onClick={() => handleNavigation(page.route)}
+                  sx={{
+                    backgroundColor: isActiveRoute(page.route) ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
+                    fontWeight: isActiveRoute(page.route) ? 600 : 400
+                  }}
+                >
                   <Box sx={{ textAlign: 'center', color: 'black' }}>
                     {t(page.key)}{page.suffix}
                   </Box>
@@ -116,12 +139,13 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
+          {/* Logo Mobile */}
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, color: 'black' }} />
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component="button"
+            onClick={handleLogoClick}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -131,17 +155,44 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'black',
               textDecoration: 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8
+              }
             }}
           >
             LOGO
           </Typography>
 
+          {/* Navigation Desktop */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page.key}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                onClick={() => handleNavigation(page.route)}
+                sx={{ 
+                  my: 2, 
+                  color: 'black', 
+                  display: 'block',
+                  position: 'relative',
+                  fontWeight: isActiveRoute(page.route) ? 600 : 400,
+                  '&::after': isActiveRoute(page.route) ? {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '80%',
+                    height: '2px',
+                    backgroundColor: 'black',
+                    borderRadius: '1px'
+                  } : {},
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                  }
+                }}
               >
                 {t(page.key)}{page.suffix}
               </Button>
@@ -181,6 +232,7 @@ function ResponsiveAppBar() {
             </FormControl>
           </Box>
 
+          {/* Contact Info */}
           <Box 
             display={'flex'} 
             gap={"10px"} 

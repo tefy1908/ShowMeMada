@@ -10,7 +10,10 @@ import Contact from "./Views/Contact";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./Theme";
 import "./i18n"; // Import de la configuration i18n
-
+import Tours from "./Views/Tours";
+import Destinations from "./Views/Destinations";
+import Services from "./Views/Services";
+import Layout from "./Components/Layout";
 // Composant de chargement pendant l'initialisation des traductions
 const Loading = () => <div>Loading...</div>;
 
@@ -18,11 +21,17 @@ const Loading = () => <div>Loading...</div>;
 function App() {
   return (
     <Router>
+      <Layout>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="About" element={<AboutUs />} />
-        <Route path="contact" element={<Contact />} />
+         <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/tours" element={<Tours />} />
+              <Route path="/destinations" element={<Destinations />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<div>Page non trouvée</div>} />
       </Routes>
+      </Layout>
     </Router>
   );
 }

@@ -2,10 +2,10 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 
 
-const Contact =()=>{
+const Tours =()=>{
     return(
-        <Box>Page de contact</Box>
+        <Box>Page des Tours</Box>
     )
 }
 
-export default Contact;
+export default Tours;
