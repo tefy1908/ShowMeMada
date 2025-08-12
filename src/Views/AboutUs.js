@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
-import CardAboutUS from "../Components/CardAboutUs";
 import { Grid, keyframes } from "@mui/material";
+import { useTranslation } from 'react-i18next';
+import CardAboutUS from "../Components/CardAboutUs";
 import TextTitle from "../Components/TextTitle";
 import ValueCard from "../Components/ValeurCard";
 import CardItemTeam from "../Components/CardItemTeam";
+
 // Animation pour l'image
 const floatAnimation = keyframes`
   0%, 100% {
@@ -16,74 +18,68 @@ const floatAnimation = keyframes`
 `;
 
 const AboutUs = () => {
-  // Données des valeurs
+  const { t } = useTranslation();
+
+  // Données des valeurs avec traduction
   const valuesData = [
     {
       icon: "🌱",
-      title: "Tourisme Responsable",
-      description:
-        "Nous nous engageons à préserver la biodiversité unique de Madagascar et à soutenir les communautés locales à travers un tourisme respectueux et durable.",
+      title: t("aboutUs.values.responsibleTourism.title"),
+      description: t("aboutUs.values.responsibleTourism.description"),
       delay: 0.1,
     },
     {
       icon: "🎯",
-      title: "Excellence & Authenticité",
-      description:
-        "Chaque détail compte. Nous créons des expériences authentiques et mémorables en privilégiant la qualité à la quantité dans tous nos services.",
+      title: t("aboutUs.values.excellence.title"),
+      description: t("aboutUs.values.excellence.description"),
       delay: 0.2,
     },
     {
       icon: "👥",
-      title: "Expertise Locale",
-      description:
-        "Notre équipe malgache passionnée partage avec vous les secrets cachés de l'île, loin des sentiers battus, pour des découvertes uniques et privilégiées.",
+      title: t("aboutUs.values.expertise.title"),
+      description: t("aboutUs.values.expertise.description"),
       delay: 0.3,
     },
     {
       icon: "🤝",
-      title: "Relation de Confiance",
-      description:
-        "Transparence, écoute et réactivité sont au cœur de notre relation client. Nous vous accompagnons avant, pendant et après votre voyage.",
+      title: t("aboutUs.values.trust.title"),
+      description: t("aboutUs.values.trust.description"),
       delay: 0.4,
     },
   ];
 
-  // team data
-
+  // Données de l'équipe avec traduction
   const teamData = [
     {
-      name: "Rakoto Andrianina",
-      title: "Directeur & Guide Principal",
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: "15 ans d'expérience",
-      specialty: "Faune endémique",
+      name: t("aboutUs.team.members.rakoto.name"),
+      title: t("aboutUs.team.members.rakoto.title"),
+      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      experience: t("aboutUs.team.members.rakoto.experience"),
+      specialty: t("aboutUs.team.members.rakoto.specialty"),
     },
     {
-      name: "Marie Razafy",
-      title: "Coordinatrice Voyages",
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: "10 ans d'expérience",
-      specialty: "Organisation logistique",
+      name: t("aboutUs.team.members.marie.name"),
+      title: t("aboutUs.team.members.marie.title"),
+      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      experience: t("aboutUs.team.members.marie.experience"),
+      specialty: t("aboutUs.team.members.marie.specialty"),
     },
     {
-      name: "Hery Rasoamanana",
-      title: "Chef Chauffeur-Guide",
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: "12 ans d'expérience",
-      specialty: "Routes & Culture locale",
+      name: t("aboutUs.team.members.hery.name"),
+      title: t("aboutUs.team.members.hery.title"),
+      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      experience: t("aboutUs.team.members.hery.experience"),
+      specialty: t("aboutUs.team.members.hery.specialty"),
     },
     {
-      name: "Dr. Lalaina Rabe",
-      title: "Guide Naturaliste",
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: "8 ans d'expérience",
-      specialty: "Biodiversité malgache",
+      name: t("aboutUs.team.members.lalaina.name"),
+      title: t("aboutUs.team.members.lalaina.title"),
+      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      experience: t("aboutUs.team.members.lalaina.experience"),
+      specialty: t("aboutUs.team.members.lalaina.specialty"),
     },
   ];
+
   return (
     <Box
       display={"flex"}
@@ -93,7 +89,7 @@ const AboutUs = () => {
       gap={"1.5rem"}
     >
       <Box display="flex" alignItems={"center"} justifyContent={"center"}>
-        <TextTitle title={"About Us"} />
+        <TextTitle title={t("aboutUs.title")} />
       </Box>
 
       {/* Section Notre Histoire */}
@@ -126,7 +122,7 @@ const AboutUs = () => {
                   },
                 }}
               >
-                Notre Histoire
+                {t("aboutUs.ourStory.title")}
               </Typography>
 
               {/* Contenu texte */}
@@ -139,9 +135,7 @@ const AboutUs = () => {
                   marginBottom: 2,
                 }}
               >
-                Fondée en 2008 par une équipe de passionnés malgaches et
-                français, Show Me Mada est née d'un rêve simple : partager la
-                beauté exceptionnelle de Madagascar avec le monde entier.
+                {t("aboutUs.ourStory.paragraph1")}
               </Typography>
 
               <Typography
@@ -153,11 +147,7 @@ const AboutUs = () => {
                   marginBottom: 2,
                 }}
               >
-                Ce qui a commencé comme une petite agence locale est devenu
-                aujourd'hui l'un des acteurs de référence du tourisme
-                responsable à Madagascar. Notre secret ? Une connaissance intime
-                du terrain, des relations privilégiées avec les communautés
-                locales et une passion contagieuse pour notre île.
+                {t("aboutUs.ourStory.paragraph2")}
               </Typography>
 
               <Typography
@@ -169,10 +159,7 @@ const AboutUs = () => {
                   marginBottom: 3,
                 }}
               >
-                Chaque voyage que nous organisons est le fruit de notre
-                expertise accumulée au fil des années et de notre engagement
-                indéfectible envers un tourisme qui respecte l'environnement et
-                les populations locales.
+                {t("aboutUs.ourStory.paragraph3")}
               </Typography>
             </Box>
           </Grid>
@@ -195,7 +182,7 @@ const AboutUs = () => {
         </Grid>
       </Box>
 
-      {/** Séction Nos valeurs */}
+      {/** Section Nos valeurs */}
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -225,7 +212,7 @@ const AboutUs = () => {
             },
           }}
         >
-          Nos valeurs
+          {t("aboutUs.values.title")}
         </Typography>
 
         {/* Contenu valeurs */}
@@ -236,26 +223,46 @@ const AboutUs = () => {
             textAlign: "center",
           }}
         >
-          Les principes qui guident chacune de nos actions et qui font la
-          différence dans vos voyages
+          {t("aboutUs.values.subtitle")}
         </Typography>
+
         {/**Contenu card valeur */}
         <Grid container spacing={3}>
-          {valuesData.map((value, index) => (
-            <Grid key={index} size={{ xs: 12, sm: 6, md: 3 }}>
-              <ValueCard
-                icon={value.icon}
-                title={value.title}
-                description={value.description}
-                delay={value.delay}
-              />
+          {/* Partie gauche - Les 4 composants en 2x2 */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Grid container spacing={2}>
+              {valuesData.map((value, index) => (
+                <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                  <ValueCard
+                    icon={value.icon}
+                    title={value.title}
+                    description={value.description}
+                    delay={value.delay}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Grid>
+
+          {/* Partie droite - Photo */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box
+              component="img"
+              src="/path/to/your/image.jpg"
+              alt="Description de votre image"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 2, // Optionnel pour arrondir les coins
+                boxShadow: 2, // Optionnel pour ajouter une ombre
+              }}
+            />
+          </Grid>
         </Grid>
       </Box>
 
-      {/** Séction Notre équipe */}
-
+      {/** Section Notre équipe */}
       <Box display={"flex"} flexDirection={"column"} gap={3} flexGrow={1}>
         {/* Titre de section */}
         <Typography
@@ -279,7 +286,7 @@ const AboutUs = () => {
             },
           }}
         >
-          Notre équipe
+          {t("aboutUs.team.title")}
         </Typography>
 
         <Typography
@@ -287,28 +294,48 @@ const AboutUs = () => {
           sx={{
             color: "#666",
             textAlign: "center",
-
             margin: "0 auto",
             fontSize: "1.5rem",
             lineHeight: 1.6,
           }}
         >
-          Une équipe multiculturelle et expérimentée, réunie par la même passion
-          pour Madagascar et l'envie de vous offrir des expériences inoubliables
+          {t("aboutUs.team.subtitle")}
         </Typography>
 
         <Grid container spacing={4} justifyContent="center">
-          {teamData.map((member, index) => (
-            <Grid key={index} size={{ xs: 12, sm: 6, md: 3 }}>
-              <CardItemTeam
-                name={member.name}
-                title={member.title}
-                image={member.image}
-                experience={member.experience}
-                specialty={member.specialty}
-              />
+          {/* Partie gauche - Photo */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box
+              component="img"
+              src="/path/to/your/team-image.jpg"
+              alt="Photo de l'équipe"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 2, // Optionnel pour arrondir les coins
+                boxShadow: 3, // Optionnel pour ajouter une ombre
+                minHeight: { xs: 300, md: 500 }, // Hauteur minimale responsive
+              }}
+            />
+          </Grid>
+
+          {/* Partie droite - Cartes d'équipe en 2x2 */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Grid container spacing={3} justifyContent="center">
+              {teamData.map((member, index) => (
+                <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                  <CardItemTeam
+                    name={member.name}
+                    title={member.title}
+                    image={member.image}
+                    experience={member.experience}
+                    specialty={member.specialty}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Grid>
         </Grid>
       </Box>
     </Box>

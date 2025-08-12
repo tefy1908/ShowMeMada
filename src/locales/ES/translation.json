@@ -11,13 +11,72 @@
     "destinations": "Destinos",
     "services": "Servicios"
   },
-  "inquiry": "Para más consultas",
+  "inquiry": "Para más información",
   "language": "Idioma",
   "email": "Email",
-  "hurryUp": "¡Date prisa para tu",
-  "newTour": "Nuevo Tour !",
+  "hurryUp": "Date prisa para tu",
+  "newTour": "¡Nuevo Tour!",
   "heroTitle": "¡Descubramos Madagascar juntos!",
-  "heroSubtitle": "Tu auténtica aventura te espera en la isla roja.",
+  "heroSubtitle": "Tu aventura auténtica te espera en la isla roja.",
   "bookTrip": "Reservar un Viaje",
-  "rating": "Puntuación"
+  "rating": "Calificación",
+  "aboutUs": {
+    "title": "Acerca de Nosotros",
+    "ourStory": {
+      "title": "Nuestra Historia",
+      "paragraph1": "Fundada en 2008 por un equipo de apasionados malgaches y franceses, Show Me Mada nació de un sueño simple: compartir la belleza excepcional de Madagascar con el mundo entero.",
+      "paragraph2": "Lo que comenzó como una pequeña agencia local se ha convertido hoy en uno de los actores de referencia del turismo responsable en Madagascar. ¿Nuestro secreto? Un conocimiento íntimo del terreno, relaciones privilegiadas with las comunidades locales y una pasión contagiosa por nuestra isla.",
+      "paragraph3": "Cada viaje que organizamos es el resultado de nuestra experiencia acumulada a lo largo de los años y de nuestro compromiso inquebrantable hacia un turismo que respeta el medio ambiente y las poblaciones locales."
+    },
+    "values": {
+      "title": "Nuestros Valores",
+      "subtitle": "Los principios que guían cada una de nuestras acciones y que marcan la diferencia en sus viajes",
+      "responsibleTourism": {
+        "title": "Turismo Responsable",
+        "description": "Nos comprometemos a preservar la biodiversidad única de Madagascar y apoyar a las comunidades locales a través de un turismo respetuoso y sostenible."
+      },
+      "excellence": {
+        "title": "Excelencia y Autenticidad",
+        "description": "Cada detalle cuenta. Creamos experiencias auténticas y memorables priorizando la calidad sobre la cantidad en todos nuestros servicios."
+      },
+      "expertise": {
+        "title": "Experiencia Local",
+        "description": "Nuestro equipo malgache apasionado comparte contigo los secretos ocultos de la isla, fuera de los caminos trillados, para descubrimientos únicos y privilegiados."
+      },
+      "trust": {
+        "title": "Relación de Confianza",
+        "description": "Transparencia, escucha y capacidad de respuesta están en el corazón de nuestra relación con el cliente. Te acompañamos antes, durante y después de tu viaje."
+      }
+    },
+    "team": {
+      "title": "Nuestro Equipo",
+      "subtitle": "Un equipo multicultural y experimentado, unido por la misma pasión por Madagascar y el deseo de ofrecerte experiencias inolvidables",
+      "members": {
+        "rakoto": {
+          "name": "Rakoto Andrianina",
+          "title": "Director y Guía Principal",
+          "experience": "15 años de experiencia",
+          "specialty": "Fauna endémica"
+        },
+        "marie": {
+          "name": "Marie Razafy",
+          "title": "Coordinadora de Viajes",
+          "experience": "10 años de experiencia",
+          "specialty": "Organización logística"
+        },
+        "hery": {
+          "name": "Hery Rasoamanana",
+          "title": "Jefe Conductor-Guía",
+          "experience": "12 años de experiencia",
+          "specialty": "Rutas y Cultura local"
+        },
+        "lalaina": {
+          "name": "Dr. Lalaina Rabe",
+          "title": "Guía Naturalista",
+          "experience": "8 años de experiencia",
+          "specialty": "Biodiversidad malgache"
+        }
+      }
+    }
+  }
 }

@@ -4,7 +4,7 @@ import SlideShow from "../Components/SlideShow";
 
 const Destinations =()=>{
     return(
-        <Box><SlideShow/></Box>
+        <Box display={'flex'} flexGrow={1}><SlideShow/></Box>
     )
 }
 

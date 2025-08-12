@@ -2,11 +2,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import ResponsiveAppBar from './AppBar';
+import NavBarBlack from './NavBarBlack';
 const Layout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* AppBar fixe en haut */}
       <ResponsiveAppBar />
+      <NavBarBlack/>
       
       {/* Contenu principal */}
       <Box 

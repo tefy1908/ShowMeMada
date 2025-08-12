@@ -19,5 +19,64 @@
   "heroTitle": "Let's discover Madagascar with us !",
   "heroSubtitle": "Your authentic adventure awaits you on the red island.",
   "bookTrip": "Book A Trip",
-  "rating": "Rating"
+  "rating": "Rating",
+  "aboutUs": {
+    "title": "About Us",
+    "ourStory": {
+      "title": "Our Story",
+      "paragraph1": "Founded in 2008 by a team of passionate Malagasy and French individuals, Show Me Mada was born from a simple dream: to share the exceptional beauty of Madagascar with the entire world.",
+      "paragraph2": "What started as a small local agency has today become one of the leading players in responsible tourism in Madagascar. Our secret? An intimate knowledge of the terrain, privileged relationships with local communities, and a contagious passion for our island.",
+      "paragraph3": "Every trip we organize is the result of our expertise accumulated over the years and our unwavering commitment to tourism that respects the environment and local populations."
+    },
+    "values": {
+      "title": "Our Values",
+      "subtitle": "The principles that guide each of our actions and make the difference in your travels",
+      "responsibleTourism": {
+        "title": "Responsible Tourism",
+        "description": "We are committed to preserving Madagascar's unique biodiversity and supporting local communities through respectful and sustainable tourism."
+      },
+      "excellence": {
+        "title": "Excellence & Authenticity",
+        "description": "Every detail matters. We create authentic and memorable experiences by prioritizing quality over quantity in all our services."
+      },
+      "expertise": {
+        "title": "Local Expertise",
+        "description": "Our passionate Malagasy team shares with you the hidden secrets of the island, off the beaten path, for unique and privileged discoveries."
+      },
+      "trust": {
+        "title": "Trust Relationship",
+        "description": "Transparency, listening and responsiveness are at the heart of our client relationship. We accompany you before, during and after your trip."
+      }
+    },
+    "team": {
+      "title": "Our Team",
+      "subtitle": "A multicultural and experienced team, united by the same passion for Madagascar and the desire to offer you unforgettable experiences",
+      "members": {
+        "rakoto": {
+          "name": "Rakoto Andrianina",
+          "title": "Director & Lead Guide",
+          "experience": "15 years of experience",
+          "specialty": "Endemic fauna"
+        },
+        "marie": {
+          "name": "Marie Razafy",
+          "title": "Travel Coordinator",
+          "experience": "10 years of experience",
+          "specialty": "Logistics organization"
+        },
+        "hery": {
+          "name": "Hery Rasoamanana",
+          "title": "Chief Driver-Guide",
+          "experience": "12 years of experience",
+          "specialty": "Routes & Local culture"
+        },
+        "lalaina": {
+          "name": "Dr. Lalaina Rabe",
+          "title": "Naturalist Guide",
+          "experience": "8 years of experience",
+          "specialty": "Malagasy biodiversity"
+        }
+      }
+    }
+  }
 }
