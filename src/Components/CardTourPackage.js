@@ -181,7 +181,7 @@ export default function CardTourPackage({
                 <Typography 
                   variant="body2" 
                   sx={{ 
-                    color: "secondary.dark",
+                    color: currentColor,
                     fontSize: "15px",
                     lineHeight: 1.6,
                     marginBottom: "20px",

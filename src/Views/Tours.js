@@ -5,8 +5,9 @@ import TextTitle from "../Components/TextTitle";
 import { useTranslation } from 'react-i18next';
 import CardTourPackage from "../Components/CardTourPackage";
 import CardTransport from "../Components/CardTransport";
-
-
+import Baobab from "..//Assets/Images/Baobab.jpg"
+import NosyBe from "..//Assets/Images/nosyBe.jpg"
+import Foret from "..//Assets/Images/Foret.jpg"
 const Tours = () => {
 
 
@@ -20,30 +21,30 @@ const Tours = () => {
   const tourPackages = [
     {
       id: 1,
-      DestinationImage: "/images/tulear.jpg",
-      DestinationName: "Tulear",
-      Location: "Sud-Ouest de Madagascar",
+      DestinationImage: Baobab,
+      DestinationName: "Morondava",
+      Location: "Madagascar Tour Sud-Ouest",
       Description: "Découvrez les merveilles du sud malgache avec ses plages paradisiaques, ses baobabs majestueux et sa culture unique. Un voyage inoubliable à travers des paysages époustouflants.",
-      Itinerary: ["Antananarivo", "Antsirabe", "Fianarantsoa", "Tulear"],
+      Itinerary: ["Antananarivo", "Andasibe", "Ampefy", "Antsirabe","Miandrivazo", "Morondava"],
       currentColor: "#ff6b35"
     },
     {
       id: 2,
-      DestinationImage: "/images/nosy-be.jpg",
+      DestinationImage: NosyBe,
       DestinationName: "Nosy Be",
       Location: "Nord-Ouest de Madagascar",
       Description: "L'île aux parfums vous attend avec ses plages de sable blanc, ses eaux turquoise et ses couchers de soleil magiques. Un paradis tropical authentique.",
       Itinerary: ["Antananarivo", "Mahajanga", "Nosy Be"],
-      currentColor: "#4ecdc4"
+      currentColor: "#45b7d1"
     },
     {
       id: 3,
-      DestinationImage: "/images/andasibe.jpg",
+      DestinationImage: Foret,
       DestinationName: "Andasibe-Mantadia",
       Location: "Est de Madagascar",
       Description: "Immergez-vous dans la forêt primaire et découvrez les lémuriens Indri dans leur habitat naturel. Une expérience unique au cœur de la biodiversité malgache.",
       Itinerary: ["Antananarivo", "Andasibe-Mantadia"],
-      currentColor: "#45b7d1"
+      currentColor: "green"
     }
   ];
 
