@@ -1,15 +1,9 @@
-import React from "react";
-import { Box, Button } from "@mui/material";
-import ResponsiveAppBar from "../Components/AppBar";
-import EmailIcon from "../Components/IconComponent/EmailIcon";
-import FacebookIcon from "../Components/IconComponent/FacebookIcon";
-import TwitterIcon from "../Components/IconComponent/TwitterIcon";
-import InstaIcon from "../Components/IconComponent/InstaIcon";
+import { Box } from "@mui/material";
+
 import backGroundImageHome from "..//Assets/Images/backgroundHome.jpeg";
 import LocMadagascarIcon from "../Components/IconComponent/LocMadagascarIcon";
 import TripAdvisorIcon from "../Components/IconComponent/TripAdvisorIcon";
 import { useTranslation } from "react-i18next";
-import NavBarBlack from "../Components/NavBarBlack";
 const Home = () => {
   const {t} = useTranslation();
   return (
