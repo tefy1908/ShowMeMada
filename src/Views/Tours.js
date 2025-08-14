@@ -24,7 +24,7 @@ const Tours = () => {
       DestinationImage: Baobab,
       DestinationName: "Morondava",
       Location: "Madagascar Tour Sud-Ouest",
-      Description: "Découvrez les merveilles du sud malgache avec ses plages paradisiaques, ses baobabs majestueux et sa culture unique. Un voyage inoubliable à travers des paysages époustouflants.",
+      Description: "Découvrez les merveilles du sud malgache avec ses plages paradisiaques, ses baobabs majestueux et sa culture unique.",
       Itinerary: ["Antananarivo", "Andasibe", "Ampefy", "Antsirabe","Miandrivazo", "Morondava"],
       currentColor: "#ff6b35"
     },
