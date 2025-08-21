@@ -188,7 +188,6 @@ const AboutUs = () => {
         flexDirection={"column"}
         gap={5}
         flexGrow={1}
-        sx={{ height: { md: "100vh" } }}
       >
         {/* Titre de section */}
         <Typography

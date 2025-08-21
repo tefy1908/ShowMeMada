@@ -188,7 +188,6 @@ const WhyMadagascarSection = () => {
           component="blockquote"
           sx={{ 
             fontSize: { xs: "24px", md: "28px" },
-            fontStyle: "italic",
             fontWeight: 300,
             mb: 2,
             lineHeight: 1.4
