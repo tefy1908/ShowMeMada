@@ -20,12 +20,45 @@
   "heroSubtitle": "Tu aventura auténtica te espera en la isla roja.",
   "bookTrip": "Reservar un Viaje",
   "rating": "Calificación",
+  
+  "whyMadagascarTitle": "¿Por qué Madagascar?",
+  "whyMadagascarSubtitle": "Descubre la isla continente de mil maravillas, un santuario de biodiversidad único en el mundo",
+  
+  "biodiversityTitle": "Biodiversidad Única",
+  "biodiversityDesc": "Madagascar alberga el 5% de la biodiversidad mundial en menos del 0,4% de las tierras emergidas. Un verdadero laboratorio de la evolución.",
+  "biodiversityStats": "90% de especies endémicas",
+  
+  "cultureTitle": "Riqueza Cultural",
+  "cultureDesc": "18 etnias malgaches con tradiciones milenarias, artesanía única y hospitalidad legendaria te esperan.",
+  "cultureStats": "18 etnias distintas",
+  
+  "landscapeTitle": "Paisajes Excepcionales",
+  "landscapeDesc": "Desde los Tsingy calcáreos hasta las avenidas de baobabs, pasando por las mesetas altas y los bosques primarios.",
+  "landscapeStats": "6 parques nacionales UNESCO",
+  
+  "wildlifeTitle": "Fauna Endémica",
+  "wildlifeDesc": "Lémures, fossas, camaleones... Una fauna única moldeada por 165 millones de años de aislamiento.",
+  "wildlifeStats": "100+ especies de lémures",
+  
+  "beachTitle": "Costas Paradisíacas",
+  "beachDesc": "5000 km de costas preservadas, lagunas turquesas, arrecifes de coral y playas de arena blanca.",
+  "beachStats": "300 días de sol/año",
+  
+  "adventureTitle": "Aventuras Auténticas",
+  "adventureDesc": "Trekking, buceo, observación de fauna... Experiencias inolvidables fuera de los caminos trillados.",
+  "adventureStats": "Destino preservado",
+  
+  "madagascarQuote": "Madagascar no es África, Madagascar es Madagascar.",
+  "quoteAuthor": "Proverbio malgache",
+  
+  "discoverMadagascar": "Descubrir nuestros tours",
+  
   "aboutUs": {
     "title": "Acerca de Nosotros",
     "ourStory": {
       "title": "Nuestra Historia",
       "paragraph1": "Fundada en 2008 por un equipo de apasionados malgaches y franceses, Show Me Mada nació de un sueño simple: compartir la belleza excepcional de Madagascar con el mundo entero.",
-      "paragraph2": "Lo que comenzó como una pequeña agencia local se ha convertido hoy en uno de los actores de referencia del turismo responsable en Madagascar. ¿Nuestro secreto? Un conocimiento íntimo del terreno, relaciones privilegiadas with las comunidades locales y una pasión contagiosa por nuestra isla.",
+      "paragraph2": "Lo que comenzó como una pequeña agencia local se ha convertido hoy en uno de los actores de referencia del turismo responsable en Madagascar. ¿Nuestro secreto? Un conocimiento íntimo del terreno, relaciones privilegiadas con las comunidades locales y una pasión contagiosa por nuestra isla.",
       "paragraph3": "Cada viaje que organizamos es el resultado de nuestra experiencia acumulada a lo largo de los años y de nuestro compromiso inquebrantable hacia un turismo que respeta el medio ambiente y las poblaciones locales."
     },
     "values": {

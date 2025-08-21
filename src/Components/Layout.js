@@ -3,6 +3,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import ResponsiveAppBar from './AppBar';
 import NavBarBlack from './NavBarBlack';
+import Footer from './Footer';
 const Layout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -23,7 +24,7 @@ const Layout = ({ children }) => {
       </Box>
       
       {/* Optionnel : Footer */}
-      {/* <Footer /> */}
+      <Footer /> 
     </Box>
   );
 };

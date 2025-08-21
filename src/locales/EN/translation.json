@@ -11,15 +11,48 @@
     "destinations": "Destinations",
     "services": "Services"
   },
-  "inquiry": "To more Inquiry",
+  "inquiry": "For more information",
   "language": "Language",
   "email": "Email",
   "hurryUp": "Hurry Up For Your",
-  "newTour": "New Tour !",
-  "heroTitle": "Let's discover Madagascar with us !",
+  "newTour": "New Tour!",
+  "heroTitle": "Let's discover Madagascar together!",
   "heroSubtitle": "Your authentic adventure awaits you on the red island.",
   "bookTrip": "Book A Trip",
   "rating": "Rating",
+  
+  "whyMadagascarTitle": "Why Madagascar?",
+  "whyMadagascarSubtitle": "Discover the continent island of a thousand wonders, a unique biodiversity sanctuary in the world",
+  
+  "biodiversityTitle": "Unique Biodiversity",
+  "biodiversityDesc": "Madagascar hosts 5% of the world's biodiversity on less than 0.4% of emerged lands. A true laboratory of evolution.",
+  "biodiversityStats": "90% endemic species",
+  
+  "cultureTitle": "Cultural Richness",
+  "cultureDesc": "18 Malagasy ethnic groups with millenary traditions, unique craftsmanship and legendary hospitality await you.",
+  "cultureStats": "18 distinct ethnic groups",
+  
+  "landscapeTitle": "Exceptional Landscapes",
+  "landscapeDesc": "From limestone Tsingy to baobab avenues, through high plateaus and primary forests.",
+  "landscapeStats": "6 UNESCO national parks",
+  
+  "wildlifeTitle": "Endemic Wildlife",
+  "wildlifeDesc": "Lemurs, fossas, chameleons... Unique fauna shaped by 165 million years of isolation.",
+  "wildlifeStats": "100+ lemur species",
+  
+  "beachTitle": "Paradisiacal Coasts",
+  "beachDesc": "5000 km of preserved coastlines, turquoise lagoons, coral reefs and white sand beaches.",
+  "beachStats": "300 sunny days/year",
+  
+  "adventureTitle": "Authentic Adventures",
+  "adventureDesc": "Trekking, diving, wildlife watching... Unforgettable experiences off the beaten path.",
+  "adventureStats": "Preserved destination",
+  
+  "madagascarQuote": "Madagascar is not Africa, Madagascar is Madagascar.",
+  "quoteAuthor": "Malagasy proverb",
+  
+  "discoverMadagascar": "Discover our tours",
+  
   "aboutUs": {
     "title": "About Us",
     "ourStory": {

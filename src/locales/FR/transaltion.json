@@ -20,6 +20,39 @@
   "heroSubtitle": "Votre aventure authentique vous attend sur l'île rouge.",
   "bookTrip": "Réserver un Voyage",
   "rating": "Évaluation",
+  
+  "whyMadagascarTitle": "Pourquoi Madagascar ?",
+  "whyMadagascarSubtitle": "Découvrez l'île continent aux mille merveilles, un sanctuaire de biodiversité unique au monde",
+  
+  "biodiversityTitle": "Biodiversité Unique",
+  "biodiversityDesc": "Madagascar abrite 5% de la biodiversité mondiale sur moins de 0,4% des terres émergées. Un véritable laboratoire de l'évolution.",
+  "biodiversityStats": "90% d'espèces endémiques",
+  
+  "cultureTitle": "Richesse Culturelle",
+  "cultureDesc": "18 ethnies malgaches aux traditions millénaires, artisanat unique et hospitalité légendaire vous attendent.",
+  "cultureStats": "18 ethnies distinctes",
+  
+  "landscapeTitle": "Paysages Exceptionnels",
+  "landscapeDesc": "Des Tsingy calcaires aux allées de baobabs, en passant par les hauts plateaux et les forêts primaires.",
+  "landscapeStats": "6 parcs nationaux UNESCO",
+  
+  "wildlifeTitle": "Faune Endémique",
+  "wildlifeDesc": "Lémuriens, fossas, caméléons... Une faune unique façonnée par 165 millions d'années d'isolement.",
+  "wildlifeStats": "100+ espèces de lémuriens",
+  
+  "beachTitle": "Côtes Paradisiaques",
+  "beachDesc": "5000 km de côtes préservées, lagons turquoise, récifs coralliens et plages de sable blanc.",
+  "beachStats": "300 jours de soleil/an",
+  
+  "adventureTitle": "Aventures Authentiques",
+  "adventureDesc": "Trekking, plongée, observation de la faune... Des expériences inoubliables hors des sentiers battus.",
+  "adventureStats": "Destination préservée",
+  
+  "madagascarQuote": "Madagascar n'est pas l'Afrique, Madagascar, c'est Madagascar.",
+  "quoteAuthor": "Proverbe malgache",
+  
+  "discoverMadagascar": "Découvrir nos circuits",
+  
   "aboutUs": {
     "title": "À Propos de Nous",
     "ourStory": {

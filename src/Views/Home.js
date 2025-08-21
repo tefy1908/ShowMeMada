@@ -4,10 +4,12 @@ import backGroundImageHome from "..//Assets/Images/backgroundHome.jpeg";
 import LocMadagascarIcon from "../Components/IconComponent/LocMadagascarIcon";
 import TripAdvisorIcon from "../Components/IconComponent/TripAdvisorIcon";
 import { useTranslation } from "react-i18next";
+import WhyMadagascarSection from "../Components/WhyMadagascar";
+import ReviewShowMeMada from "../Components/ReviewShowMeMada";
 const Home = () => {
   const {t} = useTranslation();
   return (
-    <Box display="flex" flexGrow={1} flexDirection={"column"} height={"100vh"}>
+    <Box display="flex" flexGrow={1} flexDirection={"column"}>
       <Box
         display={"flex"}
         flexGrow={1}
@@ -18,7 +20,7 @@ const Home = () => {
         color={"white"}
         sx={{
           width: "100%",
-          height: "100%",
+          height: "100vh",
           backgroundImage: `url(${backGroundImageHome})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -53,7 +55,11 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
+      <WhyMadagascarSection/>
+      <ReviewShowMeMada/>
+
     </Box>
+    
   );
 };
 
