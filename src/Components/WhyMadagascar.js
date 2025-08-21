@@ -1,6 +1,11 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
+import ForestIcon from '@mui/icons-material/Forest';
+import SailingIcon from '@mui/icons-material/Sailing';
+import PoolIcon from '@mui/icons-material/Pool';
+import PetsIcon from '@mui/icons-material/Pets';
+import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
+import KitesurfingOutlinedIcon from '@mui/icons-material/KitesurfingOutlined';
 // Composants d'icônes personnalisés (à créer ou adapter selon vos icônes existantes)
 const BiodiversityIcon = () => (
   <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🌿</Box>
@@ -31,37 +36,37 @@ const WhyMadagascarSection = () => {
 
   const highlights = [
     {
-      icon: <BiodiversityIcon />,
+      icon: <ForestIcon fontSize="large"  sx={{ color: '#63AB45' }}/>,
       title: t('biodiversityTitle'),
       description: t('biodiversityDesc'),
       stats: t('biodiversityStats')
     },
     {
-      icon: <CultureIcon />,
+      icon: <AssuredWorkloadOutlinedIcon fontSize="large" sx={{color :"orange"}} />,
       title: t('cultureTitle'),
       description: t('cultureDesc'),
       stats: t('cultureStats')
     },
     {
-      icon: <LandscapeIcon />,
+      icon: <SailingIcon fontSize="large" sx={{color :"#21CBF3"}}  />,
       title: t('landscapeTitle'),
       description: t('landscapeDesc'),
       stats: t('landscapeStats')
     },
     {
-      icon: <WildlifeIcon />,
+      icon: <PetsIcon fontSize="large" sx={{color :"#8B5A2B"}}  />,
       title: t('wildlifeTitle'),
       description: t('wildlifeDesc'),
       stats: t('wildlifeStats')
     },
     {
-      icon: <BeachIcon />,
+      icon: <PoolIcon fontSize="large"  sx={{color :"#21CBF3"}} />,
       title: t('beachTitle'),
       description: t('beachDesc'),
       stats: t('beachStats')
     },
     {
-      icon: <AdventureIcon />,
+      icon: <KitesurfingOutlinedIcon fontSize="large"  sx={{color :"#21CBF3"}}/>,
       title: t('adventureTitle'),
       description: t('adventureDesc'),
       stats: t('adventureStats')
