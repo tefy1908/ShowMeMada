@@ -1,7 +1,12 @@
+//icones
+import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
+import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
+import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+
 const menutabs = [
-  { name: "Tour Package", icon: "🌍" },
-  { name: "Hotel", icon: "🏨" },
-  { name: "Transports", icon: "🚌" }
+  { name: "Tour Package", icon: <PublicOutlinedIcon/> },
+  { name: "Hotel", icon:<BedOutlinedIcon/> },
+  { name: "Transports", icon: <DirectionsCarFilledOutlinedIcon/> }
 ];
 
 export default function NavBar({ tab, setTab }) {

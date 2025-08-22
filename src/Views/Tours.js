@@ -5,9 +5,17 @@ import TextTitle from "../Components/TextTitle";
 import { useTranslation } from 'react-i18next';
 import CardTourPackage from "../Components/CardTourPackage";
 import CardTransport from "../Components/CardTransport";
+
+//photos
 import Baobab from "..//Assets/Images/Baobab.jpg"
 import NosyBe from "..//Assets/Images/nosyBe.jpg"
 import Foret from "..//Assets/Images/Foret.jpg"
+
+//icones
+import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
+import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
+import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+
 const Tours = () => {
 
 
@@ -143,7 +151,7 @@ const renderTabContent = () => {
       case 1:
         return (
           <Box textAlign="center" padding="2rem">
-            <Typography variant="h4" color="primary" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               🏨 Hotel
             </Typography>
             <Typography variant="body1" color="text.secondary">

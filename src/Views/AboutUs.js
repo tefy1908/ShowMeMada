@@ -1,12 +1,20 @@
 import React from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import { Grid, keyframes } from "@mui/material";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import CardAboutUS from "../Components/CardAboutUs";
 import TextTitle from "../Components/TextTitle";
 import ValueCard from "../Components/ValeurCard";
 import CardItemTeam from "../Components/CardItemTeam";
+//Photos
+import CoucherSoleilImage from "..//Assets/Images/CoucherSoleil.jpg";
+import Foret from "..//Assets/Images/Foret.jpg";
 
+//Icones
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import DirectionsRunOutlinedIcon from '@mui/icons-material/DirectionsRunOutlined';
+import LocalFloristOutlinedIcon from '@mui/icons-material/LocalFloristOutlined';
 // Animation pour l'image
 const floatAnimation = keyframes`
   0%, 100% {
@@ -23,25 +31,25 @@ const AboutUs = () => {
   // Données des valeurs avec traduction
   const valuesData = [
     {
-      icon: "🌱",
+      icon: <LocalFloristOutlinedIcon fontSize="large"/>,
       title: t("aboutUs.values.responsibleTourism.title"),
       description: t("aboutUs.values.responsibleTourism.description"),
       delay: 0.1,
     },
     {
-      icon: "🎯",
+      icon: <CheckCircleOutlinedIcon fontSize="large"/>,
       title: t("aboutUs.values.excellence.title"),
       description: t("aboutUs.values.excellence.description"),
       delay: 0.2,
     },
     {
-      icon: "👥",
+      icon:<DirectionsRunOutlinedIcon fontSize="large"/>,
       title: t("aboutUs.values.expertise.title"),
       description: t("aboutUs.values.expertise.description"),
       delay: 0.3,
     },
     {
-      icon: "🤝",
+      icon: <HandshakeOutlinedIcon fontSize="large"/>,
       title: t("aboutUs.values.trust.title"),
       description: t("aboutUs.values.trust.description"),
       delay: 0.4,
@@ -53,28 +61,32 @@ const AboutUs = () => {
     {
       name: t("aboutUs.team.members.rakoto.name"),
       title: t("aboutUs.team.members.rakoto.title"),
-      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      image:
+        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
       experience: t("aboutUs.team.members.rakoto.experience"),
       specialty: t("aboutUs.team.members.rakoto.specialty"),
     },
     {
       name: t("aboutUs.team.members.marie.name"),
       title: t("aboutUs.team.members.marie.title"),
-      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      image:
+        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
       experience: t("aboutUs.team.members.marie.experience"),
       specialty: t("aboutUs.team.members.marie.specialty"),
     },
     {
       name: t("aboutUs.team.members.hery.name"),
       title: t("aboutUs.team.members.hery.title"),
-      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      image:
+        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
       experience: t("aboutUs.team.members.hery.experience"),
       specialty: t("aboutUs.team.members.hery.specialty"),
     },
     {
       name: t("aboutUs.team.members.lalaina.name"),
       title: t("aboutUs.team.members.lalaina.title"),
-      image: "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
+      image:
+        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
       experience: t("aboutUs.team.members.lalaina.experience"),
       specialty: t("aboutUs.team.members.lalaina.specialty"),
     },
@@ -86,7 +98,7 @@ const AboutUs = () => {
       flexGrow={1}
       flexDirection={"column"}
       padding={"40px 20px"}
-      gap={"1.5rem"}
+      gap={"3rem"}
     >
       <Box display="flex" alignItems={"center"} justifyContent={"center"}>
         <TextTitle title={t("aboutUs.title")} />
@@ -165,30 +177,26 @@ const AboutUs = () => {
           </Grid>
 
           <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-            {/* Container image avec éléments décoratifs */}
+            {/* Image principale Notre Historie */}
             <Box
+              display={"flex"}
+              flexGrow={1}
+              borderRadius={"10px"}
               sx={{
-                position: "relative",
-                height: { xs: "300px", md: "450px" },
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                width: "100%",
+                height: "100vh",
+                backgroundImage: `url(${CoucherSoleilImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
-            >
-              {/* Image principale */}
-              <Box>photo</Box>
-            </Box>
+            ></Box>
           </Grid>
         </Grid>
       </Box>
 
       {/** Section Nos valeurs */}
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        gap={5}
-        flexGrow={1}
-      >
+      <Box display={"flex"} flexDirection={"column"} gap={5} flexGrow={1}>
         {/* Titre de section */}
         <Typography
           variant="h3"
@@ -226,10 +234,10 @@ const AboutUs = () => {
         </Typography>
 
         {/**Contenu card valeur */}
-        <Grid container spacing={3}>
-          {/* Partie gauche - Les 4 composants en 2x2 */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Grid container spacing={2}>
+        <Grid container spacing={4} justifyContent="center">
+          {/* Grid centrée avec les 4 composants en 2x2 */}
+          <Grid size={{ xs: 12, md: 10, lg: 8 }}>
+            <Grid container spacing={4}>
               {valuesData.map((value, index) => (
                 <Grid key={index} size={{ xs: 12, sm: 6 }}>
                   <ValueCard
@@ -241,22 +249,6 @@ const AboutUs = () => {
                 </Grid>
               ))}
             </Grid>
-          </Grid>
-
-          {/* Partie droite - Photo */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box
-              component="img"
-              src="/path/to/your/image.jpg"
-              alt="Description de votre image"
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: 2, // Optionnel pour arrondir les coins
-                boxShadow: 2, // Optionnel pour ajouter une ombre
-              }}
-            />
           </Grid>
         </Grid>
       </Box>
@@ -302,23 +294,6 @@ const AboutUs = () => {
         </Typography>
 
         <Grid container spacing={4} justifyContent="center">
-          {/* Partie gauche - Photo */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box
-              component="img"
-              src="/path/to/your/team-image.jpg"
-              alt="Photo de l'équipe"
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: 2, // Optionnel pour arrondir les coins
-                boxShadow: 3, // Optionnel pour ajouter une ombre
-                minHeight: { xs: 300, md: 500 }, // Hauteur minimale responsive
-              }}
-            />
-          </Grid>
-
           {/* Partie droite - Cartes d'équipe en 2x2 */}
           <Grid size={{ xs: 12, md: 6 }}>
             <Grid container spacing={3} justifyContent="center">

@@ -6,6 +6,8 @@ import TripAdvisorIcon from "../Components/IconComponent/TripAdvisorIcon";
 import { useTranslation } from "react-i18next";
 import WhyMadagascarSection from "../Components/WhyMadagascar";
 import ReviewShowMeMada from "../Components/ReviewShowMeMada";
+import ZebuImage from "..//Assets/Images/zebu.jpg"
+import BaobabMorondava from "..//Assets/Images/baobabMorondava.jpg"
 const Home = () => {
   const {t} = useTranslation();
   return (
@@ -21,7 +23,7 @@ const Home = () => {
         sx={{
           width: "100%",
           height: "100vh",
-          backgroundImage: `url(${backGroundImageHome})`,
+          backgroundImage: `url(${BaobabMorondava})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

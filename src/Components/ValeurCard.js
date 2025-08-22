@@ -13,6 +13,7 @@ const ValueCard = ({
       elevation={3}
       sx={{
         padding: { xs: '1.5rem', md: '2rem' },
+        maxWidth : "600px",
         borderRadius: '15px',
         textAlign: 'center',
         height: '100%',

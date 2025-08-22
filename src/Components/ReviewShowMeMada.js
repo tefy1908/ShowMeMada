@@ -30,7 +30,7 @@ const reviews = [
           display="flex"
           sx={{
             backgroundImage:
-              "linear-gradient(to bottom, #3C3E3E 50%, white 50%)",
+              "linear-gradient(to bottom, black 50%, white 50%)",
           }}
           alignItems={"center"}
           justifyContent={"center"}
