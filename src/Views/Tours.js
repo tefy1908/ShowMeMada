@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import CardTourPackage from "../Components/CardTourPackage";
 import CardTransport from "../Components/CardTransport";
 import TourDetailsModal from "../Components/ToursDetailModal";
-
+import HotelSearch from "../Components/HotelSearch";
 //photos
 import Baobab from "../Assets/Images/Baobab.jpg"
 import NosyBe from "../Assets/Images/nosyBe.jpg"
@@ -255,13 +255,8 @@ const Tours = () => {
       case 1: // Hotel
         return (
           <Box textAlign="center" padding="2rem">
-            <Typography variant="h4" gutterBottom>
-              🏨 Hôtels
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Profitez de nos hôtels de luxe avec des services premium et un confort incomparable.
-            </Typography>
             {/* Vous pouvez ajouter ici le contenu des hôtels */}
+            <HotelSearch/>
           </Box>
         );
       case 2: // Transport
