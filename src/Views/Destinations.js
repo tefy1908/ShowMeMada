@@ -24,6 +24,20 @@ import MuseumIcon from '@mui/icons-material/Museum';
 import TextTitle from '../Components/TextTitle';
 import { useTranslation } from 'react-i18next';
 
+
+//icones
+import ForestOutlinedIcon from '@mui/icons-material/ForestOutlined';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
+import SailingOutlinedIcon from '@mui/icons-material/SailingOutlined';
+import BeachAccessOutlinedIcon from '@mui/icons-material/BeachAccessOutlined';
+import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
+
+//Photos
+import Antananarivo from '..//Assets/Images/Antananarivo.jpg'
+import Ampefy from '..//Assets/Images/Ampefy.jpg'
+import Antsirabe from '..//Assets/Images/Antsirabe.jpg'
+import Fianarantsoa from '..//Assets/Images/Fianaranstoa.jpg'
+
 const Destinations = () => {
   const { t } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState(0);
@@ -45,7 +59,7 @@ const Destinations = () => {
         id: 1,
         name: "Antananarivo",
         subtitle: "La Capitale",
-        image: "/images/destinations/antananarivo.jpg",
+        image: Antananarivo,
         description: "Capitale historique perchée sur ses collines. Découvrez le Palais de la Reine, les marchés colorés et l'architecture coloniale unique.",
         activities: ["Palais de la Reine", "Marché d'Analakely", "Lac Anosy", "Musées historiques"],
         category: "Culturel",
@@ -56,7 +70,7 @@ const Destinations = () => {
         id: 2,
         name: "Antsirabe",
         subtitle: "La Ville d'Eau",
-        image: "/images/destinations/antsirabe.jpg",
+        image:Antsirabe,
         description: "Station thermale coloniale réputée pour ses eaux minérales et son climat tempéré. Ville des pousse-pousse et de l'artisanat.",
         activities: ["Sources thermales", "Lac Tritriva", "Atelier miniature", "Pousse-pousse tour"],
         category: "Thermal",
@@ -67,7 +81,7 @@ const Destinations = () => {
         id: 3,
         name: "Ampefy",
         subtitle: "Le Lac Volcanique",
-        image: "/images/destinations/ampefy.jpg",
+        image: Ampefy,
         description: "Magnifique lac volcanique entouré de collines verdoyantes. Destination parfaite pour la détente et les activités nautiques.",
         activities: ["Lac Itasy", "Geysers", "Îlot de la Vierge", "Sports nautiques"],
         category: "Nature",
@@ -78,7 +92,7 @@ const Destinations = () => {
         id: 4,
         name: "Fianarantsoa",
         subtitle: "Ville de l'Education",
-        image: "/images/destinations/fianarantsoa.jpg",
+        image: Fianarantsoa,
         description: "Capitale intellectuelle de Madagascar avec sa vieille ville historique et ses vignobles environnants.",
         activities: ["Vieille ville", "Vignobles", "Train FCE", "Cathédrale"],
         category: "Culturel",
@@ -262,11 +276,11 @@ const Destinations = () => {
   };
 
   const regions = [
-    { name: "Hauts Plateaux", key: "hauts_plateaux", icon: "🏔️" },
-    { name: "Côte Ouest", key: "ouest", icon: "🌅" },
-    { name: "Côte Est", key: "est", icon: "🌊" },
-    { name: "Nord", key: "nord", icon: "🏝️" },
-    { name: "Sud", key: "sud", icon: "🌵" }
+    { name: "Hauts Plateaux", key: "hauts_plateaux", icon: <Diversity3OutlinedIcon fontSize='large'/> },
+    { name: "Côte Ouest", key: "ouest", icon: <WbSunnyOutlinedIcon fontSize='large'/> },
+    { name: "Côte Est", key: "est", icon: <BeachAccessOutlinedIcon fontSize='large'/> },
+    { name: "Nord", key: "nord", icon: <SailingOutlinedIcon fontSize='large'/> },
+    { name: "Sud", key: "sud", icon: <ForestOutlinedIcon fontSize='large'/> }
   ];
 
   const getActivityIcon = (activity) => {
@@ -344,7 +358,7 @@ const Destinations = () => {
       </Paper>
 
       {/* Grille des destinations */}
-      <Grid container spacing={1} flexGrow={1} bgcolor={"black"} display={'flex'} justifyContent={'space-between'}>
+      <Grid container spacing={1} flexGrow={1}  display={'flex'} justifyContent={'space-evenly'}>
         {getCurrentDestinations().map((destination, index) => (
           <Grid item xs={12} sm={6} md={4} key={destination.id} maxWidth={'600px'} >
             <Card
@@ -478,39 +492,55 @@ const Destinations = () => {
       </Grid>
 
       {/* Section statistiques */}
-      <Paper
-        elevation={3}
-        sx={{
-          mt: 6,
-          p: 4,
-          borderRadius: '20px',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          textAlign: 'center'
-        }}
-      >
-        <Typography variant="h4" fontWeight={700} gutterBottom>
-          Madagascar en chiffres
-        </Typography>
-        <Grid container spacing={4} sx={{ mt: 2 }}>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h3" fontWeight={700}>19</Typography>
-            <Typography variant="body1">Destinations</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h3" fontWeight={700}>5</Typography>
-            <Typography variant="body1">Régions</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h3" fontWeight={700}>50+</Typography>
-            <Typography variant="body1">Parcs Nationaux</Typography>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Typography variant="h3" fontWeight={700}>90%</Typography>
-            <Typography variant="body1">Espèces Endémiques</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
+     {/* Section statistiques */}
+<Paper
+  elevation={3}
+  sx={{
+    mt: 6,
+    p: 4,
+    borderRadius: '20px',
+    backgroundColor: 'white',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)',
+    color: 'black',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}
+>
+  <Typography variant="h4" fontWeight={700} gutterBottom>
+    Madagascar en chiffres
+  </Typography>
+  <Grid
+    container
+    spacing={4}
+    sx={{
+      mt: 2,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+    }}
+  >
+    <Grid item xs={12} sm={3}>
+      <Typography variant="h3" fontWeight={700}>19</Typography>
+      <Typography variant="body1">Destinations</Typography>
+    </Grid>
+    <Grid item xs={12} sm={3}>
+      <Typography variant="h3" fontWeight={700}>5</Typography>
+      <Typography variant="body1">Régions</Typography>
+    </Grid>
+    <Grid item xs={12} sm={3}>
+      <Typography variant="h3" fontWeight={700}>50+</Typography>
+      <Typography variant="body1">Parcs Nationaux</Typography>
+    </Grid>
+    <Grid item xs={12} sm={3}>
+      <Typography variant="h3" fontWeight={700}>90%</Typography>
+      <Typography variant="body1">Espèces Endémiques</Typography>
+    </Grid>
+  </Grid>
+</Paper>
+
     </Container>
   );
 };
