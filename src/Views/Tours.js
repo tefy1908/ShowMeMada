@@ -303,7 +303,7 @@ const Tours = () => {
       gap={"1.5rem"}
     >
       <Box display="flex" alignItems={"center"} justifyContent={"center"}>
-        <TextTitle title={t("aboutUs.title")} />
+        <TextTitle title={t("Tours.title")} />
       </Box>
       <Typography 
         alignContent={'center'} 

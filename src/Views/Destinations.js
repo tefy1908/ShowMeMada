@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import {
   Box,
   Typography,
@@ -39,6 +39,22 @@ import Antsirabe from '..//Assets/Images/Antsirabe.jpg'
 import Fianarantsoa from '..//Assets/Images/Fianaranstoa.jpg'
 
 const Destinations = () => {
+  //Responsive 
+ const [isMobile, setIsMobile] = useState(false);
+  const [isVerySmall, setIsVerySmall] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsVerySmall(window.innerWidth <= 480);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   const { t } = useTranslation();
   const [selectedRegion, setSelectedRegion] = useState(0);
 
@@ -328,7 +344,7 @@ const Destinations = () => {
       </Box>
 
       {/* Tabs des régions */}
-      <Paper elevation={3} sx={{ mb: 4, borderRadius: '16px', overflow: 'hidden' }}>
+      <Paper elevation={3} sx={{ mb: 4, borderRadius: '16px', overflow: 'hidden',}}>
         <Tabs
           value={selectedRegion}
           onChange={handleTabChange}

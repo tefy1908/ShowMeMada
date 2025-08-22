@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useEffect } from 'react';
 //icones
 import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
@@ -10,9 +12,21 @@ const menutabs = [
 ];
 
 export default function NavBar({ tab, setTab }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
   return (
     <div style={{
-      display: "flex", justifyContent: "center", gap: 18,
+      display: "flex", justifyContent: "center", gap : isMobile ? 0 : 18, flexDirection : isMobile ? 'column' : 'row',
       marginTop: 12, marginBottom: 6
     }}>
       {menutabs.map((item, idx) => (
@@ -29,7 +43,8 @@ export default function NavBar({ tab, setTab }) {
             borderRadius: 24,
             cursor: "pointer",
             display: "flex", alignItems: "center", gap: 7,
-            transition: "all .2s"
+            transition: "all .2s", 
+            justifyContent : isMobile ? 'center' : '',
           }}
         >
           <span>{item.icon}</span> {item.name}
