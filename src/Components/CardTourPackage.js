@@ -11,6 +11,7 @@ import { Box, keyframes, Chip, Stack } from "@mui/material";
 import Tilt from "react-parallax-tilt";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import RouteIcon from '@mui/icons-material/Route';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function CardTourPackage({
   DestinationImage,
@@ -19,6 +20,7 @@ export default function CardTourPackage({
   Description,
   Itinerary, // Array des étapes: ['Antananarivo', 'Antsirabe', 'Fianarantsoa', 'Tulear']
   OnQuoteRequest,
+  OnViewDetails, // Nouvelle prop pour voir les détails
   currentColor,
 }) {
   const fadeInUp = keyframes`
@@ -238,11 +240,39 @@ export default function CardTourPackage({
             <CardActions 
               sx={{
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: "16px 24px 24px 24px",
+                gap: 2,
               }}
             >
+              {/* Bouton Voir détails */}
+              <Button
+                size="medium"
+                variant="outlined"
+                onClick={OnViewDetails}
+                startIcon={<VisibilityIcon />}
+                sx={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  borderRadius: "12px",
+                  padding: "10px 20px",
+                  textTransform: "none",
+                  borderColor: currentColor,
+                  color: currentColor,
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  flex: 1,
+                  '&:hover': {
+                    backgroundColor: `${currentColor}10`,
+                    borderColor: currentColor,
+                    transform: "translateY(-1px)",
+                  },
+                }}
+              >
+                Voir détails
+              </Button>
+
+              {/* Bouton Demander un devis */}
               <Button
                 size="medium"
                 variant="contained"
@@ -251,11 +281,12 @@ export default function CardTourPackage({
                   fontSize: "13px",
                   fontWeight: 600,
                   borderRadius: "12px",
-                  padding: "12px 28px",
+                  padding: "12px 20px",
                   textTransform: "none",
                   background: currentColor,
                   boxShadow: `0 8px 16px ${currentColor}30`,
                   transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  flex: 1,
                   '&:hover': {
                     background: `linear-gradient(45deg, #bc4ed8, ${currentColor})`,
                     boxShadow: `0 12px 24px ${currentColor}40`,
