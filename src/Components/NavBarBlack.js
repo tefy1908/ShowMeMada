@@ -14,6 +14,7 @@ const NavBarBlack =()=>{
         padding={"20px 40px"}
         justifyContent={"space-between"}
         bgcolor={"black"}
+        position={'static'}
       >
         <Box
           sx={{ display: { xs: "none", md: "flex" } }}
@@ -25,7 +26,7 @@ const NavBarBlack =()=>{
           <EmailIcon />
           <Box display={"flex"} flexDirection={"column"} color={"white"}>
             <Box>{t('email')}</Box>
-            <Box>tefymaherison19@gmail.com</Box>
+            <Box>info@showmemada.com</Box>
           </Box>
         </Box>
         <Box

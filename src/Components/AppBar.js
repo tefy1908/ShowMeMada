@@ -4,17 +4,17 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Select, FormControl } from "@mui/material";
 import PhoneIcon from "./IconComponent/phoneIcon";
 import { useTranslation } from "react-i18next";
-import Logo from "../Assets/Images/logo.jpeg";
+import ShowMeMadaLogo from '..//Assets/Images/ShowMeMadaLogo.jpg'
+
+
 
 function ResponsiveAppBar() {
   const { t, i18n } = useTranslation();
@@ -66,11 +66,11 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#FFFFFF" }}>
-      <Container maxWidth="xl">
+    <AppBar position="sticky" sx={{ backgroundColor: "#FFFFFF" }}>
+      <Container maxWidth="xl" sx={{ marginLeft : 0}} >
         <Toolbar disableGutters>
           {/* Logo Desktop */}
-          <Box onClick={handleLogoClick}> <img src={Logo} width={"50px"} height={"50px"} alt="LOGO" /></Box>
+          <Box onClick={handleLogoClick}> <img src={ShowMeMadaLogo} width={"200px"} height={"120px"} alt="LOGO" /></Box>
          
 
           {/* Menu Mobile */}
@@ -205,7 +205,7 @@ function ResponsiveAppBar() {
             <PhoneIcon />
             <Box display={"flex"} flexDirection={"column"}>
               <Box color={"black"}>{t("inquiry")}</Box>
-              <Box color="green">+33610079636</Box>
+              <Box color="green">+261343025720</Box>
             </Box>
           </Box>
         </Toolbar>

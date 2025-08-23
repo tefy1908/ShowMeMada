@@ -543,7 +543,7 @@ const Destinations = () => {
       <Typography variant="body1">Destinations</Typography>
     </Grid>
     <Grid item xs={12} sm={3}>
-      <Typography variant="h3" fontWeight={700}>5</Typography>
+      <Typography variant="h3" fontWeight={700}>23</Typography>
       <Typography variant="body1">Régions</Typography>
     </Grid>
     <Grid item xs={12} sm={3}>
