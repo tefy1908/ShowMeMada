@@ -70,11 +70,59 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl" sx={{ marginLeft : 0}} >
         <Toolbar disableGutters>
           {/* Logo Desktop */}
-          <Box onClick={handleLogoClick}> <img src={ShowMeMadaLogo} width={"200px"} height={"120px"} alt="LOGO" /></Box>
+          <Box 
+            onClick={handleLogoClick}
+            sx={{ display: { xs: "none", md: "block" } }}
+          > 
+            <img src={ShowMeMadaLogo} width={"200px"} height={"120px"} alt="LOGO" />
+          </Box>
          
+          {/* Logo Mobile - À gauche */}
+          <Box 
+            onClick={handleLogoClick}
+            sx={{ display: { xs: "block", md: "none" } }}
+          > 
+            <img src={ShowMeMadaLogo} width={"120px"} height={"72px"} alt="LOGO" />
+          </Box>
 
-          {/* Menu Mobile */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          {/* Espace flexible pour pousser les éléments à droite en mobile */}
+          <Box sx={{ flexGrow: 1, display: { xs: "block", md: "none" } }} />
+
+          {/* Sélecteur de langue Mobile - À droite */}
+          <Box sx={{ mr: 1, display: { xs: "block", md: "none" } }}>
+            <FormControl size="small">
+              <Select
+                value={i18n.language}
+                onChange={handleLanguageChange}
+                sx={{
+                  color: "black",
+                  ".MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                }}
+                displayEmpty
+                renderValue={(selected) => {
+                  const lang = languages.find((l) => l.code === selected);
+                  return lang ? `${lang.flag} ${lang.name}` : "";
+                }}
+              >
+                {languages.map((lang) => (
+                  <MenuItem key={lang.code} value={lang.code}>
+                    {lang.flag} {lang.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+
+          {/* Menu Mobile - À droite */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="menu de navigation"
@@ -121,10 +169,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Logo Mobile */}
-         
-
-          {/* Navigation Desktop */}
+          {/* Navigation Desktop - Reste inchangé */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -160,8 +205,8 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          {/* Sélecteur de langue */}
-          <Box sx={{ mr: 2 }}>
+          {/* Sélecteur de langue Desktop - Reste inchangé */}
+          <Box sx={{ mr: 2, display: { xs: "none", md: "block" } }}>
             <FormControl size="small">
               <Select
                 value={i18n.language}
@@ -193,9 +238,9 @@ function ResponsiveAppBar() {
             </FormControl>
           </Box>
 
-          {/* Contact Info */}
+          {/* Contact Info Desktop - Reste inchangé */}
           <Box
-            display={"flex"}
+            display={{ xs: "none", md: "flex" }}
             gap={"10px"}
             sx={{ flexGrow: 0 }}
             textAlign={"center"}
