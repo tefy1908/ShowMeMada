@@ -79,7 +79,7 @@ const Destinations = () => {
         description: "Capitale historique perchée sur ses collines. Découvrez le Palais de la Reine, les marchés colorés et l'architecture coloniale unique.",
         activities: ["Palais de la Reine", "Marché d'Analakely", "Lac Anosy", "Musées historiques"],
         category: "Culturel",
-        color: "#e74c3c",
+        color: "#63AB45",
         region: "Hauts Plateaux"
       },
       {
@@ -90,7 +90,7 @@ const Destinations = () => {
         description: "Station thermale coloniale réputée pour ses eaux minérales et son climat tempéré. Ville des pousse-pousse et de l'artisanat.",
         activities: ["Sources thermales", "Lac Tritriva", "Atelier miniature", "Pousse-pousse tour"],
         category: "Thermal",
-        color: "#3498db",
+        color: "#63AB45",
         region: "Hauts Plateaux"
       },
       {
@@ -101,7 +101,7 @@ const Destinations = () => {
         description: "Magnifique lac volcanique entouré de collines verdoyantes. Destination parfaite pour la détente et les activités nautiques.",
         activities: ["Lac Itasy", "Geysers", "Îlot de la Vierge", "Sports nautiques"],
         category: "Nature",
-        color: "#27ae60",
+        color: "#63AB45",
         region: "Hauts Plateaux"
       },
       {
@@ -112,7 +112,7 @@ const Destinations = () => {
         description: "Capitale intellectuelle de Madagascar avec sa vieille ville historique et ses vignobles environnants.",
         activities: ["Vieille ville", "Vignobles", "Train FCE", "Cathédrale"],
         category: "Culturel",
-        color: "#8e44ad",
+        color: "#63AB45",
         region: "Hauts Plateaux"
       }
     ],
@@ -136,7 +136,7 @@ const Destinations = () => {
         description: "Formations calcaires spectaculaires classées UNESCO. Labyrinthe de pics rocheux abritant une faune unique et exceptionnelle.",
         activities: ["Randonnées sur les Tsingy", "Via ferrata", "Grottes", "Observation d'oiseaux"],
         category: "Aventure",
-        color: "#95a5a6",
+        color: "#f39c12",
         region: "Ouest"
       },
       {
@@ -147,7 +147,7 @@ const Destinations = () => {
         description: "Village authentique servant de base pour explorer les Tsingy. Rencontres avec les communautés locales Sakalava.",
         activities: ["Village traditionnel", "Marché local", "Pirogue sur Manambolo", "Culture Sakalava"],
         category: "Culturel",
-        color: "#34495e",
+        color: "#f39c12",
         region: "Ouest"
       },
       {
@@ -158,7 +158,7 @@ const Destinations = () => {
         description: "Port cosmopolite aux influences arabes et indiennes. Plages magnifiques et baobab sacré millénaire.",
         activities: ["Plages de sable", "Baobab sacré", "Marché couvert", "Cirque Rouge"],
         category: "Plage",
-        color: "#e67e22",
+        color: "#f39c12",
         region: "Ouest"
       }
     ],
@@ -182,7 +182,7 @@ const Destinations = () => {
         description: "Île paradisiaque célèbre pour l'observation des baleines à bosse. Plages de sable blanc et histoire des pirates.",
         activities: ["Observation baleines", "Plongée", "Cimetière des pirates", "Île aux Nattes"],
         category: "Plage",
-        color: "#3498db",
+        color: "#27ae60",
         region: "Est"
       },
       {
@@ -193,7 +193,7 @@ const Destinations = () => {
         description: "Terminus du fameux train FCE. Plages sauvages et canal des Pangalanes avec ses villages de pêcheurs.",
         activities: ["Train FCE", "Canal Pangalanes", "Plages sauvages", "Villages lacustres"],
         category: "Transport",
-        color: "#16a085",
+        color: "#27ae60",
         region: "Est"
       },
       {
@@ -204,7 +204,7 @@ const Destinations = () => {
         description: "Ville paisible traversée par le canal des Pangalanes. Centre de production de vanille de madagascar et d'épices.",
         activities: ["Canal Pangalanes", "Plantations vanille", "Port traditionnel", "Villages lacustres"],
         category: "Nature",
-        color: "#8e44ad",
+        color: "#27ae60",
         region: "Est"
       }
     ],
@@ -228,7 +228,7 @@ const Destinations = () => {
         description: "Baie magnifique et porte d'entrée vers la Montagne d'Ambre. Architecture coloniale et nature préservée.",
         activities: ["Baie de Diego", "Montagne d'Ambre", "Mer d'Émeraude", "Pain de Sucre"],
         category: "Nature",
-        color: "#2ecc71",
+        color: "#e74c3c",
         region: "Nord"
       },
       {
@@ -239,7 +239,7 @@ const Destinations = () => {
         description: "Forêt humide de montagne avec cascades spectaculaires. Microclimat tropical unique au nord de Madagascar.",
         activities: ["Cascades sacrées", "Lémuriens couronnés", "Lac cratère", "Randonnées"],
         category: "Nature",
-        color: "#27ae60",
+        color: "#e74c3c",
         region: "Nord"
       }
     ],
@@ -263,7 +263,7 @@ const Destinations = () => {
         description: "Village de pêcheurs Vezo avec récif corallien exceptionnel. Forêt d'épineux et baobabs du sud de madagascar.",
         activities: ["Plongée récif", "Forêt baobabs", "Village Vezo", "Pêche traditionnelle"],
         category: "Plage",
-        color: "#e67e22",
+        color: "#f39c12",
         region: "Sud"
       },
       {
@@ -274,7 +274,7 @@ const Destinations = () => {
         description: "Ville historique du sud-est avec plages magnifiques. Réserve de Berenty et observation des lémuriens catta.",
         activities: ["Plages tropicales", "Réserve Berenty", "Pic Saint-Louis", "Baie de Lokaro"],
         category: "Nature",
-        color: "#9b59b6",
+        color: "#f39c12",
         region: "Sud"
       },
       {
@@ -285,7 +285,7 @@ const Destinations = () => {
         description: "Massif de grès sculptural avec canyons, oasis et piscines naturelles. Paysages spectaculaires du Far West malgache.",
         activities: ["Canyons", "Piscines naturelles", "Couchers de soleil", "Randonnées"],
         category: "Aventure",
-        color: "#d35400",
+        color: "#f39c12",
         region: "Sud"
       }
     ]
