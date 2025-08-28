@@ -1,10 +1,9 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
-import CardList from "../Components/CardList";
-
+import { Box } from "@mui/material";
+import Carousel from "../Components/Tourismcarroussel";
 const Services =()=>{
     return(
-        <Box><CardList/></Box>
+         <Box><Carousel/></Box>
     )
 }
 

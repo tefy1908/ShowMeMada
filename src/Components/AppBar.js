@@ -28,7 +28,7 @@ function ResponsiveAppBar() {
     { key: "navigation.about", route: "/about", suffix: " +" },
     { key: "navigation.tours", route: "/tours", suffix: " +" },
     { key: "navigation.destinations", route: "/destinations", suffix: " +" },
-    { key: "navigation.services", route: "/services", suffix: " +" },
+    { key: "navigation.gallery", route: "/galerie", suffix: " +" },
     { key: "navigation.contact", route: "/contact", suffix: " +" },
   ];
 

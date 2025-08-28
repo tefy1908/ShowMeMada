@@ -694,23 +694,23 @@ const HotelSearch = () => {
               marginTop: "30px",
             }}
           >
-           <Button
-  onClick={handleBack}
-  disabled={activeStep === 0}
-  sx={{
-    px: { xs: '12px', sm: '20px' }, // padding horizontal responsive
-    py: { xs: '6px', sm: '10px' },  // padding vertical responsive
-    border: '1px solid #ddd',
-    backgroundColor: '#fff',
-    color: activeStep === 0 ? '#ccc' : '#000',
-    borderRadius: '4px',
-    fontSize: { xs: '10px', sm: '16px' }, // font-size responsive
-    cursor: activeStep === 0 ? 'not-allowed' : 'pointer',
-    '&:hover': {
-      backgroundColor: activeStep === 0 ? '#fff' : '#f5f5f5',
-    }
-  }}
->
+            <Button
+              onClick={handleBack}
+              disabled={activeStep === 0}
+              sx={{
+                px: { xs: "12px", sm: "20px" }, // padding horizontal responsive
+                py: { xs: "6px", sm: "10px" }, // padding vertical responsive
+                border: "1px solid #ddd",
+                backgroundColor: "#fff",
+                color: activeStep === 0 ? "#ccc" : "#000",
+                borderRadius: "4px",
+                fontSize: { xs: "10px", sm: "16px" }, // font-size responsive
+                cursor: activeStep === 0 ? "not-allowed" : "pointer",
+                "&:hover": {
+                  backgroundColor: activeStep === 0 ? "#fff" : "#f5f5f5",
+                },
+              }}
+            >
               Précédent
             </Button>
 
