@@ -13,64 +13,14 @@ import {
   ChevronRight
 } from '@mui/icons-material';
 
-const MadagascarCarousel = () => {
+const MadagascarCarousel = ({ images = [] }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scrollRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
-  // Images de démonstration pour Madagascar
-  const images = [
-    {
-      id: 1,
-      src: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=400&h=250&fit=crop',
-      title: 'Baobabs au coucher du soleil',
-      category: 'Paysages'
-    },
-    {
-      id: 2,
-      src: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&h=250&fit=crop',
-      title: 'Lémurien de Madagascar',
-      category: 'Faune'
-    },
-    {
-      id: 3,
-      src: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=250&fit=crop',
-      title: 'Plage paradisiaque',
-      category: 'Plages'
-    },
-    {
-      id: 4,
-      src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=250&fit=crop',
-      title: 'Forêt tropicale',
-      category: 'Flore'
-    },
-    {
-      id: 5,
-      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop',
-      title: 'Côte sauvage',
-      category: 'Paysages'
-    },
-    {
-      id: 6,
-      src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop',
-      title: 'Végétation luxuriante',
-      category: 'Flore'
-    },
-    {
-      id: 7,
-      src: 'https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&h=250&fit=crop',
-      title: 'Plage de sable blanc',
-      category: 'Plages'
-    },
-    {
-      id: 8,
-      src: 'https://images.unsplash.com/photo-1474524955719-b9f87c50ce47?w=400&h=250&fit=crop',
-      title: 'Montagnes majestueuses',
-      category: 'Paysages'
-    }
-  ];
+ 
 
   const scroll = (direction) => {
     const container = scrollRef.current;
@@ -93,19 +43,7 @@ const MadagascarCarousel = () => {
 
   return (
     <Box sx={{ position: 'relative', width: '100%', py: 2 }}>
-      {/* Titre de section */}
-      <Typography
-        variant="h5"
-        sx={{
-          mb: 2,
-          ml: 2,
-          fontWeight: 'bold',
-          color: '#333',
-          fontSize: { xs: '1.2rem', md: '1.5rem' }
-        }}
-      >
-        Découvrez Madagascar
-      </Typography>
+      
 
       {/* Container principal */}
       <Box sx={{ position: 'relative', '&:hover .nav-button': { opacity: 1 } }}>
@@ -187,8 +125,8 @@ const MadagascarCarousel = () => {
             <Box
               key={image.id}
               sx={{
-                minWidth: { xs: '260px', md: '300px' },
-                height: { xs: '160px', md: '180px' },
+                minWidth: { xs: '260px', md: '400px' },
+                height: { xs: '160px', md: '400px' },
                 position: 'relative',
                 cursor: 'pointer',
                 transition: 'transform 0.3s ease',
