@@ -125,8 +125,8 @@ const MadagascarCarousel = ({ images = [] }) => {
             <Box
               key={image.id}
               sx={{
-                minWidth: { xs: '260px', md: '400px' },
-                height: { xs: '160px', md: '400px' },
+                minWidth: { xs: '300px', md: '400px' },
+                height: { xs: '300px', md: '400px' },
                 position: 'relative',
                 cursor: 'pointer',
                 transition: 'transform 0.3s ease',
