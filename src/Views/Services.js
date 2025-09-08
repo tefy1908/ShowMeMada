@@ -4,6 +4,7 @@ import Carousel from "../Components/Tourismcarroussel";
 import { importAll, formatImagesForCarousel } from "..//Utils/ImportImage";
 import { useState } from "react";
 import { useEffect } from "react";
+import TextTitle from "../Components/TextTitle";
 
 const Services = () => {
   // Import toutes les images des différents dossiers
@@ -116,7 +117,7 @@ const Services = () => {
 
         // Traitement des images locales
 
-         const imageArrayLocales = imageLocalesKeys.map((item, index) => {
+        const imageArrayLocales = imageLocalesKeys.map((item, index) => {
           const imageSrcLocales = contextLocales(item);
           const filenameLocales = item
             .replace("./", "")
@@ -134,7 +135,7 @@ const Services = () => {
         console.log("Images Flore chargées:", imageArrayFlore);
         console.log("Images Paysages chargées:", imageArrayPaysages);
         console.log("Images Plages chargées:", imageArrayPlages);
-        console.log("Images locales chargées :", imageArrayLocales)
+        console.log("Images locales chargées :", imageArrayLocales);
 
         setFauneImages(imageArray);
         setFloreImages(imageArrayFlore);
@@ -155,16 +156,20 @@ const Services = () => {
   }, []);
 
   return (
-    <Box display={"flex"} flexDirection={"column"} gap={"2rem"}>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      gap={"2rem"}
+      padding={"20px "}
+    >
+      <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+        {" "}
+        <TextTitle title={"Gallery.Title"} />
+      </Box>
       {/* Container pour les faunes */}
       <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
         {/* Title section */}
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"20px"}
-        >
+        <Box display={"flex"} fontSize={"20px"} fontWeight={"700"}>
           Faune
         </Box>
         <Carousel images={fauneImages} />
@@ -173,12 +178,7 @@ const Services = () => {
       {/* Container pour les flores */}
       <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
         {/* Title section */}
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"20px"}
-        >
+        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
           Flore
         </Box>
         <Carousel images={floreImages} />
@@ -187,12 +187,7 @@ const Services = () => {
       {/* Container pour les paysages */}
       <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
         {/* Title section */}
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"20px"}
-        >
+        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
           Paysages
         </Box>
         <Carousel images={paysagesImages} />
@@ -201,26 +196,16 @@ const Services = () => {
       {/* Container pour les plages */}
       <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
         {/* Title section */}
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"20px"}
-        >
+        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
           Plages
         </Box>
         <Carousel images={plagesImages} />
       </Box>
 
-         {/* Container pour les images locales */}
+      {/* Container pour les images locales */}
       <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
         {/* Title section */}
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"20px"}
-        >
+        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
           Locales
         </Box>
         <Carousel images={localesImages} />

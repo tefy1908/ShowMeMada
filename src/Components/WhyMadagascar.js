@@ -6,33 +6,14 @@ import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import KitesurfingOutlinedIcon from '@mui/icons-material/KitesurfingOutlined';
-// Composants d'icônes personnalisés (à créer ou adapter selon vos icônes existantes)
-const BiodiversityIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🌿</Box>
-);
 
-const CultureIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🏺</Box>
-);
-
-const LandscapeIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🏔️</Box>
-);
-
-const WildlifeIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🐾</Box>
-);
-
-const BeachIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>🏖️</Box>
-);
-
-const AdventureIcon = () => (
-  <Box sx={{ fontSize: "48px", color: "#63AB45" }}>⛰️</Box>
-);
+//Navigation
+import { useNavigate } from 'react-router-dom';
 
 const WhyMadagascarSection = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
 
   const highlights = [
     {
@@ -209,6 +190,8 @@ const WhyMadagascarSection = () => {
       <Box textAlign="center" mt={6}>
         <Box
           component="button"
+          onClick={() => navigate('/tours')}
+
           sx={{
             backgroundColor: "#63AB45",
             color: "white",

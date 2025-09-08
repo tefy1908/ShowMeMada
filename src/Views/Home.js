@@ -6,9 +6,13 @@ import TripAdvisorIcon from "../Components/IconComponent/TripAdvisorIcon";
 import { useTranslation } from "react-i18next";
 import WhyMadagascarSection from "../Components/WhyMadagascar";
 import ReviewShowMeMada from "../Components/ReviewShowMeMada";
-import BaobabMorondava from "..//Assets/Images/baobabMorondava.jpg"
+import BaobabMorondava from "..//Assets/Images/baobabMorondava.jpg";
+//Navigation
+import { useNavigate } from "react-router";
+
 const Home = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Box display="flex" flexGrow={1} flexDirection={"column"}>
       <Box
@@ -29,12 +33,12 @@ const Home = () => {
         }}
       >
         <LocMadagascarIcon />
-        <Box fontWeight={900} fontSize={"65px"} textAlign={'center'}>
-          {t('heroTitle')}
+        <Box fontWeight={900} fontSize={"65px"} textAlign={"center"}>
+          {t("heroTitle")}
         </Box>
-        <Box fontSize={"18px"} textAlign={'center'}>
+        <Box fontSize={"18px"} textAlign={"center"}>
           {" "}
-          {t('heroSubtitle')}
+          {t("heroSubtitle")}
         </Box>
         <Box display={"flex"} gap={"20px"}>
           <Box
@@ -43,24 +47,27 @@ const Home = () => {
             fontSize={"16px"}
             borderRadius={"10px"}
             fontWeight={900}
-            sx={{cursor : "pointer"}}
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate("/tours")}
           >
-            {t('bookTrip')}
+            {t("bookTrip")}
           </Box>
           <Box display={"flex"} gap={"10px"}>
             <TripAdvisorIcon />
-            <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
-                <Box fontSize={"16px"}>Tripadvisor</Box>
-                <Box>{t('rating')} </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"space-between"}
+            >
+              <Box fontSize={"16px"}>Tripadvisor</Box>
+              <Box>{t("rating")} </Box>
             </Box>
           </Box>
         </Box>
       </Box>
-      <WhyMadagascarSection/>
-      <ReviewShowMeMada/>
-
+      <WhyMadagascarSection />
+      <ReviewShowMeMada />
     </Box>
-    
   );
 };
 
