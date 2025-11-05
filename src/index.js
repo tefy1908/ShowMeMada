@@ -14,6 +14,8 @@ import Tours from "./Views/Tours";
 import Destinations from "./Views/Destinations";
 import Services from "./Views/Services";
 import Layout from "./Components/Layout";
+
+
 // Composant de chargement pendant l'initialisation des traductions
 const Loading = () => <div>Loading...</div>;
 

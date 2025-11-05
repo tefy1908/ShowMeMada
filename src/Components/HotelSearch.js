@@ -180,7 +180,7 @@ const HotelSearch = () => {
                 </div>
                 <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>Luxe</h4>
                 <p style={{ margin: "0", fontSize: "14px", color: "#666" }}>
-                  Hôtels 4-5 étoiles, services premium
+                  Hôtels de luxe, services premium
                 </p>
               </div>
               <div

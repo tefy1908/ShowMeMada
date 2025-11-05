@@ -481,25 +481,7 @@ const Destinations = () => {
                     ))}
                   </Box>
 
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      backgroundColor: destination.color,
-                      borderRadius: '12px',
-                      py: 1.5,
-                      fontWeight: 600,
-                      textTransform: 'none',
-                      fontSize: '14px',
-                      '&:hover': {
-                        backgroundColor: destination.color,
-                        transform: 'translateY(-1px)',
-                        boxShadow: `0 8px 20px ${destination.color}40`,
-                      }
-                    }}
-                  >
-                    Explorer cette destination
-                  </Button>
+                 
                 </Box>
               </CardContent>
             </Card>
