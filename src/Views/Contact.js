@@ -196,7 +196,7 @@ const Contact = () => {
                           fontSize: { xs: "1.1rem", sm: "1.25rem" },
                         }}
                       >
-                        📋 Informations personnelles
+                        Informations personnelles
                       </Typography>
                     </Box>
 
@@ -323,7 +323,7 @@ const Contact = () => {
                           fontSize: { xs: "1.1rem", sm: "1.25rem" },
                         }}
                       >
-                        ✈️ Détails de votre voyage
+                        Détails de votre voyage
                       </Typography>
                     </Box>
 
@@ -483,7 +483,7 @@ const Contact = () => {
                           fontSize: { xs: "1.1rem", sm: "1.25rem" },
                         }}
                       >
-                        📅 Dates de voyage
+                        Dates de voyage
                       </Typography>
                     </Box>
 
@@ -491,9 +491,12 @@ const Contact = () => {
                       <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
-                          label="Date de départ"
+                          label = "Date de départ"
+                          placeholder="Date de départ"
                           name="dateDepart"
                           type="date"
+                          InputLabelProps={{ shrink: true }} 
+
                           value={formData.dateDepart}
                           onChange={handleChange}
                           sx={{
@@ -516,6 +519,7 @@ const Contact = () => {
                           label="Date de retour"
                           name="dateRetour"
                           type="date"
+                          InputLabelProps={{ shrink: true }} 
                           value={formData.dateRetour}
                           onChange={handleChange}
                           sx={{
@@ -559,7 +563,7 @@ const Contact = () => {
                           fontSize: { xs: "1.1rem", sm: "1.25rem" },
                         }}
                       >
-                        💭 Vos demandes spécifiques
+                        Vos demandes spécifiques
                       </Typography>
                     </Box>
 
