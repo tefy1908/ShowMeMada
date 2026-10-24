@@ -390,7 +390,16 @@
       "dates": "Dates :",
       "datesValue": "{{checkin}} au {{checkout}}",
       "contact": "Contact :"
-    }
+    },
+    "perNight": "par nuit",
+    "nights_one": "{{count}} nuit",
+    "nights_other": "{{count}} nuits",
+    "successTitle": "Merci, votre demande est envoyée !",
+    "successText": "Nous vous envoyons sous 24h une sélection d'hôtels adaptée à vos critères.",
+    "newSearch": "Nouvelle recherche",
+    "notSet": "Non renseigné",
+    "budgetHint": "Faites glisser les curseurs pour ajuster votre budget.",
+    "edit": "Modifier"
   },
   "contactPage": {
     "title": "Contact",

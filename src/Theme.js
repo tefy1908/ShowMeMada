@@ -2,6 +2,12 @@ import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   palette: {
+    // Vert de la marque : couleur par défaut des boutons, champs, curseurs...
+    primary: {
+      main: "#63AB45",
+      dark: "#4a8533",
+      contrastText: "#fff",
+    },
     background: {
       default: "#FFFFFF",
     },

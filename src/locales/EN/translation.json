@@ -390,7 +390,16 @@
       "dates": "Dates:",
       "datesValue": "{{checkin}} to {{checkout}}",
       "contact": "Contact:"
-    }
+    },
+    "perNight": "per night",
+    "nights_one": "{{count}} night",
+    "nights_other": "{{count}} nights",
+    "successTitle": "Thank you, your request has been sent!",
+    "successText": "We will send you a selection of hotels matching your criteria within 24 hours.",
+    "newSearch": "New search",
+    "notSet": "Not specified",
+    "budgetHint": "Drag the handles to adjust your budget.",
+    "edit": "Edit"
   },
   "contactPage": {
     "title": "Contact",

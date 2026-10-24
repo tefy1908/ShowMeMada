@@ -1,576 +1,447 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
-import { Button } from "@mui/material";
-
-// icones
-import AddLocationOutlinedIcon from "@mui/icons-material/AddLocationOutlined";
-import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import {
+  Box,
+  Button,
+  ButtonBase,
+  Grid,
+  Slider,
+  TextField,
+  Typography,
+} from "@mui/material";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
-import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
-import KingBedOutlinedIcon from "@mui/icons-material/KingBedOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
+import HotelOutlinedIcon from "@mui/icons-material/HotelOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useTranslation } from "react-i18next";
+
+const BRAND = "#63AB45";
+const BRAND_DARK = "#4a8533";
+const INK = "#1f2d3d";
+const BORDER = "#e3e6ea";
+
+const PRICE_MIN = 20;
+const PRICE_MAX = 1000;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const destinations = [
+  "Antananarivo",
+  "Antsirabe",
+  "Toamasina",
+  "Mahajanga",
+  "Toliara",
+  "Antsiranana",
+  "Fianarantsoa",
+  "Morondava",
+  "Nosy Be",
+  "Sainte-Marie",
+];
+
+const steps = [
+  { key: "destination", Icon: LocationOnOutlinedIcon },
+  { key: "category", Icon: StarBorderOutlinedIcon },
+  { key: "budget", Icon: PaymentsOutlinedIcon },
+  { key: "dates", Icon: CalendarMonthOutlinedIcon },
+  { key: "contact", Icon: PersonOutlineIcon },
+];
+
+const categories = [
+  { key: "luxe", Icon: DiamondOutlinedIcon, title: "hotel.luxury", desc: "hotel.luxuryDesc" },
+  { key: "simple", Icon: HotelOutlinedIcon, title: "hotel.simple", desc: "hotel.simpleDesc" },
+];
+
+const emptySearch = {
+  destination: "",
+  category: "",
+  priceRange: [50, 300],
+  checkin: "",
+  checkout: "",
+  nom: "",
+  prenom: "",
+  email: "",
+  telephone: "",
+};
+
+// Date du jour au format AAAA-MM-JJ (fuseau local), comme les champs type="date"
+const today = () => {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+};
+
+const nightsBetween = (checkin, checkout) =>
+  Math.round((new Date(checkout) - new Date(checkin)) / 86400000);
+
+// Tuile sélectionnable (destination, catégorie)
+const SelectTile = ({ selected, onClick, children, sx }) => (
+  <ButtonBase
+    onClick={onClick}
+    aria-pressed={selected}
+    sx={{
+      width: "100%",
+      position: "relative",
+      borderRadius: 3,
+      border: "1.5px solid",
+      borderColor: selected ? BRAND : BORDER,
+      backgroundColor: selected ? `${BRAND}0F` : "white",
+      color: INK,
+      fontFamily: "inherit",
+      transition: "all 0.2s ease",
+      "&:hover": { borderColor: BRAND },
+      "&.Mui-focusVisible": { outline: `2px solid ${BRAND}`, outlineOffset: 2 },
+      ...sx,
+    }}
+  >
+    {selected && (
+      <Box
+        sx={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          width: 20,
+          height: 20,
+          borderRadius: "50%",
+          backgroundColor: BRAND,
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CheckIcon sx={{ fontSize: 14 }} />
+      </Box>
+    )}
+    {children}
+  </ButtonBase>
+);
+
 const HotelSearch = () => {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
-  const [searchData, setSearchData] = useState({
-    destination: "",
-    category: "",
-    priceRange: [50, 1000],
-    dates: {
-      checkin: "",
-      checkout: "",
-    },
-    contact: {
-      nom: "",
-      prenom: "",
-      email: "",
-      telephone: "",
-    },
-  });
+  const [search, setSearch] = useState(emptySearch);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const destinations = [
-    "Antananarivo",
-    "Antsirabe",
-    "Toamasina",
-    "Mahajanga",
-    "Toliara",
-    "Antsiranana",
-    "Fianarantsoa",
-    "Morondava",
-    "Nosy Be",
-    "Sainte-Marie",
-  ];
+  const update = (field, value) => setSearch((prev) => ({ ...prev, [field]: value }));
 
-  const steps = [
-    { key: "destination", icon: <AddLocationOutlinedIcon /> },
-    { key: "category", icon: <StarBorderOutlinedIcon /> },
-    { key: "budget", icon: <AttachMoneyOutlinedIcon /> },
-    { key: "dates", icon: <CalendarMonthOutlinedIcon /> },
-    { key: "contact", icon: <ContactPageOutlinedIcon /> },
-  ];
+  const nights = search.checkin && search.checkout ? nightsBetween(search.checkin, search.checkout) : 0;
+  const emailValid = EMAIL_RE.test(search.email.trim());
 
-  const handleNext = () => {
-    if (activeStep < steps.length - 1) {
-      setActiveStep(activeStep + 1);
-    }
-  };
-
-  const handleBack = () => {
-    if (activeStep > 0) {
-      setActiveStep(activeStep - 1);
-    }
-  };
-
-  const handleSearch = () => {
-    console.log("Recherche avec les critères:", searchData);
-  };
-
-  const isStepValid = () => {
-    switch (activeStep) {
+  const isStepValid = (step = activeStep) => {
+    switch (step) {
       case 0:
-        return searchData.destination !== "";
+        return search.destination !== "";
       case 1:
-        return searchData.category !== "";
+        return search.category !== "";
       case 2:
         return true;
       case 3:
-        return (
-          searchData.dates.checkin !== "" && searchData.dates.checkout !== ""
-        );
+        return Boolean(search.checkin && search.checkout && search.checkin >= today() && nights > 0);
       case 4:
-        return (
-          searchData.contact.nom !== "" &&
-          searchData.contact.prenom !== "" &&
-          searchData.contact.email !== ""
-        );
+        return search.nom.trim() !== "" && search.prenom.trim() !== "" && emailValid;
       default:
         return false;
     }
   };
 
-  const handlePriceChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (e.target.name === "min") {
-      setSearchData({
-        ...searchData,
-        priceRange: [value, searchData.priceRange[1]],
-      });
-    } else {
-      setSearchData({
-        ...searchData,
-        priceRange: [searchData.priceRange[0], value],
-      });
-    }
+  // On ne peut aller qu'aux étapes déjà franchies ou à la suivante valide
+  const canGoTo = (step) => step <= activeStep || steps.slice(0, step).every((_, i) => isStepValid(i));
+
+  const handleNext = () => {
+    if (activeStep < steps.length - 1) setActiveStep(activeStep + 1);
   };
+
+  const handleBack = () => {
+    if (activeStep > 0) setActiveStep(activeStep - 1);
+  };
+
+  const handleSubmit = () => {
+    setEmailTouched(true);
+    if (!isStepValid(4)) return;
+    // TODO : brancher l'envoi réel de la demande (EmailJS, Formspree, API...)
+    console.log("Recherche avec les critères:", search);
+    setSubmitted(true);
+  };
+
+  const handleNewSearch = () => {
+    setSearch(emptySearch);
+    setActiveStep(0);
+    setEmailTouched(false);
+    setSubmitted(false);
+  };
+
+  const summary = [
+    { step: 0, Icon: LocationOnOutlinedIcon, label: t("hotel.steps.destination"), value: search.destination },
+    {
+      step: 1,
+      Icon: StarBorderOutlinedIcon,
+      label: t("hotel.steps.category"),
+      value: search.category && t(search.category === "luxe" ? "hotel.luxury" : "hotel.simple"),
+    },
+    {
+      step: 2,
+      Icon: PaymentsOutlinedIcon,
+      label: t("hotel.steps.budget"),
+      value: `${search.priceRange[0]} € – ${search.priceRange[1]} € ${t("hotel.perNight")}`,
+    },
+    {
+      step: 3,
+      Icon: CalendarMonthOutlinedIcon,
+      label: t("hotel.steps.dates"),
+      value:
+        nights > 0 &&
+        `${t("hotel.summary.datesValue", { checkin: search.checkin, checkout: search.checkout })} · ${t(
+          "hotel.nights",
+          { count: nights }
+        )}`,
+    },
+    {
+      step: 4,
+      Icon: PersonOutlineIcon,
+      label: t("hotel.steps.contact"),
+      value: search.nom && search.email && `${search.prenom} ${search.nom}`,
+    },
+  ];
+
+  const stepTitles = [
+    t("hotel.destinationTitle"),
+    t("hotel.categoryTitle"),
+    t("hotel.budgetTitle"),
+    t("hotel.datesTitle"),
+    t("hotel.contactTitle"),
+  ];
 
   const renderStepContent = () => {
     switch (activeStep) {
       case 0:
         return (
-          <div style={{ marginTop: "20px" }}>
-            <h3
-              style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
-            >
-              {t("hotel.destinationTitle")}
-            </h3>
-            <select
-              value={searchData.destination}
-              onChange={(e) =>
-                setSearchData({ ...searchData, destination: e.target.value })
-              }
-              style={{
-                width: "100%",
-                padding: "15px",
-                border: "1px solid #ddd",
-                borderRadius: "4px",
-                fontSize: "16px",
-                backgroundColor: "#fff",
-              }}
-            >
-              <option value="">{t("hotel.selectDestination")}</option>
-              {destinations.map((dest) => (
-                <option key={dest} value={dest}>
-                  {dest}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Grid container spacing={1.5}>
+            {destinations.map((dest) => (
+              <Grid key={dest} size={{ xs: 6, sm: 4 }}>
+                <SelectTile
+                  selected={search.destination === dest}
+                  onClick={() => update("destination", dest)}
+                  sx={{ justifyContent: "flex-start", gap: 1, px: 1.5, py: 1.5, textAlign: "left" }}
+                >
+                  <LocationOnOutlinedIcon sx={{ fontSize: 20, color: BRAND }} />
+                  <Typography sx={{ fontWeight: 500, fontSize: "0.92rem", pr: 2 }}>{dest}</Typography>
+                </SelectTile>
+              </Grid>
+            ))}
+          </Grid>
         );
 
       case 1:
         return (
-          <div style={{ marginTop: "20px" }}>
-            <h3
-              style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
-            >
-              {t("hotel.categoryTitle")}
-            </h3>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, // 1 colonne en XS, 2 colonnes à partir de SM
-                gap: "15px",
-              }}
-            >
-              <div
-                style={{
-                  padding: "25px",
-                  textAlign: "center",
-                  cursor: "pointer",
-                  border:
-                    searchData.category === "luxe"
-                      ? "2px solid #63AB45"
-                      : "1px solid #ddd",
-                  borderRadius: "8px",
-                  backgroundColor: "#fff",
-                  transition: "all 0.2s ease",
-                }}
-                onClick={() =>
-                  setSearchData({ ...searchData, category: "luxe" })
-                }
-                onMouseEnter={(e) => (e.target.style.borderColor = "#63AB45")}
-                onMouseLeave={(e) => {
-                  if (searchData.category !== "luxe") {
-                    e.target.style.borderColor = "#ddd";
-                  }
-                }}
-              >
-                <div style={{ fontSize: "32px", marginBottom: "10px" }}>
-                  <KingBedOutlinedIcon fontSize="large" />
-                </div>
-                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>{t("hotel.luxury")}</h4>
-                <p style={{ margin: "0", fontSize: "14px", color: "#666" }}>
-                  {t("hotel.luxuryDesc")}
-                </p>
-              </div>
-              <div
-                style={{
-                  padding: "25px",
-                  textAlign: "center",
-                  cursor: "pointer",
-                  border:
-                    searchData.category === "simple"
-                      ? "2px solid #63AB45"
-                      : "1px solid #ddd",
-                  borderRadius: "8px",
-                  backgroundColor: "#fff",
-                  transition: "all 0.2s ease",
-                }}
-                onClick={() =>
-                  setSearchData({ ...searchData, category: "simple" })
-                }
-                onMouseEnter={(e) => (e.target.style.borderColor = "#63AB45")}
-                onMouseLeave={(e) => {
-                  if (searchData.category !== "simple") {
-                    e.target.style.borderColor = "#ddd";
-                  }
-                }}
-              >
-                <div style={{ fontSize: "32px", marginBottom: "10px" }}>
-                  <CheckCircleOutlineOutlinedIcon fontSize="large" />
-                </div>
-                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>{t("hotel.simple")}</h4>
-                <p style={{ margin: "0", fontSize: "14px", color: "#666" }}>
-                  {t("hotel.simpleDesc")}
-                </p>
-              </div>
-            </Box>
-          </div>
+          <Grid container spacing={2}>
+            {categories.map(({ key, Icon, title, desc }) => (
+              <Grid key={key} size={{ xs: 12, sm: 6 }}>
+                <SelectTile
+                  selected={search.category === key}
+                  onClick={() => update("category", key)}
+                  sx={{ flexDirection: "column", alignItems: "flex-start", p: 3, textAlign: "left", height: "100%" }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: 2.5,
+                      backgroundColor: `${BRAND}1A`,
+                      color: BRAND,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <Icon />
+                  </Box>
+                  <Typography sx={{ fontWeight: 700, fontSize: "1.1rem", mb: 0.5 }}>{t(title)}</Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    {t(desc)}
+                  </Typography>
+                </SelectTile>
+              </Grid>
+            ))}
+          </Grid>
         );
 
       case 2:
         return (
-          <div style={{ marginTop: "20px" }}>
-            <h3
-              style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
-            >
-              {t("hotel.budgetTitle")}
-            </h3>
-            <div style={{ padding: "0 10px" }}>
-              <div
-                style={{
-                  marginBottom: "15px",
-                  color: "#63AB45",
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                  textAlign: "center",
-                }}
-              >
-                {searchData.priceRange[0]}€ - {searchData.priceRange[1]}€
-              </div>
-              <div
-                style={{ display: "flex", gap: "15px", alignItems: "center" }}
-              >
-                <div style={{ flex: 1 }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "5px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Min
-                  </label>
-                  <input
-                    type="range"
-                    name="min"
-                    min="20"
-                    max="1000"
-                    value={searchData.priceRange[0]}
-                    onChange={handlePriceChange}
-                    style={{
-                      width: "100%",
-                      height: "6px",
-                      borderRadius: "3px",
-                      background: "#ddd",
-                      outline: "none",
-                      appearance: "none",
-                      WebkitAppearance: "none",
-                    }}
-                  />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "5px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Max
-                  </label>
-                  <input
-                    type="range"
-                    name="max"
-                    min="20"
-                    max="1000"
-                    value={searchData.priceRange[1]}
-                    onChange={handlePriceChange}
-                    style={{
-                      width: "100%",
-                      height: "6px",
-                      borderRadius: "3px",
-                      background: "#ddd",
-                      outline: "none",
-                      appearance: "none",
-                      WebkitAppearance: "none",
-                    }}
-                  />
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginTop: "10px",
-                  fontSize: "12px",
-                  color: "#666",
-                }}
-              >
-                <span>20€</span>
-                <span>1000€</span>
-              </div>
-            </div>
-          </div>
+          <Box sx={{ px: { xs: 1, sm: 2 } }}>
+            <Box sx={{ textAlign: "center", mb: 4 }}>
+              <Typography sx={{ fontSize: { xs: "1.6rem", sm: "2rem" }, fontWeight: 700, color: INK }}>
+                {search.priceRange[0]} € – {search.priceRange[1]} €
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t("hotel.perNight")}
+              </Typography>
+            </Box>
+            <Slider
+              value={search.priceRange}
+              onChange={(_, value) => update("priceRange", value)}
+              min={PRICE_MIN}
+              max={PRICE_MAX}
+              step={10}
+              disableSwap
+              valueLabelDisplay="auto"
+              valueLabelFormat={(v) => `${v} €`}
+              getAriaLabel={(index) => (index === 0 ? "Min" : "Max")}
+              marks={[
+                { value: PRICE_MIN, label: `${PRICE_MIN} €` },
+                { value: PRICE_MAX, label: `${PRICE_MAX} €` },
+              ]}
+              sx={{ "& .MuiSlider-markLabel": { fontSize: "0.8rem", color: "text.secondary" } }}
+            />
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", mt: 2 }}>
+              {t("hotel.budgetHint")}
+            </Typography>
+          </Box>
         );
 
       case 3:
         return (
-          <div style={{ marginTop: "20px" }}>
-            <h3
-              style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
-            >
-              {t("hotel.datesTitle")}
-            </h3>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, // 1 colonne en XS, 2 colonnes à partir de SM
-                gap: "15px",
-              }}
-            >
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontSize: "14px",
-                    fontWeight: "bold",
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                type="date"
+                label={t("hotel.checkin")}
+                value={search.checkin}
+                onChange={(e) => update("checkin", e.target.value)}
+                slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: today() } }}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField
+                fullWidth
+                type="date"
+                label={t("hotel.checkout")}
+                value={search.checkout}
+                onChange={(e) => update("checkout", e.target.value)}
+                error={Boolean(search.checkout && search.checkin && nights <= 0)}
+                helperText={
+                  search.checkout && search.checkin && nights <= 0
+                    ? t("contactPage.errors.returnBeforeDeparture")
+                    : undefined
+                }
+                slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: search.checkin || today() } }}
+              />
+            </Grid>
+            {nights > 0 && (
+              <Grid size={12}>
+                <Box
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 1,
+                    px: 1.5,
+                    py: 0.75,
+                    borderRadius: 2,
+                    backgroundColor: `${BRAND}14`,
+                    color: BRAND_DARK,
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
                   }}
                 >
-                  {t("hotel.checkin")}
-                </label>
-                <input
-                  type="date"
-                  value={searchData.dates.checkin}
-                  onChange={(e) =>
-                    setSearchData({
-                      ...searchData,
-                      dates: { ...searchData.dates, checkin: e.target.value },
-                    })
-                  }
-                  style={{
-                    padding: "12px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    width: "100%",
-                    fontSize: "16px",
-                  }}
-                />
-              </div>
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("hotel.checkout")}
-                </label>
-                <input
-                  type="date"
-                  value={searchData.dates.checkout}
-                  onChange={(e) =>
-                    setSearchData({
-                      ...searchData,
-                      dates: { ...searchData.dates, checkout: e.target.value },
-                    })
-                  }
-                  style={{
-                    padding: "12px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    width: "100%",
-                    fontSize: "16px",
-                  }}
-                />
-              </div>
-            </Box>
-          </div>
+                  <CalendarMonthOutlinedIcon sx={{ fontSize: 18 }} />
+                  {t("hotel.nights", { count: nights })}
+                </Box>
+              </Grid>
+            )}
+          </Grid>
         );
 
       case 4:
         return (
-          <div style={{ marginTop: "20px" }}>
-            <h3
-              style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
-            >
-              {t("hotel.contactTitle")}
-            </h3>
-            <p
-              style={{ color: "#666", fontSize: "14px", marginBottom: "20px" }}
-            >
+          <Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
               {t("hotel.contactIntro")}
-            </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "15px",
-                marginBottom: "15px",
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  fullWidth
+                  required
+                  autoComplete="family-name"
+                  label={t("contactPage.lastName")}
+                  value={search.nom}
+                  onChange={(e) => update("nom", e.target.value)}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  fullWidth
+                  required
+                  autoComplete="given-name"
+                  label={t("contactPage.firstName")}
+                  value={search.prenom}
+                  onChange={(e) => update("prenom", e.target.value)}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  fullWidth
+                  required
+                  type="email"
+                  autoComplete="email"
+                  label={t("contactPage.email")}
+                  value={search.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  onBlur={() => setEmailTouched(true)}
+                  error={emailTouched && !emailValid}
+                  helperText={
+                    emailTouched && !emailValid
+                      ? t(search.email ? "contactPage.errors.email" : "contactPage.errors.required")
+                      : undefined
+                  }
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  fullWidth
+                  type="tel"
+                  autoComplete="tel"
+                  label={t("contactPage.phone")}
+                  value={search.telephone}
+                  onChange={(e) => update("telephone", e.target.value)}
+                  helperText={t("contactPage.phoneHelper")}
+                />
+              </Grid>
+            </Grid>
+            <Box
+              sx={{
+                mt: 3,
+                p: 2,
+                borderRadius: 2,
+                backgroundColor: "#f5f6f8",
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
               }}
             >
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("hotel.lastName")}
-                </label>
-                <input
-                  type="text"
-                  value={searchData.contact.nom}
-                  onChange={(e) =>
-                    setSearchData({
-                      ...searchData,
-                      contact: { ...searchData.contact, nom: e.target.value },
-                    })
-                  }
-                  placeholder={t("hotel.lastNamePlaceholder")}
-                  style={{
-                    padding: "12px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    width: "100%",
-                    fontSize: "16px",
-                  }}
-                />
-              </div>
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("hotel.firstName")}
-                </label>
-                <input
-                  type="text"
-                  value={searchData.contact.prenom}
-                  onChange={(e) =>
-                    setSearchData({
-                      ...searchData,
-                      contact: {
-                        ...searchData.contact,
-                        prenom: e.target.value,
-                      },
-                    })
-                  }
-                  placeholder={t("hotel.firstNamePlaceholder")}
-                  style={{
-                    padding: "12px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    width: "100%",
-                    fontSize: "16px",
-                  }}
-                />
-              </div>
-            </div>
-            <div style={{ marginBottom: "15px" }}>
-              <label
-                style={{
-                  display: "block",
-                  marginBottom: "8px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                }}
-              >
-                {t("hotel.email")}
-              </label>
-              <input
-                type="email"
-                value={searchData.contact.email}
-                onChange={(e) =>
-                  setSearchData({
-                    ...searchData,
-                    contact: { ...searchData.contact, email: e.target.value },
-                  })
-                }
-                placeholder={t("hotel.emailPlaceholder")}
-                style={{
-                  padding: "12px",
-                  border: "1px solid #ddd",
-                  borderRadius: "4px",
-                  width: "100%",
-                  fontSize: "16px",
-                }}
-              />
-            </div>
-            <div>
-              <label
-                style={{
-                  display: "block",
-                  marginBottom: "8px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                }}
-              >
-                {t("hotel.phone")}
-              </label>
-              <input
-                type="tel"
-                value={searchData.contact.telephone}
-                onChange={(e) =>
-                  setSearchData({
-                    ...searchData,
-                    contact: {
-                      ...searchData.contact,
-                      telephone: e.target.value,
-                    },
-                  })
-                }
-                placeholder="+33 1 23 45 67 89"
-                style={{
-                  padding: "12px",
-                  border: "1px solid #ddd",
-                  borderRadius: "4px",
-                  width: "100%",
-                  fontSize: "16px",
-                }}
-              />
-            </div>
-            <div
-              style={{
-                backgroundColor: "#f0f8ff",
-                padding: "15px",
-                borderRadius: "6px",
-                marginTop: "20px",
-                border: "1px solid #63AB45",
-              }}
-            >
-              <div
-                style={{
-                  margin: "0",
-                  fontSize: "13px",
-                  color: "#666",
-                  lineHeight: "1.4",
-                }}
-              >
-                <span style={{ display: "flex", gap: "8px", alignItems: "flex-start", marginBottom: "6px" }}>
-                  <EmailOutlinedIcon sx={{ fontSize: 18, color: "#63AB45" }} />
+              <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>
+                <EmailOutlinedIcon sx={{ fontSize: 18, color: BRAND, mt: "2px" }} />
+                <Typography variant="body2" color="text.secondary">
                   {t("hotel.infoEmail")}
-                </span>
-                <span style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-                  <PhoneOutlinedIcon sx={{ fontSize: 18, color: "#63AB45" }} />
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>
+                <PhoneOutlinedIcon sx={{ fontSize: 18, color: BRAND, mt: "2px" }} />
+                <Typography variant="body2" color="text.secondary">
                   {t("hotel.infoPhone")}
-                </span>
-              </div>
-            </div>
-          </div>
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
         );
 
       default:
@@ -578,238 +449,183 @@ const HotelSearch = () => {
     }
   };
 
+  if (submitted) {
+    return (
+      <Box
+        role="status"
+        sx={{
+          minHeight: 360,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          gap: 2,
+          py: 4,
+        }}
+      >
+        <CheckCircleOutlineIcon sx={{ fontSize: 72, color: BRAND }} />
+        <Typography variant="h5" sx={{ fontWeight: 700, color: INK }}>
+          {t("hotel.successTitle")}
+        </Typography>
+        <Typography sx={{ color: "text.secondary", maxWidth: 440 }}>{t("hotel.successText")}</Typography>
+        <Button variant="outlined" onClick={handleNewSearch} sx={{ mt: 1, borderRadius: 3 }}>
+          {t("hotel.newSearch")}
+        </Button>
+      </Box>
+    );
+  }
+
+  const isLastStep = activeStep === steps.length - 1;
+
   return (
-    <div style={{ backgroundColor: "#fff" }}>
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-        {/* Barre de progression */}
-        <div style={{ marginBottom: "30px" }}>
-          <div
-            style={{
-              width: "100%",
-              height: "8px",
-              backgroundColor: "#f0f0f0",
-              borderRadius: "4px",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                width: `${((activeStep + 1) / steps.length) * 100}%`,
-                height: "100%",
-                backgroundColor: "#63AB45",
-                transition: "width 0.3s ease",
-              }}
-            ></div>
-          </div>
-          <p
-            style={{
-              textAlign: "center",
-              margin: "8px 0 0 0",
-              fontSize: "14px",
-              color: "#666",
-            }}
-          >
-            {t("hotel.stepOf", { current: activeStep + 1, total: steps.length })}
-          </p>
-        </div>
-
+    <Grid container spacing={{ xs: 3, md: 5 }}>
+      {/* Assistant */}
+      <Grid size={{ xs: 12, md: 8 }}>
         {/* Indicateur d'étapes */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mb: "30px",
-            px: { xs: 0, sm: 2 }, // padding horizontal 0 en xs, 16px (2*8px) à partir de sm
-          }}
-        >
-          {steps.map((step, index) => (
-            <div key={step.key} style={{ textAlign: "center", flex: 1 }}>
-              <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  backgroundColor: index <= activeStep ? "#63AB45" : "#ddd",
-                  color: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 8px auto",
-                  fontSize: "18px",
-                  transition: "all 0.3s ease",
-                }}
-              >
-                {step.icon}
-              </div>
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "12px",
-                  color: index <= activeStep ? "#000" : "#999",
-                  fontWeight: index === activeStep ? "bold" : "normal",
-                }}
-              >
-                {t(`hotel.steps.${step.key}`)}
-              </p>
-            </div>
-          ))}
+        <Box component="ol" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", mb: 4 }}>
+          {steps.map(({ key, Icon }, index) => {
+            const done = index < activeStep;
+            const current = index === activeStep;
+            const reachable = canGoTo(index);
+            return (
+              <Box component="li" key={key} sx={{ flex: 1, position: "relative", textAlign: "center" }}>
+                {index > 0 && (
+                  <Box
+                    aria-hidden
+                    sx={{
+                      position: "absolute",
+                      top: 19,
+                      right: "50%",
+                      width: "100%",
+                      height: 2,
+                      backgroundColor: index <= activeStep ? BRAND : BORDER,
+                      transition: "background-color 0.3s ease",
+                    }}
+                  />
+                )}
+                <ButtonBase
+                  onClick={() => reachable && setActiveStep(index)}
+                  disabled={!reachable}
+                  aria-current={current ? "step" : undefined}
+                  aria-label={t(`hotel.steps.${key}`)}
+                  sx={{
+                    position: "relative",
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    border: "2px solid",
+                    borderColor: done || current ? BRAND : BORDER,
+                    backgroundColor: done ? BRAND : "white",
+                    color: done ? "white" : current ? BRAND : "#9aa4ae",
+                    transition: "all 0.3s ease",
+                    "&.Mui-focusVisible": { outline: `2px solid ${BRAND}`, outlineOffset: 2 },
+                  }}
+                >
+                  {done ? <CheckIcon sx={{ fontSize: 20 }} /> : <Icon sx={{ fontSize: 20 }} />}
+                </ButtonBase>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    fontSize: "0.78rem",
+                    fontWeight: current ? 700 : 500,
+                    color: current ? INK : "text.secondary",
+                    display: { xs: current ? "block" : "none", sm: "block" },
+                  }}
+                >
+                  {t(`hotel.steps.${key}`)}
+                </Typography>
+              </Box>
+            );
+          })}
         </Box>
 
-        {/* Contenu principal */}
+        <Typography variant="body2" sx={{ color: BRAND_DARK, fontWeight: 600, mb: 0.5 }}>
+          {t("hotel.stepOf", { current: activeStep + 1, total: steps.length })}
+        </Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "1.25rem", sm: "1.4rem" }, fontWeight: 700, color: INK, mb: 3 }}>
+          {stepTitles[activeStep]}
+        </Typography>
+
+        <Box sx={{ minHeight: { md: 240 } }}>{renderStepContent()}</Box>
+
+        {/* Navigation */}
+        <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, mt: 4 }}>
+          <Button
+            onClick={handleBack}
+            disabled={activeStep === 0}
+            startIcon={<ArrowBackIcon />}
+            sx={{ color: "text.secondary", fontWeight: 600, borderRadius: 3, px: 2 }}
+          >
+            {t("common.previous")}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={isLastStep ? handleSubmit : handleNext}
+            disabled={!isLastStep && !isStepValid()}
+            endIcon={isLastStep ? <EmailOutlinedIcon /> : <ArrowForwardIcon />}
+            sx={{ fontWeight: 600, borderRadius: 3, px: 3, py: 1.25, boxShadow: "none" }}
+          >
+            {isLastStep ? t("hotel.submit") : t("common.next")}
+          </Button>
+        </Box>
+      </Grid>
+
+      {/* Récapitulatif */}
+      <Grid size={{ xs: 12, md: 4 }}>
         <Box
           sx={{
-            backgroundColor: "#fff",
-            p: { xs: "10px", sm: "30px" }, // padding responsive
-            borderRadius: "8px",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-            minHeight: "300px",
-            mb: "20px",
+            position: { md: "sticky" },
+            top: { md: 120 },
+            p: 3,
+            borderRadius: 3,
+            backgroundColor: "#f8f9fa",
+            border: `1px solid ${BORDER}`,
           }}
         >
-          {renderStepContent()}
-
-          {/* Boutons de navigation */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "30px",
-            }}
-          >
-            <Button
-              onClick={handleBack}
-              disabled={activeStep === 0}
-              sx={{
-                px: { xs: "12px", sm: "20px" }, // padding horizontal responsive
-                py: { xs: "6px", sm: "10px" }, // padding vertical responsive
-                border: "1px solid #ddd",
-                backgroundColor: "#fff",
-                color: activeStep === 0 ? "#ccc" : "#000",
-                borderRadius: "4px",
-                fontSize: { xs: "10px", sm: "16px" }, // font-size responsive
-                cursor: activeStep === 0 ? "not-allowed" : "pointer",
-                "&:hover": {
-                  backgroundColor: activeStep === 0 ? "#fff" : "#f5f5f5",
-                },
-              }}
-            >
-              {t("common.previous")}
-            </Button>
-
-            {activeStep === steps.length - 1 ? (
-              <Button
-                onClick={handleSearch}
-                disabled={!isStepValid()}
-                sx={{
-                  px: { xs: "12px", sm: "25px" }, // padding horizontal responsive
-                  py: { xs: "8px", sm: "12px" }, // padding vertical responsive
-                  backgroundColor: isStepValid() ? "#63AB45" : "#ccc",
-                  color: "#fff",
-                  borderRadius: "4px",
-                  fontSize: { xs: "10px", sm: "16px" }, // font-size responsive
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: isStepValid() ? "pointer" : "not-allowed",
-                  border: "none",
-                  "&:hover": {
-                    backgroundColor: isStepValid() ? "#55983c" : "#ccc",
-                  },
-                }}
-              >
-                {t("hotel.submit")}
-              </Button>
-            ) : (
-              <button
-                onClick={handleNext}
-                disabled={!isStepValid()}
-                style={{
-                  padding: "10px 20px",
-                  border: "none",
-                  backgroundColor: isStepValid() ? "#63AB45" : "#ccc",
-                  color: "#fff",
-                  borderRadius: "4px",
-                  cursor: isStepValid() ? "pointer" : "not-allowed",
-                  fontSize: "16px",
-                }}
-              >
-                {t("common.next")}
-              </button>
-            )}
-          </div>
+          <Typography sx={{ fontWeight: 700, color: INK, mb: 2 }}>{t("hotel.summaryTitle")}</Typography>
+          <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: "column", gap: 0.5 }}>
+            {summary.map(({ step, Icon, label, value }) => {
+              const reachable = canGoTo(step);
+              return (
+                <Box component="li" key={step}>
+                  <ButtonBase
+                    onClick={() => reachable && setActiveStep(step)}
+                    disabled={!reachable}
+                    aria-label={`${t("hotel.edit")} : ${label}`}
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "flex-start",
+                      justifyContent: "flex-start",
+                      gap: 1.5,
+                      p: 1,
+                      borderRadius: 2,
+                      textAlign: "left",
+                      fontFamily: "inherit",
+                      "&:hover": { backgroundColor: reachable ? "rgba(0,0,0,0.03)" : "transparent" },
+                    }}
+                  >
+                    <Icon sx={{ fontSize: 20, color: value ? BRAND : "#b4bcc5", mt: "2px" }} />
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography variant="caption" sx={{ color: "text.secondary", display: "block", lineHeight: 1.3 }}>
+                        {label}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: value ? 600 : 400, color: value ? INK : "#9aa4ae", wordBreak: "break-word" }}
+                      >
+                        {value || t("hotel.notSet")}
+                      </Typography>
+                    </Box>
+                  </ButtonBase>
+                </Box>
+              );
+            })}
+          </Box>
         </Box>
-
-        {/* Résumé de la recherche */}
-        {(searchData.destination || searchData.category) && (
-          <div
-            style={{
-              backgroundColor: "#f9f9f9",
-              padding: "20px",
-              borderRadius: "8px",
-              border: "1px solid #e0e0e0",
-            }}
-          >
-            <h3
-              style={{
-                margin: "0 0 15px 0",
-                color: "#63AB45",
-                fontSize: "18px",
-              }}
-            >
-              {t("hotel.summaryTitle")}
-            </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "10px",
-              }}
-            >
-              {searchData.destination && (
-                <div>
-                  <strong style={{ color: "#000" }}>{t("hotel.summary.destination")}</strong>
-                  <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {searchData.destination}
-                  </span>
-                </div>
-              )}
-              {searchData.category && (
-                <div>
-                  <strong style={{ color: "#000" }}>{t("hotel.summary.category")}</strong>
-                  <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {searchData.category === "luxe" ? t("hotel.luxury") : t("hotel.simple")}
-                  </span>
-                </div>
-              )}
-              <div>
-                <strong style={{ color: "#000" }}>{t("hotel.summary.budget")}</strong>
-                <span style={{ marginLeft: "8px", color: "#666" }}>
-                  {searchData.priceRange[0]}€ - {searchData.priceRange[1]}€
-                </span>
-              </div>
-              {searchData.dates.checkin && searchData.dates.checkout && (
-                <div>
-                  <strong style={{ color: "#000" }}>{t("hotel.summary.dates")}</strong>
-                  <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {t("hotel.summary.datesValue", { checkin: searchData.dates.checkin, checkout: searchData.dates.checkout })}
-                  </span>
-                </div>
-              )}
-              {searchData.contact.nom && searchData.contact.email && (
-                <div>
-                  <strong style={{ color: "#000" }}>{t("hotel.summary.contact")}</strong>
-                  <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {searchData.contact.prenom} {searchData.contact.nom} -{" "}
-                    {searchData.contact.email}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
