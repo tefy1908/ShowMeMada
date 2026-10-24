@@ -1,317 +1,230 @@
 import React from "react";
-import { Box, Button, Typography, Paper } from "@mui/material";
-import { Grid, keyframes } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import CardAboutUS from "../Components/CardAboutUs";
-import TextTitle from "../Components/TextTitle";
-import ValueCard from "../Components/ValeurCard";
-import CardItemTeam from "../Components/CardItemTeam";
+import { useNavigate } from "react-router-dom";
+
+import PageHero from "../Components/PageHero";
+import StatsStrip from "../Components/StatsStrip";
+import SectionHeader from "../Components/SectionHeader";
+import CtaBanner from "../Components/CtaBanner";
+import { destinationsByRegion, regionKeys } from "../Data/destinations";
+
 //Photos
-import CoucherSoleilImage from "..//Assets/Images/CoucherSoleil.jpg";
-import Foret from "..//Assets/Images/Foret.jpg";
+import HeroImage from "../Assets/Images/zebu.jpg";
+import StoryImage from "../Assets/Images/CoucherSoleil.jpg";
 
 //Icones
-import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
-import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import DirectionsRunOutlinedIcon from '@mui/icons-material/DirectionsRunOutlined';
-import LocalFloristOutlinedIcon from '@mui/icons-material/LocalFloristOutlined';
-// Animation pour l'image
-const floatAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-`;
+import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
+import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import DirectionsRunOutlinedIcon from "@mui/icons-material/DirectionsRunOutlined";
+import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
+
+const BRAND = "#63AB45";
+const INK = "#1f2d3d";
+const FOUNDED = 2008;
+
+const totalDestinations = Object.values(destinationsByRegion).reduce((sum, list) => sum + list.length, 0);
+
+const values = [
+  { key: "responsibleTourism", Icon: LocalFloristOutlinedIcon },
+  { key: "excellence", Icon: CheckCircleOutlinedIcon },
+  { key: "expertise", Icon: DirectionsRunOutlinedIcon },
+  { key: "trust", Icon: HandshakeOutlinedIcon },
+];
+
+// Photo identique pour tous en attendant les vrais portraits de l'équipe
+const TEAM_PLACEHOLDER = "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg";
+const team = [
+  { key: "rakoto", image: TEAM_PLACEHOLDER },
+  { key: "marie", image: TEAM_PLACEHOLDER },
+  { key: "hery", image: TEAM_PLACEHOLDER },
+  { key: "lalaina", image: TEAM_PLACEHOLDER },
+];
+
+const cardSx = {
+  height: "100%",
+  borderRadius: 4,
+  backgroundColor: "white",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  "&:hover": { transform: "translateY(-6px)", boxShadow: "0 18px 40px rgba(0,0,0,0.1)" },
+};
 
 const AboutUs = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  // Données des valeurs avec traduction
-  const valuesData = [
-    {
-      icon: <LocalFloristOutlinedIcon fontSize="large"/>,
-      title: t("aboutUs.values.responsibleTourism.title"),
-      description: t("aboutUs.values.responsibleTourism.description"),
-      delay: 0.1,
-    },
-    {
-      icon: <CheckCircleOutlinedIcon fontSize="large"/>,
-      title: t("aboutUs.values.excellence.title"),
-      description: t("aboutUs.values.excellence.description"),
-      delay: 0.2,
-    },
-    {
-      icon:<DirectionsRunOutlinedIcon fontSize="large"/>,
-      title: t("aboutUs.values.expertise.title"),
-      description: t("aboutUs.values.expertise.description"),
-      delay: 0.3,
-    },
-    {
-      icon: <HandshakeOutlinedIcon fontSize="large"/>,
-      title: t("aboutUs.values.trust.title"),
-      description: t("aboutUs.values.trust.description"),
-      delay: 0.4,
-    },
-  ];
-
-  // Données de l'équipe avec traduction
-  const teamData = [
-    {
-      name: t("aboutUs.team.members.rakoto.name"),
-      title: t("aboutUs.team.members.rakoto.title"),
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: t("aboutUs.team.members.rakoto.experience"),
-      specialty: t("aboutUs.team.members.rakoto.specialty"),
-    },
-    {
-      name: t("aboutUs.team.members.marie.name"),
-      title: t("aboutUs.team.members.marie.title"),
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: t("aboutUs.team.members.marie.experience"),
-      specialty: t("aboutUs.team.members.marie.specialty"),
-    },
-    {
-      name: t("aboutUs.team.members.hery.name"),
-      title: t("aboutUs.team.members.hery.title"),
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: t("aboutUs.team.members.hery.experience"),
-      specialty: t("aboutUs.team.members.hery.specialty"),
-    },
-    {
-      name: t("aboutUs.team.members.lalaina.name"),
-      title: t("aboutUs.team.members.lalaina.title"),
-      image:
-        "https://i.ibb.co/1f5RVjV/764fdbe2-f549-4a55-bb87-c0396839183f.jpg",
-      experience: t("aboutUs.team.members.lalaina.experience"),
-      specialty: t("aboutUs.team.members.lalaina.specialty"),
-    },
+  const stats = [
+    { value: FOUNDED, label: t("aboutUs.stats.founded") },
+    { value: `${new Date().getFullYear() - FOUNDED}+`, label: t("aboutUs.stats.experience") },
+    { value: totalDestinations, label: t("aboutUs.stats.destinations") },
+    { value: regionKeys.length, label: t("aboutUs.stats.regions") },
   ];
 
   return (
-    <Box
-      display={"flex"}
-      flexGrow={1}
-      flexDirection={"column"}
-      padding={"40px 20px"}
-      gap={"3rem"}
-    >
-      <Box display="flex" alignItems={"center"} justifyContent={"center"}>
-        <TextTitle title={t("aboutUs.title")} />
-      </Box>
+    <Box sx={{ backgroundColor: "#f8f9fa", pb: { xs: 6, md: 10 } }}>
+      <PageHero
+        overline={t("aboutUs.title")}
+        title={t("aboutUs.heroTitle")}
+        intro={t("aboutUs.heroIntro")}
+        image={HeroImage}
+        imagePosition="center 45%"
+      />
+      <StatsStrip stats={stats} />
 
-      {/* Section Notre Histoire */}
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        flexGrow={1}
-        sx={{ height: { md: "100vh" } }}
-      >
-        <Grid container spacing={4} flexGrow={1} alignItems="center">
-          <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-            <Box display="flex" flexDirection="column" gap={3}>
-              {/* Titre de section */}
-              <Typography
-                variant="h3"
-                component="h2"
+      <Container maxWidth="lg">
+        {/* Notre histoire */}
+        <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center" sx={{ pt: { xs: 7, md: 10 } }}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <SectionHeader overline={t("aboutUs.storyOverline")} title={t("aboutUs.ourStory.title")} sx={{ mb: 2.5 }} />
+            {["paragraph1", "paragraph2", "paragraph3"].map((paragraph) => (
+              <Typography key={paragraph} sx={{ color: "text.secondary", lineHeight: 1.8, mb: 2 }}>
+                {t(`aboutUs.ourStory.${paragraph}`)}
+              </Typography>
+            ))}
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box sx={{ position: "relative", pl: { md: 3 }, pb: 3 }}>
+              <Box
+                component="img"
+                src={StoryImage}
+                alt={t("aboutUs.ourStory.title")}
+                loading="lazy"
                 sx={{
-                  fontSize: { xs: "2rem", md: "2.5rem" },
-                  fontWeight: "bold",
-                  color: "#333",
-                  position: "relative",
-                  "&::after": {
-                    content: '""',
-                    position: "absolute",
-                    bottom: "-10px",
-                    left: 0,
-                    width: "60px",
-                    height: "3px",
-                    backgroundColor: "#63AB45",
-                  },
+                  display: "block",
+                  width: "100%",
+                  height: { xs: 320, md: 480 },
+                  objectFit: "cover",
+                  borderRadius: 4,
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.15)",
+                }}
+              />
+              {/* Badge flottant */}
+              <Paper
+                elevation={0}
+                sx={{
+                  position: "absolute",
+                  left: { xs: 16, md: 0 },
+                  bottom: 0,
+                  px: 3,
+                  py: 2,
+                  borderRadius: 3,
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
                 }}
               >
-                {t("aboutUs.ourStory.title")}
-              </Typography>
-
-              {/* Contenu texte */}
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "1.5rem",
-                  lineHeight: 1.8,
-                  color: "#666",
-                  marginBottom: 2,
-                }}
-              >
-                {t("aboutUs.ourStory.paragraph1")}
-              </Typography>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "1.5rem",
-                  lineHeight: 1.8,
-                  color: "#666",
-                  marginBottom: 2,
-                }}
-              >
-                {t("aboutUs.ourStory.paragraph2")}
-              </Typography>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "1.5rem",
-                  lineHeight: 1.8,
-                  color: "#666",
-                  marginBottom: 3,
-                }}
-              >
-                {t("aboutUs.ourStory.paragraph3")}
-              </Typography>
+                <Typography sx={{ color: BRAND, fontWeight: 700, fontSize: "1.4rem", lineHeight: 1.2 }}>
+                  {t("aboutUs.since", { year: FOUNDED })}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" fontWeight={500}>
+                  Show Me Mada
+                </Typography>
+              </Paper>
             </Box>
           </Grid>
-
-          <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-            {/* Image principale Notre Historie */}
-            <Box
-              display={"flex"}
-              flexGrow={1}
-              borderRadius={"10px"}
-              sx={{
-                width: "100%",
-                height: "100vh",
-                backgroundImage: `url(${CoucherSoleilImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></Box>
-          </Grid>
         </Grid>
-      </Box>
 
-      {/** Section Nos valeurs */}
-      <Box display={"flex"} flexDirection={"column"} gap={5} flexGrow={1}>
-        {/* Titre de section */}
-        <Typography
-          variant="h3"
-          component="h2"
-          sx={{
-            fontSize: { xs: "2rem", md: "2.5rem" },
-            fontWeight: "bold",
-            color: "#333",
-            position: "relative",
-            textAlign: "center",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              bottom: "-10px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "60px",
-              height: "3px",
-              backgroundColor: "#63AB45",
-            },
-          }}
-        >
-          {t("aboutUs.values.title")}
-        </Typography>
+        {/* Nos valeurs */}
+        <Box sx={{ pt: { xs: 8, md: 12 } }}>
+          <SectionHeader
+            align="center"
+            overline={t("aboutUs.valuesOverline")}
+            title={t("aboutUs.values.title")}
+            subtitle={t("aboutUs.values.subtitle")}
+          />
+          <Grid container spacing={3}>
+            {values.map(({ key, Icon }) => (
+              <Grid key={key} size={{ xs: 12, sm: 6, lg: 3 }}>
+                <Box sx={{ ...cardSx, p: 3.5 }}>
+                  <Box
+                    sx={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: 3,
+                      backgroundColor: `${BRAND}1A`,
+                      color: BRAND,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mb: 2.5,
+                    }}
+                  >
+                    <Icon fontSize="large" />
+                  </Box>
+                  <Typography variant="h3" sx={{ fontSize: "1.15rem", fontWeight: 700, color: INK, mb: 1 }}>
+                    {t(`aboutUs.values.${key}.title`)}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.7 }}>
+                    {t(`aboutUs.values.${key}.description`)}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-        {/* Contenu valeurs */}
-        <Typography
-          sx={{
-            fontSize: { xs: "2rem", md: "1.5rem" },
-            color: "#333",
-            textAlign: "center",
-          }}
-        >
-          {t("aboutUs.values.subtitle")}
-        </Typography>
-
-        {/**Contenu card valeur */}
-        <Grid container spacing={4} justifyContent="center">
-          {/* Grid centrée avec les 4 composants en 2x2 */}
-          <Grid size={{ xs: 12, md: 10, lg: 8 }}>
-            <Grid container spacing={4}>
-              {valuesData.map((value, index) => (
-                <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                  <ValueCard
-                    icon={value.icon}
-                    title={value.title}
-                    description={value.description}
-                    delay={value.delay}
-                  />
+        {/* Notre équipe */}
+        <Box sx={{ pt: { xs: 8, md: 12 } }}>
+          <SectionHeader
+            align="center"
+            overline={t("aboutUs.teamOverline")}
+            title={t("aboutUs.team.title")}
+            subtitle={t("aboutUs.team.subtitle")}
+          />
+          <Grid container spacing={3}>
+            {team.map(({ key, image }) => {
+              const base = `aboutUs.team.members.${key}`;
+              return (
+                <Grid key={key} size={{ xs: 12, sm: 6, lg: 3 }}>
+                  <Box sx={{ ...cardSx, overflow: "hidden" }}>
+                    <Box
+                      component="img"
+                      src={image}
+                      alt={t(`${base}.name`)}
+                      loading="lazy"
+                      sx={{ display: "block", width: "100%", height: 260, objectFit: "cover" }}
+                    />
+                    <Box sx={{ p: 3 }}>
+                      <Typography variant="h3" sx={{ fontSize: "1.15rem", fontWeight: 700, color: INK }}>
+                        {t(`${base}.name`)}
+                      </Typography>
+                      <Typography sx={{ color: BRAND, fontWeight: 600, fontSize: "0.95rem", mb: 1.5 }}>
+                        {t(`${base}.title`)}
+                      </Typography>
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                        {[t(`${base}.experience`), t(`${base}.specialty`)].map((tag) => (
+                          <Box
+                            key={tag}
+                            component="span"
+                            sx={{
+                              fontSize: "0.78rem",
+                              fontWeight: 500,
+                              px: 1.25,
+                              py: 0.5,
+                              borderRadius: 2,
+                              backgroundColor: "#f0f2f4",
+                              color: INK,
+                            }}
+                          >
+                            {tag}
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  </Box>
                 </Grid>
-              ))}
-            </Grid>
+              );
+            })}
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
 
-      {/** Section Notre équipe */}
-      <Box display={"flex"} flexDirection={"column"} gap={3} flexGrow={1}>
-        {/* Titre de section */}
-        <Typography
-          variant="h3"
-          component="h2"
-          sx={{
-            fontSize: { xs: "2rem", md: "2.5rem" },
-            fontWeight: "bold",
-            color: "#333",
-            position: "relative",
-            textAlign: "center",
-            "&::after": {
-              content: '""',
-              position: "absolute",
-              bottom: "-10px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "60px",
-              height: "3px",
-              backgroundColor: "#63AB45",
-            },
-          }}
-        >
-          {t("aboutUs.team.title")}
-        </Typography>
-
-        <Typography
-          variant="h6"
-          sx={{
-            color: "#666",
-            textAlign: "center",
-            margin: "0 auto",
-            fontSize: "1.5rem",
-            lineHeight: 1.6,
-          }}
-        >
-          {t("aboutUs.team.subtitle")}
-        </Typography>
-
-        <Grid container spacing={4} justifyContent="center">
-          {/* Partie droite - Cartes d'équipe en 2x2 */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Grid container spacing={3} justifyContent="center">
-              {teamData.map((member, index) => (
-                <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                  <CardItemTeam
-                    name={member.name}
-                    title={member.title}
-                    image={member.image}
-                    experience={member.experience}
-                    specialty={member.specialty}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
+        <CtaBanner
+          sx={{ mt: { xs: 8, md: 12 } }}
+          title={t("aboutUs.cta.title")}
+          text={t("aboutUs.cta.text")}
+          primary={{ label: t("common.requestQuote"), onClick: () => navigate("/contact") }}
+          secondary={{ label: t("aboutUs.cta.tours"), onClick: () => navigate("/tours") }}
+        />
+      </Container>
     </Box>
   );
 };

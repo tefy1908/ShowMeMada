@@ -39,4 +39,10 @@ i18n
     }
   });
 
+// Garde l'attribut lang du document synchronisé avec la langue active (accessibilité, SEO)
+document.documentElement.lang = i18n.resolvedLanguage || i18n.language;
+i18n.on('languageChanged', (lng) => {
+  document.documentElement.lang = lng;
+});
+
 export default i18n;

@@ -13,6 +13,7 @@ import { Select, FormControl } from "@mui/material";
 import PhoneIcon from "./IconComponent/phoneIcon";
 import { useTranslation } from "react-i18next";
 import ShowMeMadaLogo from '..//Assets/Images/ShowMeMadaLogo.jpg'
+import { CONTACT } from "../Utils/contactInfo";
 
 
 
@@ -250,7 +251,14 @@ function ResponsiveAppBar() {
             <PhoneIcon />
             <Box display={"flex"} flexDirection={"column"}>
               <Box color={"black"}>{t("inquiry")}</Box>
-              <Box color="green">+261343025720</Box>
+              <Box
+                component="a"
+                href={CONTACT.phoneHref}
+                color="green"
+                sx={{ textDecoration: "none", "&:hover": { textDecoration: "underline" } }}
+              >
+                {CONTACT.phoneDisplay}
+              </Box>
             </Box>
           </Box>
         </Toolbar>

@@ -14,10 +14,16 @@ import Tours from "./Views/Tours";
 import Destinations from "./Views/Destinations";
 import Services from "./Views/Services";
 import Layout from "./Components/Layout";
+import { useTranslation } from "react-i18next";
 
 
 // Composant de chargement pendant l'initialisation des traductions
 const Loading = () => <div>Loading...</div>;
+
+const NotFound = () => {
+  const { t } = useTranslation();
+  return <div>{t("common.pageNotFound")}</div>;
+};
 
 // Définir le composant App AVANT de l'utiliser
 function App() {
@@ -31,7 +37,7 @@ function App() {
               <Route path="/destinations" element={<Destinations />} />
               <Route path="/galerie" element={<Services />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<div>Page non trouvée</div>} />
+              <Route path="*" element={<NotFound />} />
       </Routes>
       </Layout>
     </Router>

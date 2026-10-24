@@ -1,68 +1,75 @@
-import { Box } from "@mui/material"
-import Avatar1 from "..//Assets/Images/Profile 1.png";
-import Avatar2 from "..//Assets/Images/Profile 2.png";
-import Avatar3 from "..//Assets/Images/Profile 3.png";
-import ReviewCard from "./ReviewCard";
-const ReviewShowMeMada = ()=>{
-const reviews = [
-  {
-    name: "Sophie - France",
-    description: "Un voyage magique ! Des endroits secrets, des lémuriens adorables et une équipe passionnée. Madagascar nous a conquis !",
-    image: Avatar1,
+import { Avatar, Box, Grid, Typography } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import { useTranslation } from "react-i18next";
+import SectionHeader from "./SectionHeader";
+import Avatar1 from "../Assets/Images/Profile 1.png";
+import Avatar2 from "../Assets/Images/Profile 2.png";
+import Avatar3 from "../Assets/Images/Profile 3.png";
+
+const BRAND = "#63AB45";
+const INK = "#1f2d3d";
+
+const avatars = [Avatar1, Avatar2, Avatar3];
+
+const ReviewShowMeMada = () => {
+  const { t } = useTranslation();
+  // Noms et textes dans reviews.items, dans le même ordre que les avatars
+  const reviews = t("reviews.items", { returnObjects: true }).map((review, index) => ({
+    ...review,
+    image: avatars[index],
     rating: 5,
-  },
-  {
-    name: "Carlos - Espagne", 
-    description: "Organisation parfaite ! Notre guide a partagé sa passion pour la culture malgache. L'allée des baobabs au coucher du soleil... inoubliable !",
-    image: Avatar2,
-    rating: 5,
-  },
-  {
-    name: "Marie & Thomas - Suisse",
-    description: "Expérience authentique et responsable ! Hébergements chez l'habitant, artisans locaux, biodiversité incroyable. Merci Show Me Mada !",
-    image: Avatar3,
-    rating: 5,
-  },
-];
-    return(
-      
-             <Box
-          display="flex"
-          sx={{
-            backgroundImage:
-              "linear-gradient(to bottom, black 50%, white 50%)",
-          }}
-          alignItems={"center"}
-          justifyContent={"center"}
-          padding={"2% 10%"}
-          flexDirection={"column"}
-          gap="80px"
-          flexGrow={1}
-        >
-          <Box
-            display={"flex"}
-            fontSize={"32px"}
-            fontWeight={400}
-            alignContent={"center"}
-            color="#FFFFFF"
-            textAlign={'center'}
-          >
-            Expérience Show Me Mada
-          </Box>
-          <Box
-            display={"flex"}
-            flexGrow={1}
-            justifyContent={"space-between"}
-            sx={{gap: { xs: "10px", sm: "80px", md: "80px", xl : "80px" }}}
-    
-          >
-            {reviews.map((review, index) => (
-              <ReviewCard key={index} {...review} />
-            ))}
-          </Box>
-        </Box>
-      
-    )
-}
+  }));
+
+  return (
+    <Box>
+      <SectionHeader
+        align="center"
+        overline={t("home.reviewsOverline")}
+        title={t("reviews.title")}
+        subtitle={t("home.reviewsSubtitle")}
+      />
+      <Grid container spacing={3}>
+        {reviews.map((review) => (
+          <Grid key={review.name} size={{ xs: 12, md: 4 }}>
+            <Box
+              component="figure"
+              sx={{
+                m: 0,
+                height: "100%",
+                p: 3.5,
+                borderRadius: 4,
+                backgroundColor: "white",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+              }}
+            >
+              <FormatQuoteIcon
+                sx={{ position: "absolute", top: 20, right: 20, fontSize: 48, color: BRAND, opacity: 0.15 }}
+              />
+              <Box sx={{ display: "flex", mb: 2 }} aria-label={`${review.rating}/5`}>
+                {Array.from({ length: review.rating }).map((_, i) => (
+                  <StarIcon key={i} sx={{ color: "#f5b301", fontSize: 20 }} />
+                ))}
+              </Box>
+              <Typography
+                component="blockquote"
+                sx={{ m: 0, color: INK, lineHeight: 1.7, flexGrow: 1, mb: 3 }}
+              >
+                “{review.description}”
+              </Typography>
+              <Box component="figcaption" sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                <Avatar src={review.image} alt="" sx={{ width: 48, height: 48 }} />
+                <Typography sx={{ fontWeight: 600, color: INK }}>{review.name}</Typography>
+              </Box>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 
 export default ReviewShowMeMada;
