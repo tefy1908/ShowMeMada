@@ -8,9 +8,7 @@ import {
   MenuItem,
   Paper,
   TextField,
-  ThemeProvider,
   Typography,
-  createTheme,
 } from "@mui/material";
 import {
   AccessTime,
@@ -26,16 +24,6 @@ import { CONTACT } from "../Utils/contactInfo";
 
 const BRAND = "#63AB45";
 const BRAND_DARK = "#4a8533";
-
-// Couleur de la marque pour tous les champs du formulaire (focus, boutons) sans répéter de sx
-const contactTheme = (outerTheme) =>
-  createTheme({
-    ...outerTheme,
-    palette: {
-      ...outerTheme.palette,
-      primary: { main: BRAND, dark: BRAND_DARK, contrastText: "#fff" },
-    },
-  });
 
 const emptyForm = {
   nom: "",
@@ -232,8 +220,7 @@ const Contact = () => {
   });
 
   return (
-    <ThemeProvider theme={contactTheme}>
-      <Box sx={{ backgroundColor: "#f8f9fa", py: { xs: 4, md: 6 } }}>
+    <Box sx={{ backgroundColor: "#f8f9fa", py: { xs: 4, md: 6 } }}>
         <Container maxWidth="lg">
           <Box display="flex" flexDirection="column" alignItems="center" textAlign="center" mb={4}>
             <TextTitle title={t("contactPage.title")} />
@@ -510,8 +497,7 @@ const Contact = () => {
             </Grid>
           </Paper>
         </Container>
-      </Box>
-    </ThemeProvider>
+    </Box>
   );
 };
 
