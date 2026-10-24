@@ -1,35 +1,68 @@
-import React from 'react';
+import React from "react";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Typography,
   Box,
-  Chip,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
   Grid,
-  Divider,
   IconButton,
-  Paper,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
-import {
-  Close as CloseIcon,
-  LocationOn as LocationOnIcon,
-  Route as RouteIcon,
-  AccessTime as AccessTimeIcon,
-  Hotel as HotelIcon,
-  Restaurant as RestaurantIcon,
-  LocalActivity as ActivityIcon,
-  AttachMoney as PriceIcon,
-} from '@mui/icons-material';
-import { motion, AnimatePresence } from 'motion/react';
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TerrainIcon from "@mui/icons-material/Terrain";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+import RemoveIcon from "@mui/icons-material/Remove";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useTranslation } from "react-i18next";
 
-const TourDetailsModal = ({ open, onClose, tourDetails, currentColor }) => {
+const BRAND = "#63AB45";
+const BRAND_DARK = "#4a8533";
+const INK = "#1f2d3d";
+
+const sectionTitleSx = { fontSize: "1.05rem", fontWeight: 700, color: INK, mb: 2 };
+
+// Liste à puces avec icône (inclus, non inclus, points forts)
+const IconList = ({ items, icon, iconColor, iconBg }) => (
+  <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: "column", gap: 1.25 }}>
+    {items.map((item) => (
+      <Box component="li" key={item} sx={{ display: "flex", alignItems: "flex-start", gap: 1.25 }}>
+        <Box
+          sx={{
+            width: 22,
+            height: 22,
+            mt: "1px",
+            borderRadius: "50%",
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: iconColor,
+            backgroundColor: iconBg,
+            "& svg": { fontSize: 15 },
+          }}
+        >
+          {icon}
+        </Box>
+        <Typography variant="body2" sx={{ color: INK, lineHeight: 1.6 }}>
+          {item}
+        </Typography>
+      </Box>
+    ))}
+  </Box>
+);
+
+const TourDetailsModal = ({ open, onClose, onQuoteRequest, tourDetails }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (!tourDetails) return null;
 
   const {
@@ -48,325 +81,234 @@ const TourDetailsModal = ({ open, onClose, tourDetails, currentColor }) => {
     difficulty,
   } = tourDetails;
 
+  const facts = [
+    { Icon: AccessTimeIcon, label: t("Tours.modal.duration"), value: duration },
+    { Icon: TerrainIcon, label: t("Tours.modal.difficulty"), value: difficulty },
+    { Icon: CalendarMonthOutlinedIcon, label: t("Tours.modal.bestTime"), value: bestTime },
+    { Icon: PaymentsOutlinedIcon, label: t("Tours.modal.from"), value: priceRange },
+  ].filter((fact) => fact.value);
+
   return (
-    <AnimatePresence>
-      {open && (
-        <Dialog
-          open={open}
-          onClose={onClose}
-          maxWidth="md"
-          fullWidth
-          PaperComponent={motion.div}
-          PaperProps={{
-            initial: { opacity: 0, scale: 0.9 },
-            animate: { opacity: 1, scale: 1 },
-            exit: { opacity: 0, scale: 0.9 },
-            transition: { duration: 0.3 },
-            sx: {
-              borderRadius: '20px',
-              overflow: 'hidden',
-              maxHeight: '90vh',
-              backgroundColor: 'white', // Background blanc
-            }
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="md"
+      fullWidth
+      fullScreen={fullScreen}
+      scroll="paper"
+      aria-labelledby="tour-details-title"
+      slotProps={{ paper: { sx: { borderRadius: fullScreen ? 0 : 4, overflow: "hidden" } } }}
+    >
+      {/* En-tête photo */}
+      <Box
+        sx={{
+          position: "relative",
+          flexShrink: 0,
+          height: { xs: 220, sm: 280 },
+          backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.7) 100%), url("${DestinationImage}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          color: "white",
+        }}
+      >
+        <IconButton
+          onClick={onClose}
+          aria-label={t("common.close")}
+          sx={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            color: INK,
+            backgroundColor: "rgba(255,255,255,0.92)",
+            "&:hover": { backgroundColor: "white" },
           }}
         >
-          {/* Header avec image et titre */}
-          <Box sx={{ position: 'relative' }} >
+          <CloseIcon />
+        </IconButton>
+        <Box sx={{ position: "absolute", left: { xs: 20, sm: 32 }, right: { xs: 20, sm: 32 }, bottom: 20 }}>
+          <Typography
+            id="tour-details-title"
+            variant="h2"
+            sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem" }, fontWeight: 700, lineHeight: 1.15 }}
+          >
+            {DestinationName}
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5, opacity: 0.92 }}>
+            <LocationOnIcon sx={{ fontSize: 18 }} />
+            <Typography>{Location}</Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      <DialogContent sx={{ p: { xs: 2.5, sm: 4 } }}>
+        {/* Infos clés */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "repeat(2, 1fr)", sm: `repeat(${facts.length}, 1fr)` },
+            border: "1px solid #eceff2",
+            borderRadius: 3,
+            mb: 4,
+          }}
+        >
+          {facts.map(({ Icon, label, value }, index) => (
             <Box
+              key={label}
               sx={{
-                height: 300,
-                backgroundImage: `url(${DestinationImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                position: 'relative',
+                p: 2,
+                display: "flex",
+                gap: 1.25,
+                alignItems: "flex-start",
+                borderLeft: { sm: index > 0 ? "1px solid #eceff2" : "none" },
+                borderTop: { xs: index > 1 ? "1px solid #eceff2" : "none", sm: "none" },
               }}
             >
-              {/* Overlay */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7))',
-                }}
-              />
-              
-              {/* Bouton fermer */}
-              <IconButton
-                onClick={onClose}
-                sx={{
-                  position: 'absolute',
-                  top: 16,
-                  right: 16,
-                  backgroundColor: 'rgba(255,255,255,0.9)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,1)',
-                  },
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-
-              {/* Titre et localisation */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 24,
-                  left: 24,
-                  right: 24,
-                  color: 'white',
-                }}
-              >
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: 700,
-                    marginBottom: 1,
-                    textShadow: '0 2px 8px rgba(0,0,0,0.5)',
-                  }}
-                >
-                  {DestinationName}
+              <Icon sx={{ color: BRAND, fontSize: 22, mt: "2px" }} />
+              <Box>
+                <Typography variant="caption" sx={{ color: "text.secondary", display: "block", lineHeight: 1.3 }}>
+                  {label}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <LocationOnIcon sx={{ color: currentColor }} />
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      opacity: 0.9,
-                      textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-                    }}
-                  >
-                    {Location}
-                  </Typography>
-                </Box>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: INK }}>
+                  {value}
+                </Typography>
               </Box>
             </Box>
-          </Box>
+          ))}
+        </Box>
 
-          <DialogContent sx={{ padding: 0 }}>
-            <Box sx={{ padding: 3 }}>
-              {/* Informations rapides */}
-              <Grid container spacing={2} sx={{ marginBottom: 3 }}>
-                {duration && (
-                  <Grid item xs={6} sm={3}>
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        padding: 2,
-                        textAlign: 'center',
-                        backgroundColor: `${currentColor}10`,
-                        borderRadius: 2,
-                      }}
-                    >
-                      <AccessTimeIcon sx={{ color: currentColor, marginBottom: 1 }} />
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        Durée
-                      </Typography>
-                      <Typography variant="body2" fontWeight="bold">
-                        {duration}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-                {difficulty && (
-                  <Grid item xs={6} sm={3}>
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        padding: 2,
-                        textAlign: 'center',
-                        backgroundColor: `${currentColor}10`,
-                        borderRadius: 2,
-                      }}
-                    >
-                      <ActivityIcon sx={{ color: currentColor, marginBottom: 1 }} />
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        Difficulté
-                      </Typography>
-                      <Typography variant="body2" fontWeight="bold">
-                        {difficulty}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-                {priceRange && (
-                  <Grid item xs={6} sm={3}>
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        padding: 2,
-                        textAlign: 'center',
-                        backgroundColor: `${currentColor}10`,
-                        borderRadius: 2,
-                      }}
-                    >
-                      <PriceIcon sx={{ color: currentColor, marginBottom: 1 }} />
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        À partir de
-                      </Typography>
-                      <Typography variant="body2" fontWeight="bold">
-                        {priceRange}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-                {bestTime && (
-                  <Grid item xs={6} sm={3}>
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        padding: 2,
-                        textAlign: 'center',
-                        backgroundColor: `${currentColor}10`,
-                        borderRadius: 2,
-                      }}
-                    >
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        Meilleure période
-                      </Typography>
-                      <Typography variant="body2" fontWeight="bold">
-                        {bestTime}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-              </Grid>
+        {/* Description */}
+        <Typography component="h3" sx={sectionTitleSx}>
+          {t("Tours.modal.description")}
+        </Typography>
+        <Typography sx={{ color: "text.secondary", lineHeight: 1.8, mb: 4 }}>
+          {detailedDescription || Description}
+        </Typography>
 
-              {/* Description détaillée */}
-              <Typography variant="h6" gutterBottom sx={{ color: currentColor, fontWeight: 600 }}>
-                Description
+        <Grid container spacing={4} sx={{ mb: 4 }}>
+          {/* Itinéraire : frise verticale */}
+          {Itinerary && Itinerary.length > 0 && (
+            <Grid size={{ xs: 12, sm: 5 }}>
+              <Typography component="h3" sx={sectionTitleSx}>
+                {t("common.itinerary")}
               </Typography>
-              <Typography variant="body1" paragraph sx={{ lineHeight: 1.7, marginBottom: 3 }}>
-                {detailedDescription || Description}
-              </Typography>
-
-              {/* Itinéraire */}
-              {Itinerary && Itinerary.length > 0 && (
-                <>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 2 }}>
-                    <RouteIcon sx={{ color: currentColor }} />
-                    <Typography variant="h6" sx={{ color: currentColor, fontWeight: 600 }}>
-                      Itinéraire
-                    </Typography>
-                  </Box>
-                  <Box sx={{ marginBottom: 3 }}>
-                    {Itinerary.map((city, index) => (
-                      <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                        <Chip
-                          label={index + 1}
-                          size="small"
-                          sx={{
-                            backgroundColor: currentColor,
-                            color: 'white',
-                            minWidth: 30,
-                            marginRight: 2,
-                          }}
+              <Box component="ol" sx={{ listStyle: "none", m: 0, p: 0 }}>
+                {Itinerary.map((city, index) => {
+                  const last = index === Itinerary.length - 1;
+                  return (
+                    <Box component="li" key={city} sx={{ display: "flex", gap: 1.5, position: "relative", pb: last ? 0 : 2 }}>
+                      {!last && (
+                        <Box
+                          aria-hidden
+                          sx={{ position: "absolute", left: 13, top: 28, bottom: 0, width: 2, backgroundColor: `${BRAND}40` }}
                         />
-                        <Typography variant="body2">{city}</Typography>
-                        {index < Itinerary.length - 1 && (
-                          <Typography variant="body2" sx={{ marginLeft: 1, color: 'text.secondary' }}>
-                            →
-                          </Typography>
-                        )}
+                      )}
+                      <Box
+                        sx={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: "50%",
+                          flexShrink: 0,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "0.8rem",
+                          fontWeight: 700,
+                          color: index === 0 || last ? "white" : BRAND_DARK,
+                          backgroundColor: index === 0 || last ? BRAND : `${BRAND}1A`,
+                        }}
+                      >
+                        {index + 1}
                       </Box>
-                    ))}
-                  </Box>
-                </>
-              )}
+                      <Typography sx={{ color: INK, fontWeight: 500, pt: "3px" }}>{city}</Typography>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Grid>
+          )}
 
-              {/* Points forts */}
-              {highlights && highlights.length > 0 && (
-                <>
-                  <Typography variant="h6" gutterBottom sx={{ color: currentColor, fontWeight: 600 }}>
-                    Points forts
-                  </Typography>
-                  <List dense sx={{ marginBottom: 2 }}>
-                    {highlights.map((highlight, index) => (
-                      <ListItem key={index} sx={{ paddingLeft: 0 }}>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <ActivityIcon sx={{ color: currentColor, fontSize: 20 }} />
-                        </ListItemIcon>
-                        <ListItemText primary={highlight} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </>
-              )}
+          {/* Points forts */}
+          {highlights && highlights.length > 0 && (
+            <Grid size={{ xs: 12, sm: 7 }}>
+              <Typography component="h3" sx={sectionTitleSx}>
+                {t("Tours.modal.highlights")}
+              </Typography>
+              <IconList items={highlights} icon={<CheckIcon />} iconColor="white" iconBg={BRAND} />
+            </Grid>
+          )}
+        </Grid>
 
-              {/* Ce qui est inclus */}
-              <Grid container spacing={3}>
-                {included && included.length > 0 && (
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom sx={{ color: 'success.main', fontWeight: 600 }}>
-                      ✅ Inclus
-                    </Typography>
-                    <List dense>
-                      {included.map((item, index) => (
-                        <ListItem key={index} sx={{ paddingLeft: 0, paddingY: 0.5 }}>
-                          <ListItemText 
-                            primary={item}
-                            primaryTypographyProps={{ variant: 'body2' }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                )}
+        {/* Inclus / non inclus */}
+        <Grid container spacing={2}>
+          {included && included.length > 0 && (
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Box sx={{ height: "100%", p: 2.5, borderRadius: 3, backgroundColor: `${BRAND}0F` }}>
+                <Typography component="h3" sx={sectionTitleSx}>
+                  {t("Tours.modal.included")}
+                </Typography>
+                <IconList items={included} icon={<CheckIcon />} iconColor={BRAND_DARK} iconBg={`${BRAND}26`} />
+              </Box>
+            </Grid>
+          )}
+          {notIncluded && notIncluded.length > 0 && (
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Box sx={{ height: "100%", p: 2.5, borderRadius: 3, backgroundColor: "#f5f6f8" }}>
+                <Typography component="h3" sx={sectionTitleSx}>
+                  {t("Tours.modal.notIncluded")}
+                </Typography>
+                <IconList items={notIncluded} icon={<RemoveIcon />} iconColor="#6b7785" iconBg="#e6e9ed" />
+              </Box>
+            </Grid>
+          )}
+        </Grid>
+      </DialogContent>
 
-                {notIncluded && notIncluded.length > 0 && (
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom sx={{ color: 'error.main', fontWeight: 600 }}>
-                      ❌ Non inclus
-                    </Typography>
-                    <List dense>
-                      {notIncluded.map((item, index) => (
-                        <ListItem key={index} sx={{ paddingLeft: 0, paddingY: 0.5 }}>
-                          <ListItemText 
-                            primary={item}
-                            primaryTypographyProps={{ variant: 'body2' }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Grid>
-                )}
-              </Grid>
-            </Box>
-          </DialogContent>
-
-          <DialogActions sx={{ padding: 3, paddingTop: 0 }}>
-            <Button
-              onClick={onClose}
-              variant="outlined"
-              sx={{
-                borderColor: 'text.secondary',
-                color: 'text.secondary',
-                '&:hover': {
-                  borderColor: 'text.primary',
-                  color: 'text.primary',
-                },
-              }}
-            >
-              Fermer
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: currentColor,
-                '&:hover': {
-                  backgroundColor: currentColor,
-                  opacity: 0.9,
-                },
-              }}
-            >
-              Demander un devis
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
-    </AnimatePresence>
+      {/* Barre d'actions fixe en bas */}
+      <DialogActions
+        sx={{
+          px: { xs: 2.5, sm: 4 },
+          py: 2,
+          borderTop: "1px solid #eceff2",
+          justifyContent: "space-between",
+          gap: 2,
+          flexWrap: "wrap",
+        }}
+      >
+        {priceRange ? (
+          <Box>
+            <Typography variant="caption" color="text.secondary" sx={{ display: "block", lineHeight: 1.2 }}>
+              {t("Tours.modal.from")}
+            </Typography>
+            <Typography sx={{ fontWeight: 700, color: INK, fontSize: "1.15rem" }}>{priceRange}</Typography>
+          </Box>
+        ) : (
+          <span />
+        )}
+        <Box sx={{ display: "flex", gap: 1.5, ml: "auto" }}>
+          <Button
+            onClick={onClose}
+            sx={{ color: "text.secondary", fontWeight: 600, borderRadius: 3, px: 2.5 }}
+          >
+            {t("common.close")}
+          </Button>
+          <Button
+            variant="contained"
+            endIcon={<ArrowForwardIcon />}
+            onClick={onQuoteRequest}
+            sx={{
+              backgroundColor: BRAND,
+              fontWeight: 600,
+              borderRadius: 3,
+              px: 3,
+              boxShadow: "none",
+              "&:hover": { backgroundColor: BRAND_DARK, boxShadow: "none" },
+            }}
+          >
+            {t("common.requestQuote")}
+          </Button>
+        </Box>
+      </DialogActions>
+    </Dialog>
   );
 };
 

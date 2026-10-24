@@ -1,216 +1,123 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import ForestIcon from '@mui/icons-material/Forest';
-import SailingIcon from '@mui/icons-material/Sailing';
-import PoolIcon from '@mui/icons-material/Pool';
-import PetsIcon from '@mui/icons-material/Pets';
-import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
-import KitesurfingOutlinedIcon from '@mui/icons-material/KitesurfingOutlined';
+import ForestIcon from "@mui/icons-material/Forest";
+import SailingIcon from "@mui/icons-material/Sailing";
+import PoolIcon from "@mui/icons-material/Pool";
+import PetsIcon from "@mui/icons-material/Pets";
+import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
+import KitesurfingOutlinedIcon from "@mui/icons-material/KitesurfingOutlined";
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import SectionHeader from "./SectionHeader";
 
-//Navigation
-import { useNavigate } from 'react-router-dom';
+const BRAND = "#63AB45";
+const BRAND_DARK = "#4a8533";
+const INK = "#1f2d3d";
+
+// Clés de traduction : <key>Title, <key>Desc, <key>Stats
+const highlights = [
+  { key: "biodiversity", Icon: ForestIcon, color: BRAND },
+  { key: "culture", Icon: AssuredWorkloadOutlinedIcon, color: "#e67e22" },
+  { key: "landscape", Icon: SailingIcon, color: "#1e9bd7" },
+  { key: "wildlife", Icon: PetsIcon, color: "#8B5A2B" },
+  { key: "beach", Icon: PoolIcon, color: "#1e9bd7" },
+  { key: "adventure", Icon: KitesurfingOutlinedIcon, color: "#e67e22" },
+];
 
 const WhyMadagascarSection = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-
-  const highlights = [
-    {
-      icon: <ForestIcon fontSize="large"  sx={{ color: '#63AB45' }}/>,
-      title: t('biodiversityTitle'),
-      description: t('biodiversityDesc'),
-      stats: t('biodiversityStats')
-    },
-    {
-      icon: <AssuredWorkloadOutlinedIcon fontSize="large" sx={{color :"orange"}} />,
-      title: t('cultureTitle'),
-      description: t('cultureDesc'),
-      stats: t('cultureStats')
-    },
-    {
-      icon: <SailingIcon fontSize="large" sx={{color :"#21CBF3"}}  />,
-      title: t('landscapeTitle'),
-      description: t('landscapeDesc'),
-      stats: t('landscapeStats')
-    },
-    {
-      icon: <PetsIcon fontSize="large" sx={{color :"#8B5A2B"}}  />,
-      title: t('wildlifeTitle'),
-      description: t('wildlifeDesc'),
-      stats: t('wildlifeStats')
-    },
-    {
-      icon: <PoolIcon fontSize="large"  sx={{color :"#21CBF3"}} />,
-      title: t('beachTitle'),
-      description: t('beachDesc'),
-      stats: t('beachStats')
-    },
-    {
-      icon: <KitesurfingOutlinedIcon fontSize="large"  sx={{color :"#21CBF3"}}/>,
-      title: t('adventureTitle'),
-      description: t('adventureDesc'),
-      stats: t('adventureStats')
-    }
-  ];
 
   return (
-    <Box 
-      sx={{ 
-        py: 8, 
-        px: { xs: 2, md: 4 },
-        backgroundColor: "#f8f9fa"
-      }}
-    >
-      {/* Section principale */}
-      <Box textAlign="center" mb={6}>
-        <Typography 
-          variant="h2" 
-          component="h2"
-          sx={{ 
-            fontWeight: 900, 
-            fontSize: { xs: "36px", md: "48px" },
-            color: "#2c3e50",
-            mb: 2
-          }}
-        >
-          {t('whyMadagascarTitle')}
-        </Typography>
-        <Typography 
-          variant="h5" 
-          component="p"
-          sx={{ 
-            fontSize: "20px",
-            color: "#666",
-            maxWidth: "800px",
-            mx: "auto",
-            lineHeight: 1.6
-          }}
-        >
-          {t('whyMadagascarSubtitle')}
-        </Typography>
-      </Box>
+    <Box>
+      <SectionHeader
+        align="center"
+        overline={t("home.whyOverline")}
+        title={t("whyMadagascarTitle")}
+        subtitle={t("whyMadagascarSubtitle")}
+      />
 
-      {/* Grille des points forts */}
-      <Grid container spacing={4} justifyContent="center">
-        {highlights.map((highlight, index) => (
-          <Grid item xs={12} md={6} lg={4} key={index}>
+      <Grid container spacing={3}>
+        {highlights.map(({ key, Icon, color }) => (
+          <Grid key={key} size={{ xs: 12, sm: 6, lg: 4 }}>
             <Box
               sx={{
-                background: "white",
-                borderRadius: "15px",
-                padding: "30px",
-                textAlign: "center",
                 height: "100%",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                p: 3.5,
+                borderRadius: 4,
+                backgroundColor: "white",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+                display: "flex",
+                flexDirection: "column",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.15)"
-                }
+                "&:hover": { transform: "translateY(-6px)", boxShadow: "0 18px 40px rgba(0,0,0,0.1)" },
               }}
             >
-              <Box mb={2}>
-                {highlight.icon}
-              </Box>
-              <Typography 
-                variant="h4" 
-                component="h3"
-                sx={{ 
-                  fontWeight: 700,
-                  fontSize: "24px",
-                  color: "#2c3e50",
-                  mb: 2
-                }}
-              >
-                {highlight.title}
-              </Typography>
-              <Typography 
-                sx={{ 
-                  fontSize: "16px",
-                  color: "#666",
-                  lineHeight: 1.6,
-                  mb: 2
-                }}
-              >
-                {highlight.description}
-              </Typography>
               <Box
                 sx={{
-                  backgroundColor: "#63AB45",
-                  color: "white",
-                  padding: "8px 16px",
-                  borderRadius: "20px",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  display: "inline-block"
+                  width: 56,
+                  height: 56,
+                  borderRadius: 3,
+                  backgroundColor: `${color}1A`,
+                  color,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 2.5,
                 }}
               >
-                {highlight.stats}
+                <Icon fontSize="large" />
+              </Box>
+              <Typography variant="h3" sx={{ fontSize: "1.15rem", fontWeight: 700, color: INK, mb: 1 }}>
+                {t(`${key}Title`)}
+              </Typography>
+              <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.7, mb: 2.5 }}>
+                {t(`${key}Desc`)}
+              </Typography>
+              <Box
+                component="span"
+                sx={{
+                  mt: "auto",
+                  alignSelf: "flex-start",
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: 2,
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  color: BRAND_DARK,
+                  backgroundColor: `${BRAND}1A`,
+                }}
+              >
+                {t(`${key}Stats`)}
               </Box>
             </Box>
           </Grid>
         ))}
       </Grid>
 
-      {/* Section citation/témoignage */}
-      <Box 
-        textAlign="center" 
-        mt={8}
+      {/* Proverbe */}
+      <Box
+        component="figure"
         sx={{
-          background: "linear-gradient(135deg, #63AB45 0%, #4a8f35 100%)",
-          borderRadius: "20px",
-          padding: "40px",
-          color: "white"
+          m: 0,
+          mt: { xs: 5, md: 7 },
+          px: { xs: 3, md: 8 },
+          py: { xs: 4, md: 5 },
+          borderRadius: 4,
+          textAlign: "center",
+          backgroundColor: "white",
+          borderLeft: `6px solid ${BRAND}`,
+          boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
         }}
       >
-        <Typography 
-          variant="h4" 
+        <FormatQuoteIcon sx={{ fontSize: 44, color: BRAND, opacity: 0.6 }} />
+        <Typography
           component="blockquote"
-          sx={{ 
-            fontSize: { xs: "24px", md: "28px" },
-            fontWeight: 300,
-            mb: 2,
-            lineHeight: 1.4
-          }}
+          sx={{ m: 0, fontSize: { xs: "1.3rem", md: "1.6rem" }, fontWeight: 500, color: INK, lineHeight: 1.4 }}
         >
-          "{t('madagascarQuote')}"
+          {t("madagascarQuote")}
         </Typography>
-        <Typography 
-          sx={{ 
-            fontSize: "16px",
-            opacity: 0.9
-          }}
-        >
-          {t('quoteAuthor')}
+        <Typography component="figcaption" sx={{ mt: 1.5, color: "text.secondary", fontWeight: 500 }}>
+          — {t("quoteAuthor")}
         </Typography>
-      </Box>
-
-      {/* Call to action */}
-      <Box textAlign="center" mt={6}>
-        <Box
-          component="button"
-          onClick={() => navigate('/tours')}
-
-          sx={{
-            backgroundColor: "#63AB45",
-            color: "white",
-            border: "none",
-            padding: "15px 30px",
-            borderRadius: "25px",
-            fontSize: "18px",
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#4a8f35",
-              transform: "translateY(-2px)",
-              boxShadow: "0 6px 20px rgba(99, 171, 69, 0.3)"
-            }
-          }}
-        >
-          {t('discoverMadagascar')}
-        </Box>
       </Box>
     </Box>
   );

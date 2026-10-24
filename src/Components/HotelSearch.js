@@ -10,7 +10,11 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 import KingBedOutlinedIcon from "@mui/icons-material/KingBedOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import { useTranslation } from "react-i18next";
 const HotelSearch = () => {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [searchData, setSearchData] = useState({
     destination: "",
@@ -42,11 +46,11 @@ const HotelSearch = () => {
   ];
 
   const steps = [
-    { name: "Destination", icon: <AddLocationOutlinedIcon /> },
-    { name: "Catégorie", icon: <StarBorderOutlinedIcon /> },
-    { name: "Budget", icon: <AttachMoneyOutlinedIcon /> },
-    { name: "Dates", icon: <CalendarMonthOutlinedIcon /> },
-    { name: "Contact", icon: <ContactPageOutlinedIcon /> },
+    { key: "destination", icon: <AddLocationOutlinedIcon /> },
+    { key: "category", icon: <StarBorderOutlinedIcon /> },
+    { key: "budget", icon: <AttachMoneyOutlinedIcon /> },
+    { key: "dates", icon: <CalendarMonthOutlinedIcon /> },
+    { key: "contact", icon: <ContactPageOutlinedIcon /> },
   ];
 
   const handleNext = () => {
@@ -111,7 +115,7 @@ const HotelSearch = () => {
             <h3
               style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
             >
-              Choisissez votre destination à Madagascar
+              {t("hotel.destinationTitle")}
             </h3>
             <select
               value={searchData.destination}
@@ -127,7 +131,7 @@ const HotelSearch = () => {
                 backgroundColor: "#fff",
               }}
             >
-              <option value="">Sélectionnez une destination</option>
+              <option value="">{t("hotel.selectDestination")}</option>
               {destinations.map((dest) => (
                 <option key={dest} value={dest}>
                   {dest}
@@ -143,7 +147,7 @@ const HotelSearch = () => {
             <h3
               style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
             >
-              Choisissez le type d'hébergement
+              {t("hotel.categoryTitle")}
             </h3>
             <Box
               sx={{
@@ -178,9 +182,9 @@ const HotelSearch = () => {
                 <div style={{ fontSize: "32px", marginBottom: "10px" }}>
                   <KingBedOutlinedIcon fontSize="large" />
                 </div>
-                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>Luxe</h4>
+                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>{t("hotel.luxury")}</h4>
                 <p style={{ margin: "0", fontSize: "14px", color: "#666" }}>
-                  Hôtels de luxe, services premium
+                  {t("hotel.luxuryDesc")}
                 </p>
               </div>
               <div
@@ -209,9 +213,9 @@ const HotelSearch = () => {
                 <div style={{ fontSize: "32px", marginBottom: "10px" }}>
                   <CheckCircleOutlineOutlinedIcon fontSize="large" />
                 </div>
-                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>Simple</h4>
+                <h4 style={{ margin: "0 0 8px 0", color: "#000" }}>{t("hotel.simple")}</h4>
                 <p style={{ margin: "0", fontSize: "14px", color: "#666" }}>
-                  Hôtels confortables, bon rapport qualité-prix
+                  {t("hotel.simpleDesc")}
                 </p>
               </div>
             </Box>
@@ -224,7 +228,7 @@ const HotelSearch = () => {
             <h3
               style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
             >
-              Définissez votre budget par nuit
+              {t("hotel.budgetTitle")}
             </h3>
             <div style={{ padding: "0 10px" }}>
               <div
@@ -320,7 +324,7 @@ const HotelSearch = () => {
             <h3
               style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
             >
-              Sélectionnez vos dates
+              {t("hotel.datesTitle")}
             </h3>
             <Box
               sx={{
@@ -338,7 +342,7 @@ const HotelSearch = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Date d'arrivée
+                  {t("hotel.checkin")}
                 </label>
                 <input
                   type="date"
@@ -367,7 +371,7 @@ const HotelSearch = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Date de départ
+                  {t("hotel.checkout")}
                 </label>
                 <input
                   type="date"
@@ -397,13 +401,12 @@ const HotelSearch = () => {
             <h3
               style={{ color: "#000", marginBottom: "20px", fontSize: "18px" }}
             >
-              Vos informations de contact
+              {t("hotel.contactTitle")}
             </h3>
             <p
               style={{ color: "#666", fontSize: "14px", marginBottom: "20px" }}
             >
-              Nous vous enverrons une sélection personnalisée d'hôtels
-              correspondant à vos critères.
+              {t("hotel.contactIntro")}
             </p>
             <div
               style={{
@@ -422,7 +425,7 @@ const HotelSearch = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Nom *
+                  {t("hotel.lastName")}
                 </label>
                 <input
                   type="text"
@@ -433,7 +436,7 @@ const HotelSearch = () => {
                       contact: { ...searchData.contact, nom: e.target.value },
                     })
                   }
-                  placeholder="Votre nom"
+                  placeholder={t("hotel.lastNamePlaceholder")}
                   style={{
                     padding: "12px",
                     border: "1px solid #ddd",
@@ -452,7 +455,7 @@ const HotelSearch = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Prénom *
+                  {t("hotel.firstName")}
                 </label>
                 <input
                   type="text"
@@ -466,7 +469,7 @@ const HotelSearch = () => {
                       },
                     })
                   }
-                  placeholder="Votre prénom"
+                  placeholder={t("hotel.firstNamePlaceholder")}
                   style={{
                     padding: "12px",
                     border: "1px solid #ddd",
@@ -486,7 +489,7 @@ const HotelSearch = () => {
                   fontWeight: "bold",
                 }}
               >
-                Email *
+                {t("hotel.email")}
               </label>
               <input
                 type="email"
@@ -497,7 +500,7 @@ const HotelSearch = () => {
                     contact: { ...searchData.contact, email: e.target.value },
                   })
                 }
-                placeholder="votre@email.com"
+                placeholder={t("hotel.emailPlaceholder")}
                 style={{
                   padding: "12px",
                   border: "1px solid #ddd",
@@ -516,7 +519,7 @@ const HotelSearch = () => {
                   fontWeight: "bold",
                 }}
               >
-                Téléphone
+                {t("hotel.phone")}
               </label>
               <input
                 type="tel"
@@ -549,7 +552,7 @@ const HotelSearch = () => {
                 border: "1px solid #63AB45",
               }}
             >
-              <p
+              <div
                 style={{
                   margin: "0",
                   fontSize: "13px",
@@ -557,12 +560,15 @@ const HotelSearch = () => {
                   lineHeight: "1.4",
                 }}
               >
-                📧 Nous vous enverrons par email une sélection d'hôtels
-                personnalisée sous 24h.
-                <br />
-                📞 Si vous renseignez votre téléphone, nous pourrons vous
-                contacter pour affiner votre recherche.
-              </p>
+                <span style={{ display: "flex", gap: "8px", alignItems: "flex-start", marginBottom: "6px" }}>
+                  <EmailOutlinedIcon sx={{ fontSize: 18, color: "#63AB45" }} />
+                  {t("hotel.infoEmail")}
+                </span>
+                <span style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
+                  <PhoneOutlinedIcon sx={{ fontSize: 18, color: "#63AB45" }} />
+                  {t("hotel.infoPhone")}
+                </span>
+              </div>
             </div>
           </div>
         );
@@ -573,32 +579,8 @@ const HotelSearch = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#fff",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
+    <div style={{ backgroundColor: "#fff" }}>
       <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-        {/* En-tête */}
-        <div style={{ textAlign: "center", marginBottom: "30px" }}>
-          <h1
-            style={{
-              fontWeight: "bold",
-              color: "#000",
-              margin: "0 0 10px 0",
-              fontSize: "28px",
-            }}
-          >
-            Trouvez votre hôtel à Madagascar
-          </h1>
-          <p style={{ color: "#666", margin: "0", fontSize: "16px" }}>
-            Découvrez les meilleurs hébergements de la Grande Île
-          </p>
-        </div>
-
         {/* Barre de progression */}
         <div style={{ marginBottom: "30px" }}>
           <div
@@ -612,7 +594,7 @@ const HotelSearch = () => {
           >
             <div
               style={{
-                width: `${(activeStep + 1) * 25}%`,
+                width: `${((activeStep + 1) / steps.length) * 100}%`,
                 height: "100%",
                 backgroundColor: "#63AB45",
                 transition: "width 0.3s ease",
@@ -627,7 +609,7 @@ const HotelSearch = () => {
               color: "#666",
             }}
           >
-            Étape {activeStep + 1} sur {steps.length}
+            {t("hotel.stepOf", { current: activeStep + 1, total: steps.length })}
           </p>
         </div>
 
@@ -641,7 +623,7 @@ const HotelSearch = () => {
           }}
         >
           {steps.map((step, index) => (
-            <div key={step.name} style={{ textAlign: "center", flex: 1 }}>
+            <div key={step.key} style={{ textAlign: "center", flex: 1 }}>
               <div
                 style={{
                   width: "40px",
@@ -667,7 +649,7 @@ const HotelSearch = () => {
                   fontWeight: index === activeStep ? "bold" : "normal",
                 }}
               >
-                {step.name}
+                {t(`hotel.steps.${step.key}`)}
               </p>
             </div>
           ))}
@@ -711,7 +693,7 @@ const HotelSearch = () => {
                 },
               }}
             >
-              Précédent
+              {t("common.previous")}
             </Button>
 
             {activeStep === steps.length - 1 ? (
@@ -736,7 +718,7 @@ const HotelSearch = () => {
                   },
                 }}
               >
-                📧 Recevoir ma sélection
+                {t("hotel.submit")}
               </Button>
             ) : (
               <button
@@ -752,7 +734,7 @@ const HotelSearch = () => {
                   fontSize: "16px",
                 }}
               >
-                Suivant
+                {t("common.next")}
               </button>
             )}
           </div>
@@ -775,7 +757,7 @@ const HotelSearch = () => {
                 fontSize: "18px",
               }}
             >
-              Votre recherche
+              {t("hotel.summaryTitle")}
             </h3>
             <div
               style={{
@@ -786,7 +768,7 @@ const HotelSearch = () => {
             >
               {searchData.destination && (
                 <div>
-                  <strong style={{ color: "#000" }}>Destination:</strong>
+                  <strong style={{ color: "#000" }}>{t("hotel.summary.destination")}</strong>
                   <span style={{ marginLeft: "8px", color: "#666" }}>
                     {searchData.destination}
                   </span>
@@ -794,29 +776,29 @@ const HotelSearch = () => {
               )}
               {searchData.category && (
                 <div>
-                  <strong style={{ color: "#000" }}>Catégorie:</strong>
+                  <strong style={{ color: "#000" }}>{t("hotel.summary.category")}</strong>
                   <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {searchData.category === "luxe" ? "Luxe" : "Simple"}
+                    {searchData.category === "luxe" ? t("hotel.luxury") : t("hotel.simple")}
                   </span>
                 </div>
               )}
               <div>
-                <strong style={{ color: "#000" }}>Budget:</strong>
+                <strong style={{ color: "#000" }}>{t("hotel.summary.budget")}</strong>
                 <span style={{ marginLeft: "8px", color: "#666" }}>
                   {searchData.priceRange[0]}€ - {searchData.priceRange[1]}€
                 </span>
               </div>
               {searchData.dates.checkin && searchData.dates.checkout && (
                 <div>
-                  <strong style={{ color: "#000" }}>Dates:</strong>
+                  <strong style={{ color: "#000" }}>{t("hotel.summary.dates")}</strong>
                   <span style={{ marginLeft: "8px", color: "#666" }}>
-                    {searchData.dates.checkin} au {searchData.dates.checkout}
+                    {t("hotel.summary.datesValue", { checkin: searchData.dates.checkin, checkout: searchData.dates.checkout })}
                   </span>
                 </div>
               )}
               {searchData.contact.nom && searchData.contact.email && (
                 <div>
-                  <strong style={{ color: "#000" }}>Contact:</strong>
+                  <strong style={{ color: "#000" }}>{t("hotel.summary.contact")}</strong>
                   <span style={{ marginLeft: "8px", color: "#666" }}>
                     {searchData.contact.prenom} {searchData.contact.nom} -{" "}
                     {searchData.contact.email}

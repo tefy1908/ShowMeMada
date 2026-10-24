@@ -4,6 +4,7 @@ import FacebookIcon from "./IconComponent/FacebookIcon"
 import TwitterIcon from "./IconComponent/TwitterIcon"
 import InstaIcon from "./IconComponent/InstaIcon"
 import { useTranslation } from "react-i18next"
+import { CONTACT } from "../Utils/contactInfo"
 const NavBarBlack =()=>{
       const {t} = useTranslation();
     
@@ -26,7 +27,14 @@ const NavBarBlack =()=>{
           <EmailIcon />
           <Box display={"flex"} flexDirection={"column"} color={"white"}>
             <Box>{t('email')}</Box>
-            <Box>info@showmemada.com</Box>
+            <Box
+              component="a"
+              href={CONTACT.emailHref}
+              color="white"
+              sx={{ textDecoration: "none", "&:hover": { textDecoration: "underline" } }}
+            >
+              {CONTACT.email}
+            </Box>
           </Box>
         </Box>
         <Box

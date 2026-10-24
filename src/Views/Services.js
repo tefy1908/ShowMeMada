@@ -1,215 +1,184 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import Carousel from "../Components/Tourismcarroussel";
-import { importAll, formatImagesForCarousel } from "..//Utils/ImportImage";
-import { useState } from "react";
-import { useEffect } from "react";
-import TextTitle from "../Components/TextTitle";
+import React, { useState } from "react";
+import { Box, ButtonBase, Container, Typography, keyframes } from "@mui/material";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+import PageHero from "../Components/PageHero";
+import FilterPills from "../Components/FilterPills";
+import CtaBanner from "../Components/CtaBanner";
+import Lightbox from "../Components/Lightbox";
+import HeroImage from "../Assets/Images/Galerie/Paysage/Paysage 6.jpg";
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+// require.context doit recevoir des arguments littéraux : un appel par dossier
+const sections = [
+  {
+    key: "fauna",
+    context: require.context("../Assets/Images/Galerie/Faune", false, /\.(png|jpe?g|svg|webp)$/),
+  },
+  {
+    key: "flora",
+    context: require.context("../Assets/Images/Galerie/Flore", false, /\.(png|jpe?g|svg|webp)$/),
+  },
+  {
+    key: "landscapes",
+    context: require.context("../Assets/Images/Galerie/Paysage", false, /\.(png|jpe?g|svg|webp)$/),
+  },
+  {
+    key: "beaches",
+    context: require.context("../Assets/Images/Galerie/Plage", false, /\.(png|jpe?g|svg|webp)$/),
+  },
+  {
+    key: "local",
+    context: require.context("../Assets/Images/Galerie/Locale", false, /\.(png|jpe?g|svg|webp)$/),
+  },
+];
+
+const allPhotos = sections.flatMap(({ key, context }) =>
+  context.keys().map((item, index) => {
+    const src = context(item);
+    return { id: `${key}-${index + 1}`, number: index + 1, section: key, src: src.default || src };
+  })
+);
 
 const Services = () => {
-  // Import toutes les images des différents dossiers
-  const [fauneImages, setFauneImages] = useState([]);
-  const [floreImages, setFloreImages] = useState([]);
-  const [paysagesImages, setPaysagesImages] = useState([]);
-  const [plagesImages, setPlagesImages] = useState([]);
-  const [localesImages, setLocalesImages] = useState([]);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState("all");
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  useEffect(() => {
-    // Méthode simple pour importer les images
-    const importImages = () => {
-      try {
-        // Contexte des images Faune
-        const context = require.context(
-          "..//Assets/Images/Galerie/Faune",
-          false,
-          /\.(png|jpe?g|svg|webp)$/
-        );
+  const photos = allPhotos
+    .filter((photo) => filter === "all" || photo.section === filter)
+    .map((photo) => {
+      const category = t(`gallery.${photo.section}`);
+      return { ...photo, category, title: `${category} ${photo.number}` };
+    });
 
-        // Contexte des images Flore
-        const contextFlore = require.context(
-          "..//Assets/Images/Galerie/Flore",
-          false,
-          /\.(png|jpe?g|svg|webp)$/
-        );
+  const filterItems = [
+    { key: "all", label: t("gallery.all"), count: allPhotos.length },
+    ...sections.map(({ key }) => ({
+      key,
+      label: t(`gallery.${key}`),
+      count: allPhotos.filter((photo) => photo.section === key).length,
+    })),
+  ];
 
-        // Contexte des images Paysages
-        const contextPaysages = require.context(
-          "..//Assets/Images/Galerie/Paysage",
-          false,
-          /\.(png|jpe?g|svg|webp)$/
-        );
-
-        // Contexte des images Plages
-        const contextPlages = require.context(
-          "..//Assets/Images/Galerie/Plage",
-          false,
-          /\.(png|jpe?g|svg|webp)$/
-        );
-        // Contexte des images locales
-        const contextLocales = require.context(
-          "..//Assets/Images/Galerie/Locale",
-          false,
-          /\.(png|jpe?g|svg|webp)$/
-        );
-
-        // Clés des images
-        const imageKeys = context.keys();
-        const imageFloreKeys = contextFlore.keys();
-        const imagePaysagesKeys = contextPaysages.keys();
-        const imagePlagesKeys = contextPlages.keys();
-        const imageLocalesKeys = contextLocales.keys();
-
-        // Traitement des images Faune
-        const imageArray = imageKeys.map((item, index) => {
-          const imageSrc = context(item);
-          const filename = item.replace("./", "").replace(/\.[^/.]+$/, "");
-
-          return {
-            id: index + 1,
-            src: imageSrc.default || imageSrc,
-            title: filename.replace(/[-_]/g, " "),
-            category: "Faune",
-          };
-        });
-
-        // Traitement des images Flore
-        const imageArrayFlore = imageFloreKeys.map((item, index) => {
-          const imageSrcFlore = contextFlore(item);
-          const filenameFlore = item.replace("./", "").replace(/\.[^/.]+$/, "");
-
-          return {
-            id: index + 1,
-            src: imageSrcFlore.default || imageSrcFlore,
-            title: filenameFlore.replace(/[-_]/g, " "),
-            category: "Flore",
-          };
-        });
-
-        // Traitement des images Paysages
-        const imageArrayPaysages = imagePaysagesKeys.map((item, index) => {
-          const imageSrcPaysages = contextPaysages(item);
-          const filenamePaysages = item
-            .replace("./", "")
-            .replace(/\.[^/.]+$/, "");
-
-          return {
-            id: index + 1,
-            src: imageSrcPaysages.default || imageSrcPaysages,
-            title: filenamePaysages.replace(/[-_]/g, " "),
-            category: "Paysages",
-          };
-        });
-
-        // Traitement des images Plages
-        const imageArrayPlages = imagePlagesKeys.map((item, index) => {
-          const imageSrcPlages = contextPlages(item);
-          const filenamePlages = item
-            .replace("./", "")
-            .replace(/\.[^/.]+$/, "");
-
-          return {
-            id: index + 1,
-            src: imageSrcPlages.default || imageSrcPlages,
-            title: filenamePlages.replace(/[-_]/g, " "),
-            category: "Plages",
-          };
-        });
-
-        // Traitement des images locales
-
-        const imageArrayLocales = imageLocalesKeys.map((item, index) => {
-          const imageSrcLocales = contextLocales(item);
-          const filenameLocales = item
-            .replace("./", "")
-            .replace(/\.[^/.]+$/, "");
-
-          return {
-            id: index + 1,
-            src: imageSrcLocales.default || imageSrcLocales,
-            title: filenameLocales.replace(/[-_]/g, " "),
-            category: "Plages",
-          };
-        });
-
-        console.log("Images Faune chargées:", imageArray);
-        console.log("Images Flore chargées:", imageArrayFlore);
-        console.log("Images Paysages chargées:", imageArrayPaysages);
-        console.log("Images Plages chargées:", imageArrayPlages);
-        console.log("Images locales chargées :", imageArrayLocales);
-
-        setFauneImages(imageArray);
-        setFloreImages(imageArrayFlore);
-        setPaysagesImages(imageArrayPaysages);
-        setPlagesImages(imageArrayPlages);
-        setLocalesImages(imageArrayLocales);
-      } catch (error) {
-        console.error("Erreur lors du chargement des images:", error);
-        setFauneImages([]);
-        setFloreImages([]);
-        setPaysagesImages([]);
-        setPlagesImages([]);
-        setLocalesImages([]);
-      }
-    };
-
-    importImages();
-  }, []);
+  const handleFilterChange = (key) => {
+    setFilter(key);
+    setLightboxIndex(null);
+  };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      gap={"2rem"}
-      padding={"20px "}
-    >
-      <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-        {" "}
-        <TextTitle title={"Gallery.Title"} />
-      </Box>
-      {/* Container pour les faunes */}
-      <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
-        {/* Title section */}
-        <Box display={"flex"} fontSize={"20px"} fontWeight={"700"}>
-          Faune
-        </Box>
-        <Carousel images={fauneImages} />
-      </Box>
+    <Box sx={{ backgroundColor: "#f8f9fa", pb: { xs: 6, md: 10 } }}>
+      <PageHero
+        overline={t("gallery.title")}
+        title={t("gallery.heading")}
+        intro={t("gallery.intro")}
+        image={HeroImage}
+        imagePosition="center 40%"
+        overlap={false}
+      />
 
-      {/* Container pour les flores */}
-      <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
-        {/* Title section */}
-        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
-          Flore
+      <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 6 } }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "stretch", md: "center" },
+            justifyContent: "space-between",
+            gap: 2,
+            mb: 3,
+          }}
+        >
+          <FilterPills
+            ariaLabel={t("gallery.filterLabel")}
+            value={filter}
+            onChange={handleFilterChange}
+            items={filterItems}
+          />
+          <Typography variant="body2" color="text.secondary" fontWeight={500} sx={{ flexShrink: 0 }}>
+            {t("gallery.count", { count: photos.length })}
+          </Typography>
         </Box>
-        <Carousel images={floreImages} />
-      </Box>
 
-      {/* Container pour les paysages */}
-      <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
-        {/* Title section */}
-        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
-          Paysages
+        {/* Mosaïque : colonnes CSS, chaque photo garde ses proportions */}
+        <Box
+          key={filter}
+          sx={{
+            columnCount: { xs: 2, md: 3, lg: 4 },
+            columnGap: { xs: "10px", md: "16px" },
+          }}
+        >
+          {photos.map((photo, index) => (
+            <ButtonBase
+              key={photo.id}
+              onClick={() => setLightboxIndex(index)}
+              aria-label={t("gallery.open", { title: photo.title })}
+              sx={{
+                display: "block",
+                width: "100%",
+                mb: { xs: "10px", md: "16px" },
+                breakInside: "avoid",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: 3,
+                boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+                animation: `${fadeIn} 0.45s ease-out ${Math.min(index, 12) * 0.04}s both`,
+                "& img": { transition: "transform 0.5s ease" },
+                "&:hover img, &.Mui-focusVisible img": { transform: "scale(1.06)" },
+                "&:hover .photo-overlay, &.Mui-focusVisible .photo-overlay": { opacity: 1 },
+                "&.Mui-focusVisible": { outline: "3px solid #63AB45", outlineOffset: 2 },
+              }}
+            >
+              <Box
+                component="img"
+                src={photo.src}
+                alt={photo.title}
+                loading="lazy"
+                sx={{ display: "block", width: "100%", height: "auto" }}
+              />
+              <Box
+                className="photo-overlay"
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                  p: 1.5,
+                  color: "white",
+                  background: "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.65) 100%)",
+                  opacity: 0,
+                  transition: "opacity 0.3s ease",
+                }}
+              >
+                <Typography sx={{ fontWeight: 600, fontSize: "0.9rem" }}>{photo.category}</Typography>
+                <ZoomInIcon />
+              </Box>
+            </ButtonBase>
+          ))}
         </Box>
-        <Carousel images={paysagesImages} />
-      </Box>
 
-      {/* Container pour les plages */}
-      <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
-        {/* Title section */}
-        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
-          Plages
-        </Box>
-        <Carousel images={plagesImages} />
-      </Box>
+        <CtaBanner
+          sx={{ mt: { xs: 6, md: 8 } }}
+          title={t("gallery.cta.title")}
+          text={t("gallery.cta.text")}
+          primary={{ label: t("common.requestQuote"), onClick: () => navigate("/contact") }}
+          secondary={{ label: t("gallery.cta.destinations"), onClick: () => navigate("/destinations") }}
+        />
+      </Container>
 
-      {/* Container pour les images locales */}
-      <Box display={"flex"} flexDirection={"column"} gap={"1rem"}>
-        {/* Title section */}
-        <Box display={"flex"} fontWeight={"700"} fontSize={"20px"}>
-          Locales
-        </Box>
-        <Carousel images={localesImages} />
-      </Box>
+      <Lightbox
+        images={photos}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onChange={setLightboxIndex}
+      />
     </Box>
   );
 };

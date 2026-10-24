@@ -1,6 +1,22 @@
 {
   "welcome": "Bienvenido",
-  "home": "Inicio",
+  "home": {
+    "heroOverline": "Agencia de viajes local en Madagascar",
+    "discoverDestinations": "Descubrir los destinos",
+    "toursOverline": "Nuestros circuitos",
+    "toursTitle": "Circuitos populares",
+    "toursSubtitle": "Itinerarios diseñados por nuestro equipo local, adaptados a sus deseos.",
+    "allTours": "Ver todos los circuitos",
+    "whyOverline": "La Gran Isla",
+    "galleryOverline": "Galería",
+    "galleryCta": "Ver toda la galería",
+    "reviewsOverline": "Testimonios",
+    "reviewsSubtitle": "Exploraron Madagascar con nosotros y comparten su experiencia.",
+    "cta": {
+      "title": "Su aventura malgache empieza aquí",
+      "text": "Cuéntenos lo que sueña: construimos con usted un viaje auténtico y a medida."
+    }
+  },
   "about": "Acerca de",
   "contact": "Contacto",
   "navigation": {
@@ -20,39 +36,29 @@
   "heroSubtitle": "Tu aventura auténtica te espera en la isla roja.",
   "bookTrip": "Reservar un Viaje",
   "rating": "Calificación",
-  
   "whyMadagascarTitle": "¿Por qué Madagascar?",
   "whyMadagascarSubtitle": "Descubre la isla continente de mil maravillas, un santuario de biodiversidad único en el mundo",
-  
   "biodiversityTitle": "Biodiversidad Única",
   "biodiversityDesc": "Madagascar alberga el 5% de la biodiversidad mundial en menos del 0,4% de las tierras emergidas.",
   "biodiversityStats": "90% de especies endémicas",
-  
   "cultureTitle": "Riqueza Cultural",
   "cultureDesc": "18 etnias malgaches con tradiciones milenarias , artesanía única te esperan.",
   "cultureStats": "18 etnias distintas",
-  
   "landscapeTitle": "Paisajes Excepcionales",
   "landscapeDesc": "Desde los Tsingy calcáreos hasta las avenidas de baobabs, pasando por las mesetas altas y los bosques primarios.",
   "landscapeStats": "6 parques nacionales UNESCO",
-  
   "wildlifeTitle": "Fauna Endémica",
   "wildlifeDesc": "Lémures, fossas, camaleones... Una fauna única moldeada por 165 millones de años de aislamiento.",
   "wildlifeStats": "100+ especies de lémures",
-  
   "beachTitle": "Costas Paradisíacas",
   "beachDesc": "5000 km de costas preservadas, lagunas turquesas, arrecifes de coral y playas de arena blanca.",
   "beachStats": "300 días de sol/año",
-  
   "adventureTitle": "Aventuras Auténticas",
   "adventureDesc": "Trekking, buceo, observación de fauna... Experiencias inolvidables fuera de los caminos trillados.",
   "adventureStats": "Destino preservado",
-  
   "madagascarQuote": "El camino desconocido es el que aporta más experiencia.",
   "quoteAuthor": "Proverbio malgache",
-  
   "discoverMadagascar": "Descubrir nuestros tours",
-  
   "aboutUs": {
     "title": "Acerca de Nosotros",
     "ourStory": {
@@ -110,6 +116,574 @@
           "specialty": "Biodiversidad malgache"
         }
       }
+    },
+    "heroTitle": "Madagascar, nuestro hogar",
+    "heroIntro": "Una agencia local y apasionada que le hace descubrir la Gran Isla de otra manera: auténtica, responsable y a medida.",
+    "stats": {
+      "founded": "Año de fundación",
+      "experience": "Años de experiencia",
+      "destinations": "Destinos",
+      "regions": "Regiones exploradas"
+    },
+    "since": "Desde {{year}}",
+    "storyOverline": "Quiénes somos",
+    "valuesOverline": "Nuestro compromiso",
+    "teamOverline": "El equipo",
+    "cta": {
+      "title": "¿Listo para descubrir Madagascar con nosotros?",
+      "text": "Cuéntenos sus deseos: nuestro equipo le prepara un viaje a su medida.",
+      "tours": "Ver nuestros circuitos"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "pageNotFound": "Página no encontrada",
+    "requestQuote": "Solicitar presupuesto",
+    "viewDetails": "Ver detalles",
+    "close": "Cerrar",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "itinerary": "Itinerario"
+  },
+  "gallery": {
+    "title": "Galería",
+    "fauna": "Fauna",
+    "flora": "Flora",
+    "landscapes": "Paisajes",
+    "beaches": "Playas",
+    "local": "Vida local",
+    "heading": "Madagascar en imágenes",
+    "intro": "Lémures, baobabs, playas turquesas y escenas cotidianas: un anticipo de lo que le espera en la Gran Isla.",
+    "all": "Todo",
+    "filterLabel": "Filtrar las fotos",
+    "count_one": "{{count}} foto",
+    "count_other": "{{count}} fotos",
+    "open": "Ampliar la foto: {{title}}",
+    "cta": {
+      "title": "¿Quiere ver estos paisajes con sus propios ojos?",
+      "text": "Diseñamos con usted un viaje a medida por los lugares más bellos de Madagascar.",
+      "destinations": "Ver los destinos"
+    }
+  },
+  "reviews": {
+    "title": "La experiencia Show Me Mada",
+    "items": [
+      {
+        "name": "Sophie - Francia",
+        "description": "¡Un viaje mágico! Lugares secretos, lémures adorables y un equipo apasionado. ¡Madagascar nos conquistó!"
+      },
+      {
+        "name": "Carlos - España",
+        "description": "¡Organización perfecta! Nuestro guía compartió su pasión por la cultura malgache. La avenida de los baobabs al atardecer... ¡inolvidable!"
+      },
+      {
+        "name": "Marie & Thomas - Suiza",
+        "description": "¡Una experiencia auténtica y responsable! Alojamiento en casas locales, artesanos locales, biodiversidad increíble. ¡Gracias Show Me Mada!"
+      }
+    ]
+  },
+  "footer": {
+    "description": "Descubra la belleza auténtica de Madagascar con nuestros circuitos a medida. Explore la isla roja, su fauna única, sus paisajes impresionantes y su rica cultura con guías locales apasionados.",
+    "sections": {
+      "discover": "Descubrir",
+      "services": "Nuestros servicios",
+      "madagascar": "Madagascar"
+    },
+    "links": {
+      "home": "Inicio",
+      "about": "Quiénes somos",
+      "destinations": "Destinos",
+      "contact": "Contacto",
+      "tours": "Circuitos organizados",
+      "gallery": "Galería",
+      "customTrip": "Viajes a medida",
+      "localGuide": "Guía local",
+      "culture": "Cultura malgache",
+      "wildlife": "Fauna y flora",
+      "parks": "Parques nacionales",
+      "tips": "Consejos de viaje"
+    },
+    "rights": "© {{year}} Show Me Mada. Todos los derechos reservados. | Agencia de viajes en Madagascar"
+  },
+  "Tours": {
+    "title": "Circuitos",
+    "subtitle": "Una experiencia de viaje inolvidable",
+    "tabs": {
+      "packages": "Circuitos",
+      "hotel": "Hoteles",
+      "transport": "Transporte"
+    },
+    "packagesTitle": "Nuestros circuitos",
+    "vehiclesTitle": "Alquiler de vehículos",
+    "packages": {
+      "morondava": {
+        "location": "Circuito Suroeste de Madagascar",
+        "description": "Descubra las maravillas del sur malgache con sus playas paradisíacas, sus majestuosos baobabs y su cultura única.",
+        "detailedDescription": "Sumérjase en una aventura extraordinaria a través de los impresionantes paisajes del suroeste de Madagascar. Este viaje le llevará desde las tierras altas de la capital hasta los famosos baobabs de Morondava, pasando por las aguas termales de Antsirabe y las formaciones geológicas únicas de Miandrivazo. Descubrirá la riqueza cultural malgache, observará una fauna endémica excepcional y disfrutará de las puestas de sol más bellas del océano Índico.",
+        "duration": "8 días / 7 noches",
+        "difficulty": "Fácil",
+        "bestTime": "Abril - Noviembre",
+        "highlights": [
+          "Avenida de los Baobabs al atardecer",
+          "Encuentro con los lémures de Andasibe",
+          "Aguas termales naturales de Antsirabe",
+          "Navegación por el río Tsiribihina",
+          "Descubrimiento de la cultura Sakalava",
+          "Playas vírgenes de la costa oeste"
+        ],
+        "included": [
+          "Transporte en 4x4 con chófer-guía",
+          "Alojamiento en hoteles de 3 estrellas",
+          "Todos los desayunos",
+          "Entradas a los parques nacionales",
+          "Guía local francófono",
+          "Actividades indicadas en el programa"
+        ],
+        "notIncluded": [
+          "Vuelos internacionales",
+          "Almuerzos y cenas (salvo indicación contraria)",
+          "Bebidas",
+          "Propinas",
+          "Seguro de viaje",
+          "Gastos personales"
+        ]
+      },
+      "nosyBe": {
+        "location": "Noroeste de Madagascar",
+        "description": "La isla de los perfumes le espera con sus playas de arena blanca, sus aguas turquesas y sus mágicas puestas de sol. Un auténtico paraíso tropical.",
+        "detailedDescription": "Escápese a la isla de los perfumes, una verdadera joya del océano Índico. Nosy Be le seducirá con sus plantaciones de ylang-ylang, sus playas de ensueño y su excepcional biodiversidad marina. Entre descanso en playas paradisíacas, buceo en aguas cristalinas y exploración de los islotes cercanos, esta estancia promete una experiencia tropical inolvidable en un entorno preservado.",
+        "duration": "6 días / 5 noches",
+        "difficulty": "Muy fácil",
+        "bestTime": "Abril - Diciembre",
+        "highlights": [
+          "Playas de arena blanca inmaculada",
+          "Snorkel en la laguna turquesa",
+          "Excursión a Nosy Komba (isla de los lémures)",
+          "Visita a las destilerías de ylang-ylang",
+          "Puestas de sol espectaculares",
+          "Degustación de ron arrangé local"
+        ],
+        "included": [
+          "Vuelos nacionales Tana-Nosy Be",
+          "Traslados aeropuerto-hotel",
+          "Alojamiento en bungalós frente al mar",
+          "Desayuno diario",
+          "Excursión en barco a los islotes",
+          "Equipo de snorkel"
+        ],
+        "notIncluded": [
+          "Vuelos internacionales",
+          "Comidas principales",
+          "Actividades de buceo",
+          "Alquiler de scooter",
+          "Spa y masajes",
+          "Compras personales"
+        ]
+      },
+      "andasibe": {
+        "location": "Este de Madagascar",
+        "description": "Sumérjase en el bosque primario y descubra los lémures Indri en su hábitat natural. Una experiencia única en el corazón de la biodiversidad malgache.",
+        "detailedDescription": "Descubra uno de los parques nacionales más bellos de Madagascar, un verdadero santuario de biodiversidad. El bosque primario de Andasibe-Mantadia alberga al lémur más grande de la isla, el Indri indri, cuyo canto melodioso resuena en el bosque. Esta experiencia inmersiva le permitirá observar numerosas especies endémicas en su hábitat natural preservado, disfrutando de impresionantes paisajes montañosos.",
+        "duration": "3 días / 2 noches",
+        "difficulty": "Moderada",
+        "bestTime": "Marzo - Noviembre",
+        "highlights": [
+          "Observación de los lémures Indri indri",
+          "Trekking en el bosque primario",
+          "Descubrimiento de 11 especies de lémures",
+          "Observación de 108 especies de aves",
+          "Plantas medicinales y orquídeas raras",
+          "Paisajes montañosos espectaculares"
+        ],
+        "included": [
+          "Transporte de ida y vuelta desde Antananarivo",
+          "Alojamiento en eco-lodge",
+          "Guía naturalista especializado",
+          "Entradas a los parques nacionales",
+          "Trekkings y caminatas guiadas",
+          "Todas las comidas"
+        ],
+        "notIncluded": [
+          "Alojamiento en Antananarivo",
+          "Bebidas alcohólicas",
+          "Equipo de senderismo personal",
+          "Propinas para los guías",
+          "Fotos con los lémures",
+          "Recuerdos y artesanía local"
+        ]
+      }
+    },
+    "modal": {
+      "duration": "Duración",
+      "difficulty": "Dificultad",
+      "from": "Precio",
+      "bestTime": "Mejor época",
+      "description": "Descripción",
+      "highlights": "Puntos destacados",
+      "included": "Incluido",
+      "notIncluded": "No incluido"
+    },
+    "vehicles": {
+      "perDay": "Ar/día",
+      "seats": "{{count}} plazas",
+      "features": "Características",
+      "book": "Reservar ahora",
+      "fuel": {
+        "diesel": "Diésel",
+        "petrol": "Gasolina"
+      },
+      "transmission": {
+        "manual": "Manual",
+        "automatic": "Automática"
+      }
+    },
+    "intro": "Circuitos llave en mano, alojamientos seleccionados y vehículos con conductor: todo para explorar Madagascar con total tranquilidad.",
+    "packagesSubtitle": "Itinerarios probados por nuestro equipo, adaptables a sus deseos y a su ritmo.",
+    "hotelTitle": "Encontrar alojamiento",
+    "hotelSubtitle": "Indíquenos sus criterios y le enviaremos una selección de hoteles adaptada.",
+    "vehiclesSubtitle": "Vehículos bien mantenidos, con conductor-guía experimentado.",
+    "cta": {
+      "title": "¿Ningún circuito encaja del todo?",
+      "text": "Construimos su itinerario a medida: duración, presupuesto, ritmo e intereses.",
+      "destinations": "Ver los destinos"
+    }
+  },
+  "hotel": {
+    "title": "Encuentre su hotel en Madagascar",
+    "subtitle": "Descubra los mejores alojamientos de la Gran Isla",
+    "stepOf": "Paso {{current}} de {{total}}",
+    "steps": {
+      "destination": "Destino",
+      "category": "Categoría",
+      "budget": "Presupuesto",
+      "dates": "Fechas",
+      "contact": "Contacto"
+    },
+    "destinationTitle": "Elija su destino en Madagascar",
+    "selectDestination": "Seleccione un destino",
+    "categoryTitle": "Elija el tipo de alojamiento",
+    "luxury": "Lujo",
+    "luxuryDesc": "Hoteles de lujo, servicios premium",
+    "simple": "Estándar",
+    "simpleDesc": "Hoteles cómodos, buena relación calidad-precio",
+    "budgetTitle": "Defina su presupuesto por noche",
+    "datesTitle": "Seleccione sus fechas",
+    "checkin": "Fecha de llegada",
+    "checkout": "Fecha de salida",
+    "contactTitle": "Sus datos de contacto",
+    "contactIntro": "Le enviaremos una selección personalizada de hoteles que se ajusten a sus criterios.",
+    "lastName": "Apellido *",
+    "lastNamePlaceholder": "Su apellido",
+    "firstName": "Nombre *",
+    "firstNamePlaceholder": "Su nombre",
+    "email": "Email *",
+    "emailPlaceholder": "su@email.com",
+    "phone": "Teléfono",
+    "infoEmail": "Le enviaremos por email una selección personalizada de hoteles en 24 horas.",
+    "infoPhone": "Si nos deja su teléfono, podremos llamarle para afinar su búsqueda.",
+    "submit": "Recibir mi selección",
+    "summaryTitle": "Su búsqueda",
+    "summary": {
+      "destination": "Destino:",
+      "category": "Categoría:",
+      "budget": "Presupuesto:",
+      "dates": "Fechas:",
+      "datesValue": "del {{checkin}} al {{checkout}}",
+      "contact": "Contacto:"
+    }
+  },
+  "contactPage": {
+    "title": "Contacto",
+    "success": "¡Su solicitud de presupuesto se ha enviado correctamente! Le responderemos lo antes posible.",
+    "formTitle": "Solicitud de presupuesto personalizado",
+    "personalInfo": "Datos personales",
+    "lastName": "Apellido",
+    "firstName": "Nombre",
+    "email": "Email",
+    "phone": "Teléfono",
+    "tripDetails": "Detalles de su viaje",
+    "tripType": "Tipo de viaje",
+    "mainDestination": "Destino principal",
+    "people": "Número de personas",
+    "budget": "Presupuesto aproximado (en €)",
+    "budgetOptions": {
+      "under1000": "Menos de 1000 €",
+      "1000-2000": "1000 € - 2000 €",
+      "2000-3000": "2000 € - 3000 €",
+      "3000-4000": "3000 € - 4000 €",
+      "over4000": "Más de 4000 €"
+    },
+    "travelDates": "Fechas del viaje",
+    "departureDate": "Fecha de salida",
+    "returnDate": "Fecha de regreso",
+    "specificRequests": "Sus peticiones específicas",
+    "messageLabel": "Mensaje / Peticiones específicas",
+    "messagePlaceholder": "Cuéntenos sus deseos, sus intereses o cualquier petición especial para su viaje a Madagascar...",
+    "submit": "Solicitar presupuesto",
+    "requiredNote": "* Campos obligatorios - Le responderemos en 24 horas",
+    "contactUs": "Contáctenos",
+    "emailLabel": "Email",
+    "phoneLabel": "Teléfono",
+    "addressLabel": "Dirección",
+    "tagline": "¡Descubra la magia de Madagascar con nuestros expertos locales! Circuitos a medida para una experiencia inolvidable.",
+    "tripTypes": {
+      "cultural": "Descubrimiento cultural",
+      "safari": "Safari y naturaleza",
+      "beach": "Playas y relax",
+      "adventure": "Aventura y senderismo",
+      "honeymoon": "Luna de miel",
+      "family": "Viaje en familia",
+      "business": "Viaje de negocios"
+    },
+    "fullCircuit": "Circuito completo",
+    "otherDestination": "Otro",
+    "subtitle": "Cuéntenos su proyecto: le preparamos un presupuesto personalizado y gratuito.",
+    "infoText": "Nuestro equipo local le responde personalmente y construye con usted un itinerario a medida.",
+    "responseTime": "Respuesta en 24 h",
+    "phoneHelper": "Con el prefijo, p. ej. +34 612 34 56 78",
+    "successTitle": "¡Gracias, su solicitud ha sido enviada!",
+    "newRequest": "Hacer otra solicitud",
+    "errors": {
+      "required": "Este campo es obligatorio",
+      "email": "Dirección de email no válida",
+      "pastDate": "La fecha debe ser hoy o posterior",
+      "returnBeforeDeparture": "El regreso debe ser posterior a la salida",
+      "people": "Al menos 1 viajero"
+    }
+  },
+  "destinations": {
+    "title": "Destinos de Madagascar",
+    "heading": "Descubra la Gran Isla",
+    "intro": "Madagascar, un continente en miniatura con paisajes impresionantes y una biodiversidad única en el mundo. Explore nuestros destinos imprescindibles en las diferentes regiones de la isla.",
+    "mainActivities": "Actividades principales:",
+    "regions": {
+      "hauts_plateaux": "Tierras Altas",
+      "ouest": "Costa Oeste",
+      "est": "Costa Este",
+      "nord": "Norte",
+      "sud": "Sur"
+    },
+    "categories": {
+      "cultural": "Cultural",
+      "thermal": "Termal",
+      "nature": "Naturaleza",
+      "adventure": "Aventura",
+      "beach": "Playa",
+      "transport": "Transporte"
+    },
+    "stats": {
+      "title": "Madagascar en cifras",
+      "destinations": "Destinos",
+      "regions": "Regiones",
+      "parks": "Parques Nacionales",
+      "endemic": "Especies Endémicas"
+    },
+    "items": {
+      "antananarivo": {
+        "subtitle": "La Capital",
+        "description": "Capital histórica encaramada en sus colinas. Descubra el Palacio de la Reina, los coloridos mercados y la singular arquitectura colonial.",
+        "activities": [
+          "Palacio de la Reina",
+          "Mercado de Analakely",
+          "Lago Anosy",
+          "Museos históricos"
+        ]
+      },
+      "antsirabe": {
+        "subtitle": "La Ciudad del Agua",
+        "description": "Estación termal colonial famosa por sus aguas minerales y su clima templado. Ciudad de los rickshaws y de la artesanía.",
+        "activities": [
+          "Aguas termales",
+          "Lago Tritriva",
+          "Taller de miniaturas",
+          "Paseo en rickshaw"
+        ]
+      },
+      "ampefy": {
+        "subtitle": "El Lago Volcánico",
+        "description": "Magnífico lago volcánico rodeado de verdes colinas. Destino perfecto para el descanso y las actividades acuáticas.",
+        "activities": [
+          "Lago Itasy",
+          "Géiseres",
+          "Islote de la Virgen",
+          "Deportes acuáticos"
+        ]
+      },
+      "fianarantsoa": {
+        "subtitle": "Ciudad de la Educación",
+        "description": "Capital intelectual de Madagascar con su casco antiguo histórico y sus viñedos cercanos.",
+        "activities": [
+          "Casco antiguo",
+          "Viñedos",
+          "Tren FCE",
+          "Catedral"
+        ]
+      },
+      "morondava": {
+        "subtitle": "Avenida de los Baobabs",
+        "description": "Puerta de entrada a la Avenida de los Baobabs. Puestas de sol inolvidables sobre baobabs centenarios y acceso a los Tsingy.",
+        "activities": [
+          "Avenida de los Baobabs",
+          "Puesta de sol",
+          "Playas",
+          "Tsingy de Bemaraha"
+        ]
+      },
+      "tsingy": {
+        "subtitle": "Bosque de Piedra",
+        "description": "Espectaculares formaciones calizas declaradas Patrimonio de la UNESCO. Un laberinto de picos rocosos que alberga una fauna única y excepcional.",
+        "activities": [
+          "Senderismo por los Tsingy",
+          "Vía ferrata",
+          "Cuevas",
+          "Observación de aves"
+        ]
+      },
+      "bekopaka": {
+        "subtitle": "Base de los Tsingy",
+        "description": "Pueblo auténtico que sirve de base para explorar los Tsingy. Encuentros con las comunidades locales Sakalava.",
+        "activities": [
+          "Pueblo tradicional",
+          "Mercado local",
+          "Piragua por el Manambolo",
+          "Cultura Sakalava"
+        ]
+      },
+      "mahajanga": {
+        "subtitle": "Ciudad Cosmopolita",
+        "description": "Puerto cosmopolita con influencias árabes e indias. Playas magníficas y un baobab sagrado milenario.",
+        "activities": [
+          "Playas de arena",
+          "Baobab sagrado",
+          "Mercado cubierto",
+          "Circo Rojo"
+        ]
+      },
+      "andasibe": {
+        "subtitle": "Bosque de los Lémures",
+        "description": "Parque nacional que alberga a los lémures Indri. Bosque primario húmedo con una biodiversidad excepcional.",
+        "activities": [
+          "Observación de los Indri",
+          "Caminatas por el bosque",
+          "Orquídeas",
+          "Aves endémicas"
+        ]
+      },
+      "sainteMarie": {
+        "subtitle": "Isla de las Ballenas",
+        "description": "Isla paradisíaca famosa por el avistamiento de ballenas jorobadas. Playas de arena blanca e historia de piratas.",
+        "activities": [
+          "Avistamiento de ballenas",
+          "Buceo",
+          "Cementerio de piratas",
+          "Île aux Nattes"
+        ]
+      },
+      "manakara": {
+        "subtitle": "Final de la línea FCE",
+        "description": "Terminal del famoso tren FCE. Playas salvajes y el canal de Pangalanes con sus pueblos de pescadores.",
+        "activities": [
+          "Tren FCE",
+          "Canal de Pangalanes",
+          "Playas salvajes",
+          "Pueblos lacustres"
+        ]
+      },
+      "mananjary": {
+        "subtitle": "Canal de Pangalanes",
+        "description": "Ciudad tranquila atravesada por el canal de Pangalanes. Centro de producción de vainilla de Madagascar y especias.",
+        "activities": [
+          "Canal de Pangalanes",
+          "Plantaciones de vainilla",
+          "Puerto tradicional",
+          "Pueblos lacustres"
+        ]
+      },
+      "nosyBe": {
+        "subtitle": "Isla de los Perfumes",
+        "description": "Isla tropical paradisíaca famosa por su ylang-ylang y sus playas de arena blanca. Gran variedad de actividades acuáticas.",
+        "activities": [
+          "Playas paradisíacas",
+          "Buceo",
+          "Ylang-ylang",
+          "Monte Passot"
+        ]
+      },
+      "diego": {
+        "subtitle": "Antsiranana",
+        "description": "Bahía magnífica y puerta de entrada a la Montaña de Ámbar. Arquitectura colonial y naturaleza preservada.",
+        "activities": [
+          "Bahía de Diego",
+          "Montaña de Ámbar",
+          "Mar Esmeralda",
+          "Pan de Azúcar"
+        ]
+      },
+      "ambre": {
+        "subtitle": "Parque Nacional",
+        "description": "Bosque húmedo de montaña con cascadas espectaculares. Un microclima tropical único en el norte de Madagascar.",
+        "activities": [
+          "Cascadas sagradas",
+          "Lémures coronados",
+          "Lago de cráter",
+          "Senderismo"
+        ]
+      },
+      "tulear": {
+        "subtitle": "Toliara",
+        "description": "Puerta del gran sur malgache. Varias playas de arena blanca y la cultura de los pescadores nómadas Vezo.",
+        "activities": [
+          "Playas de arena",
+          "Cultura Vezo",
+          "Mercado de conchas",
+          "Reniala"
+        ]
+      },
+      "ifaty": {
+        "subtitle": "Pueblo de Pescadores",
+        "description": "Pueblo de pescadores Vezo con un arrecife de coral excepcional. Bosque espinoso y baobabs del sur de Madagascar.",
+        "activities": [
+          "Buceo en el arrecife",
+          "Bosque de baobabs",
+          "Pueblo Vezo",
+          "Pesca tradicional"
+        ]
+      },
+      "fortDauphin": {
+        "subtitle": "Tolagnaro",
+        "description": "Ciudad histórica del sureste con playas magníficas. Reserva de Berenty y observación de lémures de cola anillada.",
+        "activities": [
+          "Playas tropicales",
+          "Reserva de Berenty",
+          "Pico Saint-Louis",
+          "Bahía de Lokaro"
+        ]
+      },
+      "isalo": {
+        "subtitle": "Parque Nacional",
+        "description": "Macizo de arenisca esculpido con cañones, oasis y piscinas naturales. Paisajes espectaculares del Lejano Oeste malgache.",
+        "activities": [
+          "Cañones",
+          "Piscinas naturales",
+          "Puestas de sol",
+          "Senderismo"
+        ]
+      }
+    },
+    "exploreTitle": "Explorar por región",
+    "count_one": "{{count}} destino",
+    "count_other": "{{count}} destinos",
+    "regionDescriptions": {
+      "hauts_plateaux": "Arrozales en terrazas, ciudades históricas y clima templado en el corazón de la isla.",
+      "ouest": "Baobabs gigantes, Tsingy espectaculares y atardeceres sobre el canal de Mozambique.",
+      "est": "Selvas tropicales, lémures y lagunas a lo largo del canal de Pangalanes.",
+      "nord": "Islas paradisíacas, mar turquesa y exuberantes parques nacionales.",
+      "sud": "Cañones, playas salvajes y cultura Vezo bajo el sol del gran sur."
+    },
+    "cta": {
+      "title": "¿Duda entre varias regiones?",
+      "text": "Nuestros expertos locales crean con usted un itinerario a medida que combina sus destinos favoritos.",
+      "tours": "Ver nuestros circuitos"
     }
   }
 }

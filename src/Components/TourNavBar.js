@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 //icones
 import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
 
 const menutabs = [
-  { name: "Tour Package", icon: <PublicOutlinedIcon/> },
-  { name: "Hotel", icon:<BedOutlinedIcon/> },
-  { name: "Transports", icon: <DirectionsCarFilledOutlinedIcon/> }
+  { key: "packages", icon: <PublicOutlinedIcon/> },
+  { key: "hotel", icon:<BedOutlinedIcon/> },
+  { key: "transport", icon: <DirectionsCarFilledOutlinedIcon/> }
 ];
 
 export default function NavBar({ tab, setTab }) {
+  const { t } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function NavBar({ tab, setTab }) {
     }}>
       {menutabs.map((item, idx) => (
         <button
-          key={item.name}
+          key={item.key}
           onClick={() => setTab(idx)}
           style={{
             border: "none",
@@ -47,7 +49,7 @@ export default function NavBar({ tab, setTab }) {
             justifyContent : isMobile ? 'center' : '',
           }}
         >
-          <span>{item.icon}</span> {item.name}
+          <span>{item.icon}</span> {t(`Tours.tabs.${item.key}`)}
         </button>
       ))}
     </div>

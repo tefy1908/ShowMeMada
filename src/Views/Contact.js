@@ -1,733 +1,517 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
-  TextField,
-  Typography,
+  Container,
   Grid,
-  Card,
-  CardContent,
-  Select,
+  Link,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Chip,
-  Alert,
   Paper,
-  Divider,
-  useTheme,
-  useMediaQuery,
+  TextField,
+  ThemeProvider,
+  Typography,
+  createTheme,
 } from "@mui/material";
 import {
-  Email,
-  Phone,
-  LocationOn,
-  Send,
-  TravelExplore,
   AccessTime,
-  People,
-  CalendarToday,
+  CheckCircleOutline,
+  Email,
+  LocationOn,
+  Phone,
+  Send,
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 import TextTitle from "../Components/TextTitle";
+import { CONTACT } from "../Utils/contactInfo";
 
-const Contact = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const BRAND = "#63AB45";
+const BRAND_DARK = "#4a8533";
 
-  const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    typeVoyage: "",
-    destination: "",
-    nombrePersonnes: "",
-    dateDepart: "",
-    dateRetour: "",
-    budget: "",
-    message: "",
+// Couleur de la marque pour tous les champs du formulaire (focus, boutons) sans répéter de sx
+const contactTheme = (outerTheme) =>
+  createTheme({
+    ...outerTheme,
+    palette: {
+      ...outerTheme.palette,
+      primary: { main: BRAND, dark: BRAND_DARK, contrastText: "#fff" },
+    },
   });
 
-  const [showSuccess, setShowSuccess] = useState(false);
+const emptyForm = {
+  nom: "",
+  prenom: "",
+  email: "",
+  telephone: "",
+  typeVoyage: "",
+  destination: "",
+  nombrePersonnes: "",
+  dateDepart: "",
+  dateRetour: "",
+  budget: "",
+  message: "",
+};
+
+// Ordre des champs : sert à placer le focus sur la première erreur
+const fieldOrder = ["nom", "prenom", "email", "nombrePersonnes", "dateDepart", "dateRetour"];
+
+// Clés de traduction (contactPage.tripTypes.<clé>)
+const typesVoyage = ["cultural", "safari", "beach", "adventure", "honeymoon", "family", "business"];
+
+const destinations = [
+  "Antananarivo",
+  "Nosy Be",
+  "Andasibe-Mantadia",
+  "Morondava",
+  "Isalo",
+  "Anakao",
+  "Sainte-Marie",
+  "Diego Suarez",
+  "fullCircuit",
+  "otherDestination",
+];
+
+const budgetOptions = ["under1000", "1000-2000", "2000-3000", "3000-4000", "over4000"];
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Date du jour au format AAAA-MM-JJ (fuseau local), comme les champs type="date"
+const today = () => {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+};
+
+const validate = (data) => {
+  const errors = {};
+  if (!data.nom.trim()) errors.nom = "required";
+  if (!data.prenom.trim()) errors.prenom = "required";
+  if (!data.email.trim()) errors.email = "required";
+  else if (!EMAIL_RE.test(data.email.trim())) errors.email = "email";
+  if (data.nombrePersonnes !== "" && Number(data.nombrePersonnes) < 1) errors.nombrePersonnes = "people";
+  if (data.dateDepart && data.dateDepart < today()) errors.dateDepart = "pastDate";
+  if (data.dateRetour && data.dateDepart && data.dateRetour < data.dateDepart) {
+    errors.dateRetour = "returnBeforeDeparture";
+  } else if (data.dateRetour && data.dateRetour < today()) {
+    errors.dateRetour = "pastDate";
+  }
+  return errors;
+};
+
+// Titre de section numéroté
+const SectionTitle = ({ number, children }) => (
+  <Box display="flex" alignItems="center" gap={1.5} mb={2}>
+    <Box
+      sx={{
+        width: 28,
+        height: 28,
+        borderRadius: "50%",
+        bgcolor: BRAND,
+        color: "white",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "0.85rem",
+        fontWeight: 700,
+        flexShrink: 0,
+      }}
+    >
+      {number}
+    </Box>
+    <Typography variant="h6" sx={{ fontSize: "1.05rem", fontWeight: 600, color: "#2c3e50" }}>
+      {children}
+    </Typography>
+  </Box>
+);
+
+// Ligne du panneau d'information : icône + libellé + valeur (cliquable si href)
+const InfoRow = ({ icon, label, value, href }) => (
+  <Box display="flex" alignItems="center" gap={2}>
+    <Box
+      sx={{
+        width: 44,
+        height: 44,
+        borderRadius: "50%",
+        bgcolor: "rgba(255,255,255,0.18)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      {icon}
+    </Box>
+    <Box minWidth={0}>
+      <Typography variant="body2" sx={{ opacity: 0.8 }}>
+        {label}
+      </Typography>
+      {href ? (
+        <Link
+          href={href}
+          sx={{
+            color: "white",
+            fontWeight: 500,
+            textDecorationColor: "rgba(255,255,255,0.5)",
+            wordBreak: "break-word",
+            "&:hover": { textDecorationColor: "white" },
+          }}
+        >
+          {value}
+        </Link>
+      ) : (
+        <Typography sx={{ fontWeight: 500 }}>{value}</Typography>
+      )}
+    </Box>
+  </Box>
+);
+
+const Contact = () => {
+  const { t } = useTranslation();
+  const cardRef = useRef(null);
+
+  const [formData, setFormData] = useState(emptyForm);
+  const [errors, setErrors] = useState({});
+  // Après une première tentative d'envoi, on revalide à chaque saisie
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const destinationLabel = (dest) =>
+    dest === "fullCircuit" || dest === "otherDestination" ? t(`contactPage.${dest}`) : dest;
+
+  const errorText = (name) => (errors[name] ? t(`contactPage.errors.${errors[name]}`) : undefined);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const next = { ...formData, [name]: value };
+    setFormData(next);
+    if (submitAttempted || errors[name]) setErrors(validate(next));
+  };
+
+  // Validation douce de l'email dès qu'on quitte le champ
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    if (name === "email" && formData.email) {
+      const fieldErrors = validate(formData);
+      setErrors((prev) => ({ ...prev, email: fieldErrors.email }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ici vous pouvez ajouter la logique d'envoi du formulaire
-    console.log("Données du formulaire:", formData);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 5000);
+    setSubmitAttempted(true);
+    const newErrors = validate(formData);
+    setErrors(newErrors);
 
-    // Reset du formulaire
-    setFormData({
-      nom: "",
-      prenom: "",
-      email: "",
-      telephone: "",
-      typeVoyage: "",
-      destination: "",
-      nombrePersonnes: "",
-      dateDepart: "",
-      dateRetour: "",
-      budget: "",
-      message: "",
-    });
+    const firstError = fieldOrder.find((name) => newErrors[name]);
+    if (firstError) {
+      document.getElementsByName(firstError)[0]?.focus();
+      return;
+    }
+
+    // TODO : brancher l'envoi réel du formulaire (EmailJS, Formspree, API...)
+    console.log("Données du formulaire:", formData);
+    setSubmitted(true);
+    cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const typesVoyage = [
-    "Découverte culturelle",
-    "Safari et nature",
-    "Plages et détente",
-    "Aventure et randonnée",
-    "Voyage de noces",
-    "Voyage en famille",
-    "Voyage d'affaires",
-  ];
+  const handleNewRequest = () => {
+    setFormData(emptyForm);
+    setErrors({});
+    setSubmitAttempted(false);
+    setSubmitted(false);
+  };
 
-  const destinations = [
-    "Antananarivo",
-    "Nosy Be",
-    "Andasibe-Mantadia",
-    "Morondava (Allée des Baobabs)",
-    "Isalo",
-    "Anakao",
-    "Sainte-Marie",
-    "Diego Suarez",
-    "Circuit complet",
-    "Autre",
-  ];
+  const field = (name, extra = {}) => ({
+    name,
+    fullWidth: true,
+    value: formData[name],
+    onChange: handleChange,
+    onBlur: handleBlur,
+    error: Boolean(errors[name]),
+    helperText: errorText(name),
+    ...extra,
+  });
 
   return (
-    <Box
-      display="flex"
-      padding="20px"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      sx={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}
-    >
-      <TextTitle title="Contact" />
+    <ThemeProvider theme={contactTheme}>
+      <Box sx={{ backgroundColor: "#f8f9fa", py: { xs: 4, md: 6 } }}>
+        <Container maxWidth="lg">
+          <Box display="flex" flexDirection="column" alignItems="center" textAlign="center" mb={4}>
+            <TextTitle title={t("contactPage.title")} />
+            <Typography sx={{ color: "text.secondary", mt: 1.5, maxWidth: 560 }}>
+              {t("contactPage.subtitle")}
+            </Typography>
+          </Box>
 
-      {showSuccess && (
-        <Alert
-          severity="success"
-          sx={{
-            mb: 3,
-            maxWidth: "800px",
-            width: "100%",
-            backgroundColor: "#63AB45",
-            color: "white",
-            "& .MuiAlert-icon": {
-              color: "white",
-            },
-          }}
-        >
-          Votre demande de devis a été envoyée avec succès ! Nous vous
-          répondrons dans les plus brefs délais.
-        </Alert>
-      )}
-
-      <Grid
-        container
-        spacing={4}
-        sx={{ mt: 2 }}
-        display={"flex"}
-        flexGrow={1}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        {/* Formulaire de devis */}
-        <Grid item xs={12} md={8}>
           <Paper
-            elevation={3}
+            ref={cardRef}
+            elevation={0}
             sx={{
-              p: { xs: 3, sm: 4 },
-              backgroundColor: "white",
-              borderTop: "4px solid #63AB45",
+              borderRadius: 4,
+              overflow: "hidden",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
+              scrollMarginTop: 24,
             }}
           >
-            <Box display="flex" alignItems="center" mb={4}>
-              <TravelExplore
-                sx={{ color: "#63AB45", mr: 2, fontSize: "2rem" }}
-              />
-              <Typography
-                variant="h5"
+            <Grid container>
+              {/* Panneau d'information */}
+              <Grid
+                size={{ xs: 12, md: 4 }}
                 sx={{
-                  color: "#63AB45",
-                  fontWeight: "bold",
-                  fontSize: { xs: "1.25rem", sm: "1.5rem" },
+                  position: "relative",
+                  overflow: "hidden",
+                  color: "white",
+                  background: `linear-gradient(160deg, ${BRAND} 0%, ${BRAND_DARK} 100%)`,
+                  p: { xs: 3, sm: 4, md: 5 },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  // Cercles décoratifs
+                  "&::before, &::after": {
+                    content: '""',
+                    position: "absolute",
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.08)",
+                    pointerEvents: "none",
+                  },
+                  "&::before": { width: 220, height: 220, bottom: -80, right: -80 },
+                  "&::after": { width: 120, height: 120, bottom: 70, right: 60 },
                 }}
               >
-                Demande de devis personnalisé
-              </Typography>
-            </Box>
+                <Box>
+                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
+                    {t("contactPage.contactUs")}
+                  </Typography>
+                  <Typography sx={{ opacity: 0.9, lineHeight: 1.6 }}>
+                    {t("contactPage.infoText")}
+                  </Typography>
+                </Box>
 
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={4} >
-                {/* COLONNE GAUCHE - Informations personnelles */}
-                <Grid item xs={12} md={6}>
-                  <Box
-                    sx={{
-                      backgroundColor: "#f8f9fa",
-                      borderRadius: 2,
-                      p: 3,
-                      height: "fit-content",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        borderBottom: "2px solid #63AB45",
-                        pb: 1,
-                        mb: 3,
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          color: "#63AB45",
-                          fontWeight: "bold",
-                          fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                        }}
-                      >
-                        Informations personnelles
-                      </Typography>
-                    </Box>
+                <Box
+                  sx={{
+                    display: "inline-flex",
+                    alignSelf: "flex-start",
+                    alignItems: "center",
+                    gap: 1,
+                    px: 1.5,
+                    py: 0.75,
+                    borderRadius: 5,
+                    bgcolor: "rgba(255,255,255,0.18)",
+                    fontSize: "0.9rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  <AccessTime fontSize="small" />
+                  {t("contactPage.responseTime")}
+                </Box>
 
-                    <Grid container spacing={2} display={'flex'} flexDirection={'column'}>
-                      {/* Nom */}
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Nom *"
-                          name="nom"
-                          value={formData.nom}
-                          onChange={handleChange}
-                          required
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
+                <Box display="flex" flexDirection="column" gap={2.5}>
+                  <InfoRow
+                    icon={<Email />}
+                    label={t("contactPage.emailLabel")}
+                    value={CONTACT.email}
+                    href={CONTACT.emailHref}
+                  />
+                  <InfoRow
+                    icon={<Phone />}
+                    label={t("contactPage.phoneLabel")}
+                    value={CONTACT.phoneDisplay}
+                    href={CONTACT.phoneHref}
+                  />
+                  <InfoRow
+                    icon={<LocationOn />}
+                    label={t("contactPage.addressLabel")}
+                    value={CONTACT.address}
+                  />
+                </Box>
 
-                      {/* Prénom */}
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Prénom *"
-                          name="prenom"
-                          value={formData.prenom}
-                          onChange={handleChange}
-                          required
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-
-                      {/* Email */}
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Email *"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-
-                      {/* Téléphone */}
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Téléphone"
-                          name="telephone"
-                          value={formData.telephone}
-                          onChange={handleChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-
-                {/* COLONNE DROITE - Détails du voyage */}
-                <Grid item xs={12} md={6}  >
-                  <Box
-                    sx={{
-                      backgroundColor: "#f8f9fa",
-                      borderRadius: 2,
-                      p: 3,
-                      height: "fit-content",
-                      display : 'flex',
-                      flexDirection : 'column'
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        borderBottom: "2px solid #63AB45",
-                        pb: 1,
-                        mb: 3,
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          color: "#63AB45",
-                          fontWeight: "bold",
-                          fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                        }}
-                      >
-                        Détails de votre voyage
-                      </Typography>
-                    </Box>
-
-                    <Grid container spacing={2}  display={'flex'} flexDirection={'column'}>
-                      {/* Type de voyage */}
-                      <Grid item xs={12}>
-                        <FormControl fullWidth>
-                          <InputLabel
-                            sx={{
-                              "&.Mui-focused": {
-                                color: "#63AB45",
-                              },
-                            }}
-                          >
-                            Type de voyage
-                          </InputLabel>
-                          <Select
-                            name="typeVoyage"
-                            value={formData.typeVoyage}
-                            onChange={handleChange}
-                            label="Type de voyage"
-                            sx={{
-                              backgroundColor: "white",
-                              "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                {
-                                  borderColor: "#63AB45",
-                                },
-                            }}
-                          >
-                            {typesVoyage.map((type) => (
-                              <MenuItem key={type} value={type}>
-                                {type}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-
-                      {/* Destination */}
-                      <Grid item xs={12}>
-                        <FormControl fullWidth>
-                          <InputLabel
-                            sx={{
-                              "&.Mui-focused": {
-                                color: "#63AB45",
-                              },
-                            }}
-                          >
-                            Destination principale
-                          </InputLabel>
-                          <Select
-                            name="destination"
-                            value={formData.destination}
-                            onChange={handleChange}
-                            label="Destination principale"
-                            sx={{
-                              backgroundColor: "white",
-                              "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                {
-                                  borderColor: "#63AB45",
-                                },
-                            }}
-                          >
-                            {destinations.map((dest) => (
-                              <MenuItem key={dest} value={dest}>
-                                {dest}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-
-                      {/* Nombre de personnes */}
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Nombre de personnes"
-                          name="nombrePersonnes"
-                          type="number"
-                          value={formData.nombrePersonnes}
-                          onChange={handleChange}
-                          InputProps={{ inputProps: { min: 1 } }}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-
-                      {/* Budget */}
-                      <Grid item xs={12}>
-                        <FormControl fullWidth>
-                          <InputLabel
-                            sx={{
-                              "&.Mui-focused": {
-                                color: "#63AB45",
-                              },
-                            }}
-                          >
-                            Budget approximatif (en €)
-                          </InputLabel>
-                          <Select
-                            name="budget"
-                            value={formData.budget}
-                            onChange={handleChange}
-                            label="Budget approximatif (en €)"
-                            sx={{
-                              backgroundColor: "white",
-                              "&.Mui-focused .MuiOutlinedInput-notchedOutline":
-                                {
-                                  borderColor: "#63AB45",
-                                },
-                            }}
-                          >
-                            <MenuItem value="moins-1000">
-                              Moins de 1000€
-                            </MenuItem>
-                            <MenuItem value="1000-2000">1000€ - 2000€</MenuItem>
-                            <MenuItem value="2000-3000">2000€ - 3000€</MenuItem>
-                            <MenuItem value="3000-4000">3000€ - 4000€</MenuItem>
-                            <MenuItem value="plus-4000">Plus de 4000€</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-
-                {/* SECTION DATES - Sur toute la largeur */}
-                <Grid item xs={12} >
-                  <Box
-                    sx={{
-                      backgroundColor: "#f8f9fa",
-                      borderRadius: 2,
-                      p: 3,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        borderBottom: "2px solid #63AB45",
-                        pb: 1,
-                        mb: 3,
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          color: "#63AB45",
-                          fontWeight: "bold",
-                          fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                        }}
-                      >
-                        Dates de voyage
-                      </Typography>
-                    </Box>
-
-                    <Grid container spacing={3} display={'flex'} flexDirection={'column'}>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label = "Date de départ"
-                          placeholder="Date de départ"
-                          name="dateDepart"
-                          type="date"
-                          InputLabelProps={{ shrink: true }} 
-
-                          value={formData.dateDepart}
-                          onChange={handleChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label="Date de retour"
-                          name="dateRetour"
-                          type="date"
-                          InputLabelProps={{ shrink: true }} 
-                          value={formData.dateRetour}
-                          onChange={handleChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              backgroundColor: "white",
-                              "&.Mui-focused fieldset": {
-                                borderColor: "#63AB45",
-                              },
-                            },
-                            "& .MuiInputLabel-root.Mui-focused": {
-                              color: "#63AB45",
-                            },
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-
-                {/* MESSAGE - Sur toute la largeur */}
-                <Grid item xs={12}>
-                  <Box
-                    sx={{
-                      backgroundColor: "#f8f9fa",
-                      borderRadius: 2,
-                      p: 3,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        borderBottom: "2px solid #63AB45",
-                        pb: 1,
-                        mb: 3,
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          color: "#63AB45",
-                          fontWeight: "bold",
-                          fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                        }}
-                      >
-                        Vos demandes spécifiques
-                      </Typography>
-                    </Box>
-
-                    <TextField
-                      fullWidth
-                      label="Message / Demandes spécifiques"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      multiline
-                      rows={4}
-                      placeholder="Décrivez-nous vos envies, vos centres d'intérêt, ou toute demande particulière pour votre voyage à Madagascar..."
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          backgroundColor: "white",
-                          "&.Mui-focused fieldset": {
-                            borderColor: "#63AB45",
-                          },
-                        },
-                        "& .MuiInputLabel-root.Mui-focused": {
-                          color: "#63AB45",
-                        },
-                      }}
-                    />
-                  </Box>
-                </Grid>
-
-                {/* BOUTON D'ENVOI - Centré en bas */}
-                <Grid item xs={12}>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    gap={2}
-                    sx={{ mt: 4 }}
-                  >
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="large"
-                      startIcon={<Send />}
-                      sx={{
-                        backgroundColor: "#63AB45",
-                        color: "white",
-                        fontWeight: "bold",
-                        py: 2,
-                        px: 6,
-                        fontSize: "1.1rem",
-                        borderRadius: 3,
-                        minWidth: "300px",
-                        "&:hover": {
-                          backgroundColor: "#4a8533",
-                          transform: "translateY(-2px)",
-                          boxShadow: "0 8px 25px rgba(99, 171, 69, 0.3)",
-                          transition: "all 0.3s ease",
-                        },
-                      }}
-                    >
-                      Demander un devis
-                    </Button>
-
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      align="center"
-                      sx={{
-                        fontSize: { xs: "0.8rem", sm: "0.875rem" },
-                      }}
-                    >
-                      * Champs obligatoires - Nous vous répondrons sous 24h
-                    </Typography>
-                  </Box>
-                </Grid>
+                <Typography
+                  variant="body2"
+                  sx={{ mt: "auto", pt: 2, fontStyle: "italic", opacity: 0.9, position: "relative" }}
+                >
+                  {t("contactPage.tagline")}
+                </Typography>
               </Grid>
-            </form>
+
+              {/* Formulaire */}
+              <Grid size={{ xs: 12, md: 8 }} sx={{ p: { xs: 3, sm: 4, md: 5 } }}>
+                {submitted ? (
+                  <Box
+                    role="status"
+                    sx={{
+                      minHeight: 420,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      gap: 2,
+                    }}
+                  >
+                    <CheckCircleOutline sx={{ fontSize: 72, color: BRAND }} />
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: "#2c3e50" }}>
+                      {t("contactPage.successTitle")}
+                    </Typography>
+                    <Typography sx={{ color: "text.secondary", maxWidth: 440 }}>
+                      {t("contactPage.success")}
+                    </Typography>
+                    <Button variant="outlined" onClick={handleNewRequest} sx={{ mt: 1, borderRadius: 3 }}>
+                      {t("contactPage.newRequest")}
+                    </Button>
+                  </Box>
+                ) : (
+                  <Box component="form" noValidate onSubmit={handleSubmit}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: "#2c3e50", mb: 4 }}>
+                      {t("contactPage.formTitle")}
+                    </Typography>
+
+                    {/* 1. Coordonnées */}
+                    <SectionTitle number={1}>{t("contactPage.personalInfo")}</SectionTitle>
+                    <Grid container spacing={2} mb={4}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("nom", { required: true, autoComplete: "family-name" })}
+                          label={t("contactPage.lastName")}
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("prenom", { required: true, autoComplete: "given-name" })}
+                          label={t("contactPage.firstName")}
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("email", { required: true, type: "email", autoComplete: "email" })}
+                          label={t("contactPage.email")}
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("telephone", {
+                            type: "tel",
+                            autoComplete: "tel",
+                            helperText: t("contactPage.phoneHelper"),
+                          })}
+                          label={t("contactPage.phone")}
+                        />
+                      </Grid>
+                    </Grid>
+
+                    {/* 2. Voyage */}
+                    <SectionTitle number={2}>{t("contactPage.tripDetails")}</SectionTitle>
+                    <Grid container spacing={2} mb={4}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField {...field("typeVoyage", { select: true })} label={t("contactPage.tripType")}>
+                          {typesVoyage.map((type) => (
+                            <MenuItem key={type} value={type}>
+                              {t(`contactPage.tripTypes.${type}`)}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("destination", { select: true })}
+                          label={t("contactPage.mainDestination")}
+                        >
+                          {destinations.map((dest) => (
+                            <MenuItem key={dest} value={dest}>
+                              {destinationLabel(dest)}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("nombrePersonnes", {
+                            type: "number",
+                            slotProps: { htmlInput: { min: 1, max: 50 } },
+                          })}
+                          label={t("contactPage.people")}
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField {...field("budget", { select: true })} label={t("contactPage.budget")}>
+                          {budgetOptions.map((option) => (
+                            <MenuItem key={option} value={option}>
+                              {t(`contactPage.budgetOptions.${option}`)}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("dateDepart", {
+                            type: "date",
+                            slotProps: { inputLabel: { shrink: true }, htmlInput: { min: today() } },
+                          })}
+                          label={t("contactPage.departureDate")}
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <TextField
+                          {...field("dateRetour", {
+                            type: "date",
+                            slotProps: {
+                              inputLabel: { shrink: true },
+                              htmlInput: { min: formData.dateDepart || today() },
+                            },
+                          })}
+                          label={t("contactPage.returnDate")}
+                        />
+                      </Grid>
+                    </Grid>
+
+                    {/* 3. Message */}
+                    <SectionTitle number={3}>{t("contactPage.specificRequests")}</SectionTitle>
+                    <TextField
+                      {...field("message", { multiline: true, minRows: 4 })}
+                      label={t("contactPage.messageLabel")}
+                      placeholder={t("contactPage.messagePlaceholder")}
+                    />
+
+                    {/* Envoi */}
+                    <Box
+                      sx={{
+                        mt: 4,
+                        display: "flex",
+                        flexDirection: { xs: "column-reverse", sm: "row" },
+                        alignItems: { xs: "stretch", sm: "center" },
+                        justifyContent: "space-between",
+                        gap: 2,
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary", textAlign: { xs: "center", sm: "left" } }}
+                      >
+                        {t("contactPage.requiredNote")}
+                      </Typography>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        endIcon={<Send />}
+                        sx={{
+                          px: 4,
+                          py: 1.5,
+                          borderRadius: 3,
+                          fontWeight: 600,
+                          boxShadow: "0 6px 20px rgba(99,171,69,0.3)",
+                          flexShrink: 0,
+                        }}
+                      >
+                        {t("contactPage.submit")}
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
           </Paper>
-        </Grid>
-        {/* Informations de contact */}
-        <Grid item xs={12} md={4}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 3,
-              height: "fit-content",
-              backgroundColor: "white",
-              borderTop: "4px solid #63AB45",
-            }}
-          >
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{
-                color: "#63AB45",
-                fontWeight: "bold",
-                mb: 3,
-              }}
-            >
-              Contactez-nous
-            </Typography>
-
-            <Box display="flex" alignItems="center" mb={2}>
-              <Email sx={{ color: "#63AB45", mr: 2 }} />
-              <Box>
-                <Typography variant="body2" color="textSecondary">
-                  Email
-                </Typography>
-                <Typography variant="body1">
-                  contact@madagascar-voyage.mg
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box display="flex" alignItems="center" mb={2}>
-              <Phone sx={{ color: "#63AB45", mr: 2 }} />
-              <Box>
-                <Typography variant="body2" color="textSecondary">
-                  Téléphone
-                </Typography>
-                <Typography variant="body1">+261 20 22 123 45</Typography>
-              </Box>
-            </Box>
-
-            <Box display="flex" alignItems="center" mb={2}>
-              <LocationOn sx={{ color: "#63AB45", mr: 2 }} />
-              <Box>
-                <Typography variant="body2" color="textSecondary">
-                  Adresse
-                </Typography>
-                <Typography variant="body1">
-                  Avenue de l'Indépendance
-                  <br />
-                  Antananarivo 101, Madagascar
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box display="flex" alignItems="center">
-              <AccessTime sx={{ color: "#63AB45", mr: 2 }} />
-              <Box>
-                <Typography variant="body2" color="textSecondary">
-                  Horaires
-                </Typography>
-                <Typography variant="body1">
-                  Lun - Ven : 8h00 - 17h00
-                  <br />
-                  Sam : 8h00 - 12h00
-                </Typography>
-              </Box>
-            </Box>
-
-            <Divider sx={{ my: 3 }} />
-
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              sx={{ fontStyle: "italic" }}
-            >
-              🌴 Découvrez la magie de Madagascar avec nos experts locaux ! Des
-              circuits sur mesure pour une expérience inoubliable.
-            </Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+        </Container>
+      </Box>
+    </ThemeProvider>
   );
 };
 

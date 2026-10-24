@@ -19,29 +19,33 @@ import {
   Instagram, 
   Linkedin 
 } from 'lucide-react';
+import { CONTACT } from '../Utils/contactInfo';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // Clés de traduction : footer.sections.<section> et footer.links.<lien>
   const footerLinks = {
-    'Découvrir': [
-      { name: 'Accueil', route: '/' },
-      { name: 'À propos', route: '/about' },
-      { name: 'Destinations', route: '/destinations' },
-      { name: 'Contact', route: '/contact' }
+    discover: [
+      { key: 'home', route: '/' },
+      { key: 'about', route: '/about' },
+      { key: 'destinations', route: '/destinations' },
+      { key: 'contact', route: '/contact' }
     ],
-    'Nos Services': [
-      { name: 'Circuits organisés', route: '/tours' },
-      { name: 'Services', route: '/services' },
-      { name: 'Voyage sur mesure', route: '#' },
-      { name: 'Guide local', route: '#' }
+    services: [
+      { key: 'tours', route: '/tours' },
+      { key: 'gallery', route: '/galerie' },
+      { key: 'customTrip', route: '#' },
+      { key: 'localGuide', route: '#' }
     ],
-    'Madagascar': [
-      { name: 'Culture malgache', route: '#' },
-      { name: 'Faune et flore', route: '#' },
-      { name: 'Parcs nationaux', route: '#' },
-      { name: 'Conseils voyage', route: '#' }
+    madagascar: [
+      { key: 'culture', route: '#' },
+      { key: 'wildlife', route: '#' },
+      { key: 'parks', route: '#' },
+      { key: 'tips', route: '#' }
     ]
   };
 
@@ -67,7 +71,7 @@ const Footer = () => {
         {/* Section principale du footer */}
         <Grid container  justifyContent={'space-between'}>
           {/* Logo et description */}
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Box>
               <Typography 
                 variant="h4" 
@@ -90,31 +94,29 @@ const Footer = () => {
                   maxWidth: '400px'
                 }}
               >
-                Découvrez la beauté authentique de Madagascar avec nos circuits sur mesure. 
-                Explorez l'île rouge, sa faune unique, ses paysages époustouflants 
-                et sa culture riche avec des guides locaux passionnés.
+                {t('footer.description')}
               </Typography>
               
               {/* Informations de contact */}
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Mail size={20} style={{ color: '#63AB45', marginRight: '12px' }} />
-                  <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
-                    info@showmemada.com
-                  </Typography>
+                  <Link href={CONTACT.emailHref} variant="body2" sx={{ color: '#e0e0e0', textDecoration: 'none', '&:hover': { color: '#63AB45' } }}>
+                    {CONTACT.email}
+                  </Link>
                 </Box>
                 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Phone size={20} style={{ color: '#63AB45', marginRight: '12px' }} />
-                  <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
-                    +261 34 12 345 67
-                  </Typography>
+                  <Link href={CONTACT.phoneHref} variant="body2" sx={{ color: '#e0e0e0', textDecoration: 'none', '&:hover': { color: '#63AB45' } }}>
+                    {CONTACT.phoneDisplay}
+                  </Link>
                 </Box>
                 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <MapPin size={20} style={{ color: '#63AB45', marginRight: '12px' }} />
                   <Typography variant="body2" sx={{ color: '#e0e0e0' }}>
-                    Antananarivo, Madagascar
+                    {CONTACT.address}
                   </Typography>
                 </Box>
               </Box>
@@ -122,10 +124,10 @@ const Footer = () => {
           </Grid>
 
           {/* Liens du footer */}
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Grid container spacing={4}>
               {Object.entries(footerLinks).map(([category, links]) => (
-                <Grid item xs={12} sm={4} key={category}>
+                <Grid size={{ xs: 12, sm: 4 }} key={category}>
                   <Box  display={'flex'} flexGrow={1} flexDirection={'column'}>
                     <Typography 
                       variant="h6" 
@@ -137,13 +139,13 @@ const Footer = () => {
                         fontSize: '1.1rem'
                       }}
                     >
-                      {category}
+                      {t(`footer.sections.${category}`)}
                     </Typography>
                     
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                       {links.map((link) => (
                         <Link
-                          key={link.name}
+                          key={link.key}
                           href={link.route}
                           sx={{
                             color: '#e0e0e0',
@@ -156,7 +158,7 @@ const Footer = () => {
                             }
                           }}
                         >
-                          {link.name}
+                          {t(`footer.links.${link.key}`)}
                         </Link>
                       ))}
                     </Box>
@@ -194,7 +196,7 @@ const Footer = () => {
               textAlign: isMobile ? 'center' : 'left'
             }}
           >
-            © 2025 Show Me Mada. Tous droits réservés. | Agence de voyage Madagascar
+            {t('footer.rights', { year: new Date().getFullYear() })}
           </Typography>
 
           {/* Réseaux sociaux */}
