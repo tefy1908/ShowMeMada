@@ -458,7 +458,9 @@
       "pastDate": "La fecha debe ser hoy o posterior",
       "returnBeforeDeparture": "El regreso debe ser posterior a la salida",
       "people": "Al menos 1 viajero"
-    }
+    },
+    "sending": "Enviando…",
+    "sendError": "El envío ha fallado. Inténtelo de nuevo en un momento o escríbanos directamente a {{email}}."
   },
   "destinations": {
     "title": "Destinos de Madagascar",

@@ -458,7 +458,9 @@
       "pastDate": "The date must be today or later",
       "returnBeforeDeparture": "Return must be after departure",
       "people": "At least 1 traveler"
-    }
+    },
+    "sending": "Sending…",
+    "sendError": "Sending failed. Please try again in a moment or email us directly at {{email}}."
   },
   "destinations": {
     "title": "Madagascar Destinations",

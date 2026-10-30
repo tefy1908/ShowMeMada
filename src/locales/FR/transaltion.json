@@ -458,7 +458,9 @@
       "pastDate": "La date doit être aujourd'hui ou plus tard",
       "returnBeforeDeparture": "Le retour doit être après le départ",
       "people": "Au moins 1 voyageur"
-    }
+    },
+    "sending": "Envoi en cours…",
+    "sendError": "L'envoi a échoué. Réessayez dans un instant ou écrivez-nous directement à {{email}}."
   },
   "destinations": {
     "title": "Destinations Madagascar",

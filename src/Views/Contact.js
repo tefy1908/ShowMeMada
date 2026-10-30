@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import {
+  Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   Link,
@@ -21,6 +23,7 @@ import {
 import { useTranslation } from "react-i18next";
 import TextTitle from "../Components/TextTitle";
 import { CONTACT } from "../Utils/contactInfo";
+import { sendEmail, TEMPLATES } from "../Utils/emailService";
 
 const BRAND = "#63AB45";
 const BRAND_DARK = "#4a8533";
@@ -161,6 +164,8 @@ const Contact = () => {
   // Après une première tentative d'envoi, on revalide à chaque saisie
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
 
   const destinationLabel = (dest) =>
     dest === "fullCircuit" || dest === "otherDestination" ? t(`contactPage.${dest}`) : dest;
@@ -183,8 +188,9 @@ const Contact = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (sending) return;
     setSubmitAttempted(true);
     const newErrors = validate(formData);
     setErrors(newErrors);
@@ -195,10 +201,31 @@ const Contact = () => {
       return;
     }
 
-    // TODO : brancher l'envoi réel du formulaire (EmailJS, Formspree, API...)
-    console.log("Données du formulaire:", formData);
-    setSubmitted(true);
-    cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setSending(true);
+    setSendError(false);
+    try {
+      // Valeurs lisibles (libellés traduits) pour l'email reçu par l'équipe
+      await sendEmail(TEMPLATES.contact, {
+        nom: formData.nom.trim(),
+        prenom: formData.prenom.trim(),
+        email: formData.email.trim(),
+        telephone: formData.telephone.trim(),
+        type_voyage: formData.typeVoyage && t(`contactPage.tripTypes.${formData.typeVoyage}`),
+        destination: formData.destination && destinationLabel(formData.destination),
+        nombre_personnes: formData.nombrePersonnes,
+        date_depart: formData.dateDepart,
+        date_retour: formData.dateRetour,
+        budget: formData.budget && t(`contactPage.budgetOptions.${formData.budget}`),
+        message: formData.message.trim(),
+      });
+      setSubmitted(true);
+      cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      console.error("Échec de l'envoi EmailJS :", err);
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleNewRequest = () => {
@@ -206,6 +233,7 @@ const Contact = () => {
     setErrors({});
     setSubmitAttempted(false);
     setSubmitted(false);
+    setSendError(false);
   };
 
   const field = (name, extra = {}) => ({
@@ -458,6 +486,11 @@ const Contact = () => {
                     />
 
                     {/* Envoi */}
+                    {sendError && (
+                      <Alert severity="error" sx={{ mt: 4 }}>
+                        {t("contactPage.sendError", { email: CONTACT.email })}
+                      </Alert>
+                    )}
                     <Box
                       sx={{
                         mt: 4,
@@ -478,7 +511,8 @@ const Contact = () => {
                         type="submit"
                         variant="contained"
                         size="large"
-                        endIcon={<Send />}
+                        disabled={sending}
+                        endIcon={sending ? <CircularProgress size={18} color="inherit" /> : <Send />}
                         sx={{
                           px: 4,
                           py: 1.5,
@@ -488,7 +522,7 @@ const Contact = () => {
                           flexShrink: 0,
                         }}
                       >
-                        {t("contactPage.submit")}
+                        {t(sending ? "contactPage.sending" : "contactPage.submit")}
                       </Button>
                     </Box>
                   </Box>
